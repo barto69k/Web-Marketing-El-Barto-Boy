@@ -1,0 +1,3746 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mi Campus · Grado en Marketing VIU</title>
+  <style>
+/* ===== Campus VIU · estilos (estética de la web original: grafito + rojo) ===== */
+:root {
+  --bg: #f1f1ef; --surface: #ffffff; --surface-2: #eceae6; --border: #e1e1dd;
+  --text: #23262b; --muted: #6b7078; --accent: #c0262d; --accent-soft: #f8e4e5; --accent-text: #ffffff;
+  --ok: #2f7d4f; --ok-soft: #e8f4ec; --warn: #a65b00; --warn-soft: #fdf0dc; --bad: #b42318; --bad-soft: #fde7e4;
+  --nav: #2a2d32; --nav-text: #c4c7cc;
+  --shadow: 0 1px 2px rgba(20,22,26,.06), 0 8px 22px rgba(20,22,26,.06);
+  --radius: 14px; --sidebar: 248px;
+  --font: Inter, "Segoe UI", system-ui, -apple-system, Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #17181b; --surface: #222428; --surface-2: #2b2e33; --border: #33363b;
+    --text: #ececec; --muted: #a0a4ab; --accent: #e0454b; --accent-soft: #3a2224; --accent-text: #ffffff;
+    --ok: #6fcf97; --ok-soft: #1b3326; --warn: #f2b24c; --warn-soft: #3a2e17; --bad: #ff8a80; --bad-soft: #3d1f1d;
+    --nav: #101113; --shadow: 0 1px 2px rgba(0,0,0,.5);
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #17181b; --surface: #222428; --surface-2: #2b2e33; --border: #33363b;
+  --text: #ececec; --muted: #a0a4ab; --accent: #e0454b; --accent-soft: #3a2224; --accent-text: #ffffff;
+  --ok: #6fcf97; --ok-soft: #1b3326; --warn: #f2b24c; --warn-soft: #3a2e17; --bad: #ff8a80; --bad-soft: #3d1f1d;
+  --nav: #101113; --shadow: 0 1px 2px rgba(0,0,0,.5);
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body { font-family: var(--font); background: var(--bg); color: var(--text); font-size: 15.5px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+h1, h2, h3, h4 { line-height: 1.25; margin: 0; letter-spacing: -.02em; font-weight: 700; }
+h1 { font-size: 2rem; } h2 { font-size: 1.15rem; } h3 { font-size: 1rem; }
+a { color: var(--accent); }
+button, input, select, textarea { font: inherit; color: inherit; }
+button { cursor: pointer; }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; border-radius: 6px; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+/* ----- layout ----- */
+.app { display: grid; grid-template-columns: var(--sidebar) 1fr; min-height: 100vh; }
+.sidebar { position: sticky; top: 0; height: 100vh; overflow-y: auto; background: var(--surface); border-right: 1px solid var(--border); padding: 18px 14px; display: flex; flex-direction: column; gap: 14px; }
+.brand { display: flex; gap: 10px; align-items: center; padding: 4px 6px; }
+.brand-logo { width: 38px; height: 38px; border-radius: 11px; background: var(--accent); color: var(--accent-text); display: grid; place-items: center; font-weight: 800; }
+.brand b { display: block; font-size: .98rem; } .brand span { font-size: .78rem; color: var(--muted); }
+.course-select label { font-size: .75rem; color: var(--muted); display: block; margin: 0 4px 3px; }
+.nav { display: flex; flex-direction: column; gap: 2px; }
+.nav a { display: flex; align-items: center; gap: 10px; padding: 9px 12px; border-radius: 10px; text-decoration: none; color: var(--text); font-weight: 500; }
+.nav a:hover { background: var(--surface-2); }
+.nav a[aria-current="page"] { background: var(--accent-soft); color: var(--accent); font-weight: 700; }
+.nav .ico { width: 20px; text-align: center; }
+.side-foot { margin-top: auto; display: flex; flex-direction: column; gap: 8px; font-size: .85rem; }
+.side-foot .hint { color: var(--muted); font-size: .75rem; }
+.topbar { display: none; }
+main { padding: 26px clamp(16px, 3vw, 40px) 60px; max-width: 1240px; width: 100%; }
+.page-head { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 10px; margin-bottom: 20px; }
+.page-head p { margin: 4px 0 0; color: var(--muted); }
+
+/* ----- piezas ----- */
+.grid { display: grid; gap: 16px; }
+.g2 { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+.g3 { grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); }
+.g4 { grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); }
+.card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px; box-shadow: var(--shadow); min-width: 0; }
+.card > h2, .card > .card-title { margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+.stat b { font-size: 1.8rem; display: block; line-height: 1.1; }
+.stat span { color: var(--muted); font-size: .85rem; }
+.muted { color: var(--muted); } .small { font-size: .82rem; }
+.row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+.row.between { justify-content: space-between; }
+.stack { display: flex; flex-direction: column; gap: 10px; }
+.empty { color: var(--muted); padding: 12px 0; font-style: italic; }
+.btn { border: 1px solid var(--border); background: var(--surface); padding: 7px 13px; border-radius: 10px; font-weight: 600; }
+.btn:hover { background: var(--surface-2); }
+.btn.primary { background: var(--accent); color: var(--accent-text); border-color: var(--accent); }
+.btn.primary:hover { filter: brightness(1.08); }
+.btn.small { padding: 4px 9px; font-size: .8rem; }
+.btn.danger { color: var(--bad); }
+input[type=text], input[type=date], input[type=url], select, textarea { background: var(--surface); border: 1px solid var(--border); border-radius: 9px; padding: 7px 10px; max-width: 100%; }
+input[type=checkbox] { width: 18px; height: 18px; accent-color: var(--accent); flex: none; }
+label.field { display: flex; flex-direction: column; gap: 3px; font-size: .8rem; color: var(--muted); }
+.filters { display: flex; flex-wrap: wrap; gap: 12px 16px; align-items: flex-end; padding: 14px 16px; margin-bottom: 16px; }
+.check { display: inline-flex; align-items: center; gap: 6px; font-size: .88rem; }
+
+.chip { display: inline-flex; align-items: center; gap: 6px; padding: 2px 9px; border-radius: 999px; font-size: .74rem; font-weight: 700; background: var(--surface-2); border: 1px solid var(--border); white-space: nowrap; }
+.dot { width: 9px; height: 9px; border-radius: 50%; background: var(--c, var(--accent)); flex: none; display: inline-block; }
+.badge { display: inline-block; padding: 1px 8px; border-radius: 7px; font-size: .72rem; font-weight: 700; white-space: nowrap; }
+.b-oficial { background: var(--ok-soft); color: var(--ok); }
+.b-recomendada { background: var(--warn-soft); color: var(--warn); }
+.b-pendiente { background: var(--bad-soft); color: var(--bad); }
+.b-ia { background: var(--bad-soft); color: var(--bad); }
+.b-elaborado { background: var(--surface-2); color: var(--muted); }
+.b-aviso { background: var(--warn-soft); color: var(--warn); }
+.b-tipo { background: var(--surface-2); color: var(--muted); }
+
+.bar { height: 9px; border-radius: 99px; background: var(--surface-2); overflow: hidden; }
+.bar > i { display: block; height: 100%; background: var(--c, var(--accent)); border-radius: 99px; transition: width .25s; }
+
+.list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; }
+.list > li { padding: 10px 0; border-top: 1px solid var(--border); display: flex; gap: 12px; align-items: flex-start; justify-content: space-between; }
+.list > li:first-child { border-top: 0; padding-top: 0; }
+.li-main { min-width: 0; flex: 1; }
+.li-main b { display: block; overflow-wrap: anywhere; }
+.li-date { text-align: right; font-size: .85rem; white-space: nowrap; }
+.when-soon { color: var(--warn); font-weight: 700; } .when-late { color: var(--bad); font-weight: 700; }
+.done { text-decoration: line-through; opacity: .6; }
+.past { opacity: .55; }
+
+.subject-card { border-top: 5px solid var(--c); display: flex; flex-direction: column; gap: 10px; }
+.subject-card h3 { font-size: 1.05rem; }
+.notice { border-left: 4px solid var(--warn); background: var(--warn-soft); padding: 10px 14px; border-radius: 8px; }
+.notice.alto { border-color: var(--bad); background: var(--bad-soft); }
+.notice.bajo { border-color: var(--border); background: var(--surface-2); }
+.notice b { display: block; }
+.legend { display: flex; flex-wrap: wrap; gap: 8px 14px; font-size: .82rem; color: var(--muted); align-items: center; }
+
+table { width: 100%; border-collapse: collapse; }
+th, td { text-align: left; padding: 8px 10px; border-top: 1px solid var(--border); vertical-align: middle; }
+th { font-size: .75rem; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); border-top: 0; }
+td.c, th.c { text-align: center; }
+.table-wrap { overflow-x: auto; }
+
+/* ----- calendario ----- */
+.cal-head { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; flex-wrap: wrap; }
+.cal-head h2 { min-width: 170px; }
+.cal-head h2::first-letter { text-transform: uppercase; }
+.cal { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 4px; }
+.cal .dow { text-align: center; font-size: .72rem; font-weight: 700; color: var(--muted); padding: 4px 0; text-transform: uppercase; }
+.day { min-height: 98px; border: 1px solid var(--border); background: var(--surface); border-radius: 9px; padding: 4px; display: flex; flex-direction: column; gap: 2px; text-align: left; overflow: hidden; }
+.day.out { opacity: .4; }
+.day.today { border: 2px solid var(--accent); }
+.day.sel { background: var(--accent-soft); }
+.day .n { font-size: .78rem; font-weight: 700; color: var(--muted); }
+.ev { display: flex; gap: 4px; align-items: center; font-size: .68rem; line-height: 1.2; padding: 1px 4px; border-radius: 5px; background: color-mix(in srgb, var(--c) 18%, var(--surface)); border-left: 3px solid var(--c); overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.ev.t-portafolio, .ev.t-examen { font-weight: 800; background: color-mix(in srgb, var(--c) 34%, var(--surface)); }
+.ev.t-recomendada { border-left-style: dashed; }
+.more { font-size: .68rem; color: var(--muted); }
+.day-panel { margin-top: 14px; }
+
+/* ----- móvil ----- */
+@media (max-width: 860px) {
+  .app { grid-template-columns: 1fr; }
+  .sidebar { position: fixed; z-index: 30; left: 0; top: 0; bottom: 0; width: min(290px, 86vw); transform: translateX(-102%); transition: transform .2s; box-shadow: var(--shadow); }
+  body.nav-open .sidebar { transform: none; }
+  body.nav-open::after { content: ""; position: fixed; inset: 0; background: rgba(0,0,0,.35); z-index: 20; }
+  .topbar { display: flex; align-items: center; gap: 12px; position: sticky; top: 0; z-index: 10; background: var(--surface); border-bottom: 1px solid var(--border); padding: 10px 16px; }
+  .topbar b { font-size: 1rem; }
+  main { padding: 18px 16px 50px; }
+  .day { min-height: 56px; padding: 3px; }
+  .ev { font-size: 0; padding: 0; height: 6px; border-radius: 3px; border-left-width: 0; background: var(--c); }
+  .day .n { font-size: .74rem; }
+  .list > li { flex-direction: column; gap: 6px; }
+  .li-date { text-align: left; }
+}
+@media print { .sidebar, .topbar, .filters { display: none; } .app { display: block; } }
+
+/* ----- añadidos v1 ----- */
+button.day { font: inherit; color: inherit; cursor: pointer; width: 100%; }
+button.day:hover { border-color: var(--accent); }
+button:disabled { opacity: .4; cursor: default; }
+.chip[aria-pressed="false"] { opacity: .45; background: var(--surface); }
+.chip[aria-pressed="true"] { background: color-mix(in srgb, var(--c, var(--accent)) 16%, var(--surface)); border-color: var(--c, var(--accent)); }
+.li-ctrl { display: flex; flex-direction: column; gap: 6px; align-items: flex-end; }
+.li-ctrl select { font-size: .82rem; padding: 4px 8px; }
+.list > li > input[type=checkbox] { margin-top: 3px; }
+a.card:hover { border-color: var(--c, var(--accent)); }
+code { background: var(--surface-2); padding: 1px 6px; border-radius: 6px; font-size: .85em; overflow-wrap: anywhere; }
+summary { cursor: pointer; }
+.page-head p a { text-decoration: none; font-weight: 600; }
+.card > h2 a.small { font-weight: 500; }
+@media (max-width: 860px) { .li-ctrl { align-items: flex-start; width: 100%; } }
+
+/* ----- tema original: barra lateral grafito, portadas y banner ----- */
+.sidebar { background: var(--nav); border-right: 0; color: #e8e9eb; }
+.brand b { color: #fff; font-size: 1.1rem; } .brand span { color: #9ea2a9; }
+.brand-logo { border-radius: 10px; }
+.course-select label { color: #9ea2a9; }
+.course-select select { width: 100%; background: rgba(255,255,255,.08); color: #fff; border-color: rgba(255,255,255,.22); }
+option { color: #23262b; background: #fff; }
+.nav a { color: var(--nav-text); gap: 11px; padding: 10px 12px; transition: background .18s, color .18s; }
+.nav a svg { flex: none; }
+.nav a:hover { background: rgba(255,255,255,.07); color: #fff; }
+.nav a[aria-current="page"] { background: var(--accent); color: #fff; box-shadow: 0 4px 14px rgba(192,38,45,.35); }
+.side-foot .btn { background: transparent; color: #e8e9eb; border-color: rgba(255,255,255,.3); }
+.side-foot .btn:hover { background: rgba(255,255,255,.08); }
+.side-foot .hint { color: #9ea2a9; }
+.btn { border-radius: 10px; font-weight: 500; transition: .15s; }
+.btn:hover { border-color: var(--accent); color: var(--accent); background: var(--surface); }
+.side-foot .btn:hover { color: #fff; background: rgba(255,255,255,.08); }
+.btn.primary, .btn.primary:hover { color: #fff; }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.nav :focus-visible, .bottombar :focus-visible { outline-color: #fff; }
+a.card.subject-card:hover, .subject-card:hover { transform: translateY(-2px); box-shadow: 0 12px 30px rgba(20,22,26,.14); }
+.card { transition: transform .2s, box-shadow .2s; }
+main { animation: fi .35s ease both; }
+@keyframes fi { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+.bar { height: 9px; }
+
+.cov { position: relative; height: 110px; border-radius: 12px; overflow: hidden; background: linear-gradient(135deg, #25282c, #464a52); }
+.cov.big { height: 180px; }
+.cov svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.cov:after { content: ""; position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,.5), transparent 65%); }
+.cov span { position: absolute; z-index: 1; left: 14px; bottom: 10px; color: #fff; font-weight: 700; letter-spacing: .1em; font-size: .8rem; }
+.subject-card.has-cover { border-top: 0; padding: 12px 12px 16px; }
+.subject-card.has-cover > :not(.cov) { margin-left: 4px; margin-right: 4px; }
+
+.banner { position: relative; min-height: clamp(190px, 28vw, 300px); border-radius: 18px; overflow: hidden; background: #25282c; box-shadow: var(--shadow); display: flex; align-items: flex-end; margin-bottom: 18px; }
+.banner svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.banner:after { content: ""; position: absolute; inset: 0; background: linear-gradient(to right, rgba(16,17,19,.78), rgba(16,17,19,.15) 70%); }
+.banner .bt { position: relative; z-index: 1; padding: clamp(18px, 3vw, 36px); color: #fff; }
+.banner .bt small { display: block; color: #d9dbe0; letter-spacing: .12em; text-transform: uppercase; font-size: 12px; font-weight: 600; margin-bottom: 6px; }
+.banner h1 { color: #fff; margin: 0; font-size: clamp(1.7rem, 4.5vw, 2.8rem); max-width: 16ch; line-height: 1.1; }
+.banner i { display: block; width: 56px; height: 4px; background: var(--accent); border-radius: 2px; margin-top: 14px; }
+.hero { background: var(--surface); border: 1px solid var(--border); border-left: 6px solid var(--c, var(--accent)); border-radius: var(--radius); box-shadow: var(--shadow); padding: 24px; margin: 0 0 16px; }
+.hero .big { font-size: clamp(1.5rem, 3.5vw, 2rem); font-weight: 700; letter-spacing: -.02em; line-height: 1.15; margin: 4px 0; }
+
+.bottombar { display: none; }
+.topbar { background: var(--nav); color: #fff; border-bottom: 0; }
+.topbar small { color: #9ea2a9; }
+.topbar .btn { background: transparent; color: #fff; border-color: rgba(255,255,255,.3); }
+@media (max-width: 860px) {
+  body { padding-bottom: 84px; }
+  .sidebar .nav { display: none; }
+  .bottombar { display: flex; position: fixed; left: 0; right: 0; bottom: 0; z-index: 25; background: var(--nav); padding: 6px 4px calc(6px + env(safe-area-inset-bottom)); gap: 0; overflow-x: auto; }
+  .bottombar a { flex: 1 0 auto; display: flex; flex-direction: column; align-items: center; gap: 2px; font-size: 10.5px; padding: 6px 8px; min-width: 60px; text-align: center; color: var(--nav-text); text-decoration: none; border-radius: 10px; }
+  .bottombar a[aria-current="page"] { background: var(--accent); color: #fff; }
+  .topbar small { display: inline; }
+  .cov.big { height: 130px; }
+}
+
+/* ----- sesiones ----- */
+textarea { width: 100%; font: inherit; padding: 10px; border: 1px solid var(--border); border-radius: 10px; background: var(--surface); color: var(--text); resize: vertical; }
+#toast { position: fixed; left: 50%; bottom: 26px; transform: translateX(-50%); background: #23262b; color: #fff; padding: 10px 18px; border-radius: 99px; opacity: 0; pointer-events: none; transition: opacity .2s; z-index: 60; box-shadow: var(--shadow); font-size: .9rem; }
+#toast.show { opacity: 1; }
+label.check.card { box-shadow: none; }
+@media (max-width: 860px) { #toast { bottom: 96px; } }
+
+a.btn { text-decoration: none; display: inline-block; }
+
+
+/* ===== v1.1: buscador, actividades, exámenes, biblioteca con adjuntos ===== */
+[hidden] { display: none !important; }
+input[type=search], input[type=number] { background: var(--surface); border: 1px solid var(--border); border-radius: 9px; padding: 7px 10px; max-width: 100%; }
+mark { background: color-mix(in srgb, var(--accent) 24%, transparent); color: inherit; border-radius: 3px; padding: 0 2px; }
+.searchbox { display: flex; flex-direction: column; gap: 10px; margin-bottom: 14px; }
+.searchbox > label.field { font-size: .85rem; font-weight: 600; color: var(--text); }
+.searchbox input[type=search] { width: 100%; font-size: 1.02rem; padding: 11px 14px; border-radius: 12px; }
+.qchips { display: flex; flex-wrap: wrap; gap: 6px; }
+.qchips .btn { border-radius: 99px; padding: 4px 12px; }
+#calRes { margin-bottom: 14px; }
+.list > li.past { opacity: .62; }
+
+.act { display: block; }
+.stepper { list-style: none; display: flex; padding: 0; margin: 14px 0 12px; }
+.stepper li { flex: 1; min-width: 0; position: relative; }
+.stepper li + li::before { content: ""; position: absolute; top: 19px; left: -50%; width: 100%; height: 3px; background: var(--border); z-index: 0; }
+.stepper li.on + li::before { background: var(--c, var(--accent)); }
+.step { position: relative; z-index: 1; width: 100%; background: none; border: 0; display: flex; flex-direction: column; align-items: center; gap: 5px; padding: 4px 1px; color: var(--muted); font-size: .72rem; line-height: 1.2; text-align: center; }
+.step .sn { width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center; border: 2px solid var(--border); background: var(--surface); font-weight: 700; font-size: .82rem; transition: .15s; }
+.step:hover .sn { border-color: var(--c, var(--accent)); }
+.step.on { color: var(--text); }
+.step.on .sn { background: var(--c, var(--accent)); border-color: var(--c, var(--accent)); color: #fff; }
+.checks { list-style: none; padding: 0; margin: 6px 0 0; display: flex; flex-direction: column; gap: 6px; }
+.check { display: inline-flex; gap: 8px; align-items: flex-start; }
+.exam .list > li { border-top: 1px solid var(--border); }
+tr.past { opacity: .55; }
+.drop { display: block; border: 2px dashed var(--border); border-radius: 12px; padding: 22px 14px; text-align: center; cursor: pointer; transition: .15s; }
+.drop:hover, .drop.over { border-color: var(--accent); background: var(--accent-soft); }
+
+.bottombar button { flex: 1 0 auto; display: flex; flex-direction: column; align-items: center; gap: 2px; font-size: 10.5px; padding: 6px 8px; min-width: 60px; background: none; border: 0; color: var(--nav-text); border-radius: 10px; }
+.bottombar button[aria-expanded="true"] { background: var(--accent); color: #fff; }
+@media (max-width: 860px) {
+  .sidebar .nav { display: flex; }
+  .bottombar a, .bottombar button { flex: 1 1 0; min-width: 0; }
+  .step { font-size: .62rem; }
+  .step .sn { width: 26px; height: 26px; }
+  .stepper li + li::before { top: 17px; }
+  .act-info { grid-template-columns: 1fr; }
+}
+@media (max-width: 860px) {
+  .grid.g4:has(> .stat) { grid-template-columns: 1fr 1fr; gap: 10px; }
+  .card.stat { padding: 12px; } .card.stat b { font-size: 1.5rem; }
+}
+
+</style>
+</head>
+<body>
+  <div class="topbar">
+    <button class="btn" id="menuBtn" aria-label="Abrir menú" aria-expanded="false">☰</button>
+    <b>Mi Campus</b><small>Grado en Marketing · VIU</small>
+  </div>
+  <div class="app">
+    <aside class="sidebar" id="sidebar">
+      <div class="brand">
+        <div class="brand-logo" aria-hidden="true">M</div>
+        <div><b>Mi Campus</b><span>Grado en Marketing · VIU</span></div>
+      </div>
+      <div class="course-select">
+        <label for="cursoSel">Curso</label>
+        <select id="cursoSel" style="width:100%"></select>
+      </div>
+      <nav class="nav" id="nav" aria-label="Secciones">
+      </nav>
+      <div class="side-foot">
+        <button class="btn" id="exportBtn">⬇ Exportar copia</button>
+        <button class="btn" id="importBtn">⬆ Importar copia</button>
+        <input type="file" id="importFile" accept="application/json,.json" hidden>
+        <button class="btn" id="themeBtn">Tema: automático</button>
+        <div class="hint">Tus tareas, progreso y preferencias se guardan solo en este navegador. Exporta una copia con regularidad.</div>
+      </div>
+    </aside>
+    <main id="main" tabindex="-1"></main>
+  </div>
+
+  <nav class="bottombar" id="bottomNav" aria-label="Secciones (móvil)">
+  </nav>
+
+  <!-- Datos de cada curso. Para añadir un curso nuevo, añade aquí otra línea <script> -->
+  <script>
+// DATOS DEL CURSO 1 (2026-27). Generado a partir de Calendario_Marketing_VIU_2026-2027.xlsx.
+// Puedes editarlo con el Bloc de notas. Respeta comas y comillas.
+// Novedad v1.1: «actividades» (pestaña Actividades) y «examenes» (pestaña Exámenes).
+window.CAMPUS_CURSOS = window.CAMPUS_CURSOS || [];
+window.CAMPUS_CURSOS.push({
+ "id": "2026-27",
+ "nombre": "Curso 1 · 2026-27",
+ "cuatrimestre": "Cuatrimestre 1",
+ "base": "01_CURSO_1_2026-27/C1_CUATRIMESTRE_1",
+ "reglas": [
+  "Se exige un mínimo de 5 tanto en el portafolio como en el examen.",
+  "Las entregas fuera de plazo no se corrigen.",
+  "Plagio o fraude: calificación de 0.",
+  "El uso de IA en actividades evaluables debe declararse según la guía docente."
+ ],
+ "asignaturas": [
+  {
+   "code": "04GMAR",
+   "nombre": "Introducción a la Economía",
+   "corto": "Economía",
+   "carpeta": "04GMAR_ECONOMIA",
+   "color": "#c0262d",
+   "ects": "6",
+   "profesor": "Alejandro Piedrahita Valencia",
+   "temas": [
+    {
+     "id": "04GMAR-T01",
+     "clave": "T01",
+     "nombre": "Tema 1",
+     "titulo": null,
+     "carpeta": "02_unidades/T01"
+    },
+    {
+     "id": "04GMAR-T02",
+     "clave": "T02",
+     "nombre": "Tema 2",
+     "titulo": null,
+     "carpeta": "02_unidades/T02"
+    },
+    {
+     "id": "04GMAR-T03",
+     "clave": "T03",
+     "nombre": "Tema 3",
+     "titulo": null,
+     "carpeta": "02_unidades/T03"
+    },
+    {
+     "id": "04GMAR-T04",
+     "clave": "T04",
+     "nombre": "Tema 4",
+     "titulo": null,
+     "carpeta": "02_unidades/T04"
+    },
+    {
+     "id": "04GMAR-T05",
+     "clave": "T05",
+     "nombre": "Tema 5",
+     "titulo": null,
+     "carpeta": "02_unidades/T05"
+    },
+    {
+     "id": "04GMAR-T06",
+     "clave": "T06",
+     "nombre": "Tema 6",
+     "titulo": null,
+     "carpeta": "02_unidades/T06"
+    },
+    {
+     "id": "04GMAR-T07",
+     "clave": "T07",
+     "nombre": "Tema 7",
+     "titulo": null,
+     "carpeta": "02_unidades/T07"
+    },
+    {
+     "id": "04GMAR-T08",
+     "clave": "T08",
+     "nombre": "Tema 8",
+     "titulo": null,
+     "carpeta": "02_unidades/T08"
+    }
+   ],
+   "evaluacion": [
+    {
+     "item": "Evidencia 1 (temas 1–4)",
+     "peso": "30 %"
+    },
+    {
+     "item": "Evidencia 2 (temas 5–8)",
+     "peso": "30 %"
+    },
+    {
+     "item": "Examen",
+     "peso": "40 %",
+     "nota": "El formato del examen «se concretará en la tutoría final» (según la guía)."
+    }
+   ],
+   "biblioteca": [
+    {
+     "titulo": "Guía Docente Introducción a la Eco 26-27.pdf",
+     "tipo": "Guía docente",
+     "origen": "oficial",
+     "carpeta": "{base}/00_guias"
+    },
+    {
+     "titulo": "Guía_Introducción a la economía.pdf",
+     "tipo": "Guía de la asignatura",
+     "origen": "oficial",
+     "carpeta": "{base}/00_guias"
+    },
+    {
+     "titulo": "Introducción a la economía.pdf",
+     "tipo": "Manual / temario",
+     "origen": "oficial",
+     "carpeta": "{base}/01_material_oficial",
+     "nota": "Clasificación por confirmar."
+    },
+    {
+     "titulo": "criterios_evaluacion_actividad.pdf",
+     "tipo": "Criterios de evaluación",
+     "origen": "oficial",
+     "carpeta": "{base}/03_evaluacion/rubricas"
+    },
+    {
+     "titulo": "Introduccion_Economia_VIU_guia_Cgpt.pdf",
+     "tipo": "Guía generada con IA",
+     "origen": "ia",
+     "carpeta": "{base}/04_material_IA_no_oficial",
+     "nota": "No oficial: contrastar con el manual."
+    }
+   ]
+  },
+  {
+   "code": "03GMAR",
+   "nombre": "Estadística Aplicada al Marketing",
+   "corto": "Estadística",
+   "carpeta": "03GMAR_ESTADISTICA",
+   "color": "#4f545c",
+   "ects": "6 o 9 (POR CONFIRMAR)",
+   "profesor": "Pablo Rafael Pardo Ibáñez",
+   "temas": [
+    {
+     "id": "03GMAR-UA1",
+     "clave": "UA1",
+     "nombre": "Unidad de aprendizaje 1",
+     "titulo": null,
+     "carpeta": "02_unidades/UA1"
+    },
+    {
+     "id": "03GMAR-UA2",
+     "clave": "UA2",
+     "nombre": "Unidad de aprendizaje 2",
+     "titulo": null,
+     "carpeta": "02_unidades/UA2"
+    },
+    {
+     "id": "03GMAR-UA3",
+     "clave": "UA3",
+     "nombre": "Unidad de aprendizaje 3",
+     "titulo": null,
+     "carpeta": "02_unidades/UA3"
+    }
+   ],
+   "evaluacion": [
+    {
+     "item": "Evidencia 1",
+     "peso": "20 %",
+     "nota": "Fecha recomendada: por confirmar (no figura en el calendario)."
+    },
+    {
+     "item": "Evidencia 2",
+     "peso": "20 %",
+     "nota": "Fecha recomendada: por confirmar."
+    },
+    {
+     "item": "Evidencia 3",
+     "peso": "20 %",
+     "nota": "Fecha recomendada: por confirmar."
+    },
+    {
+     "item": "Examen",
+     "peso": "40 %",
+     "nota": "10 preguntas numéricas; según la guía se permite software."
+    }
+   ],
+   "biblioteca": [
+    {
+     "titulo": "Guía Docente_03GMAR_26-27(1).pdf",
+     "tipo": "Guía docente",
+     "origen": "oficial",
+     "carpeta": "{base}/00_guias"
+    },
+    {
+     "titulo": "03GMAR_Estadística aplicada al marketing.pdf",
+     "tipo": "Manual / temario",
+     "origen": "oficial",
+     "carpeta": "{base}/01_material_oficial",
+     "nota": "Clasificación por confirmar."
+    },
+    {
+     "titulo": "Manual_Estadistica_Aplicada_al_Marketing-Cgpt.pdf",
+     "tipo": "Manual generado con IA",
+     "origen": "ia",
+     "carpeta": "{base}/04_material_IA_no_oficial",
+     "nota": "No oficial: contrastar con el manual."
+    }
+   ]
+  },
+  {
+   "code": "02GMAR",
+   "nombre": "Comunicación Empresarial",
+   "corto": "Comunicación",
+   "carpeta": "02GMAR_COMUNICACION",
+   "color": "#8a2a30",
+   "ects": "6",
+   "profesor": "Miguel Houghton Torralba",
+   "temas": [
+    {
+     "id": "02GMAR-T01",
+     "clave": "T01",
+     "nombre": "Tema 1",
+     "titulo": "Introducción a la dirección de la comunicación",
+     "carpeta": "02_unidades/T01"
+    },
+    {
+     "id": "02GMAR-T02",
+     "clave": "T02",
+     "nombre": "Tema 2",
+     "titulo": "Ética, cultura y valores",
+     "carpeta": "02_unidades/T02"
+    },
+    {
+     "id": "02GMAR-T03",
+     "clave": "T03",
+     "nombre": "Tema 3",
+     "titulo": "Comunicación interna",
+     "carpeta": "02_unidades/T03"
+    },
+    {
+     "id": "02GMAR-T04",
+     "clave": "T04",
+     "nombre": "Tema 4",
+     "titulo": "Comunicación externa",
+     "carpeta": "02_unidades/T04"
+    },
+    {
+     "id": "02GMAR-T05",
+     "clave": "T05",
+     "nombre": "Tema 5",
+     "titulo": "Grupos de presión y comunicación de crisis",
+     "carpeta": "02_unidades/T05"
+    },
+    {
+     "id": "02GMAR-T06",
+     "clave": "T06",
+     "nombre": "Tema 6",
+     "titulo": "Comunicación empresarial 2.0",
+     "carpeta": "02_unidades/T06"
+    },
+    {
+     "id": "02GMAR-T07",
+     "clave": "T07",
+     "nombre": "Tema 7",
+     "titulo": "Redes sociales",
+     "carpeta": "02_unidades/T07"
+    },
+    {
+     "id": "02GMAR-T08",
+     "clave": "T08",
+     "nombre": "Tema 8",
+     "titulo": "Publicidad en internet",
+     "carpeta": "02_unidades/T08"
+    }
+   ],
+   "evaluacion": [
+    {
+     "item": "Portafolio (50 %): Informe 1 / Evidencia 1",
+     "peso": "20 %",
+     "nota": "Entrega por el campus en PDF, no por correo."
+    },
+    {
+     "item": "Portafolio: Informe 2 / Evidencia 2",
+     "peso": "20 %"
+    },
+    {
+     "item": "Portafolio: foro",
+     "peso": "10 %",
+     "nota": "Fecha por confirmar."
+    },
+    {
+     "item": "Examen",
+     "peso": "50 %",
+     "nota": "20 preguntas test (0,4 c/u, penalización −33 %) + 2 de desarrollo (1 punto c/u)."
+    }
+   ],
+   "biblioteca": [
+    {
+     "titulo": "PresentaciónTUTORÍAINICIAL.ComunicaciónEmpresarial13.10.2026.pdf",
+     "tipo": "Presentación tutoría inicial",
+     "origen": "oficial",
+     "carpeta": "{base}/00_guias"
+    },
+    {
+     "titulo": "Manual Comunicación Empresarial - U1-U2-U3.pdf",
+     "tipo": "Manual",
+     "origen": "oficial",
+     "carpeta": "{base}/01_material_oficial"
+    },
+    {
+     "titulo": "Presentacion caso practico.pdf",
+     "tipo": "Caso práctico",
+     "origen": "oficial",
+     "carpeta": "{base}/05_casos_practicos"
+    },
+    {
+     "titulo": "solucion caso practico.pdf",
+     "tipo": "Solución del caso práctico",
+     "origen": "oficial",
+     "carpeta": "{base}/05_casos_practicos"
+    },
+    {
+     "titulo": "Guia_Comunicacion_Empresarial_VIU-Cgpt.pdf",
+     "tipo": "Guía generada con IA",
+     "origen": "ia",
+     "carpeta": "{base}/04_material_IA_no_oficial",
+     "nota": "No oficial: contrastar con el manual."
+    }
+   ]
+  },
+  {
+   "code": "01GMAR",
+   "nombre": "Contabilidad Analítica y de Costes",
+   "corto": "Contabilidad",
+   "carpeta": "01GMAR_CONTABILIDAD",
+   "color": "#7b766d",
+   "ects": "9",
+   "profesor": "Francisco Joaquín Cortés García",
+   "temas": [
+    {
+     "id": "01GMAR-T01",
+     "clave": "T01",
+     "nombre": "Tema 1",
+     "titulo": "Introducción financiera y contable",
+     "carpeta": "02_unidades/T01"
+    },
+    {
+     "id": "01GMAR-T02",
+     "clave": "T02",
+     "nombre": "Tema 2",
+     "titulo": "La cuenta de resultados y el fondo de maniobra",
+     "carpeta": "02_unidades/T02"
+    },
+    {
+     "id": "01GMAR-T03",
+     "clave": "T03",
+     "nombre": "Tema 3",
+     "titulo": "Ratios económico-financieros",
+     "carpeta": "02_unidades/T03"
+    },
+    {
+     "id": "01GMAR-T04",
+     "clave": "T04",
+     "nombre": "Tema 4",
+     "titulo": "Introducción a la estabilidad de costes",
+     "carpeta": "02_unidades/T04"
+    },
+    {
+     "id": "01GMAR-T05",
+     "clave": "T05",
+     "nombre": "Tema 5",
+     "titulo": "La magnitud del coste",
+     "carpeta": "02_unidades/T05"
+    },
+    {
+     "id": "01GMAR-T06",
+     "clave": "T06",
+     "nombre": "Tema 6",
+     "titulo": "Análisis de los factores de producción y cálculo de sus costes",
+     "carpeta": "02_unidades/T06"
+    },
+    {
+     "id": "01GMAR-T07",
+     "clave": "T07",
+     "nombre": "Tema 7",
+     "titulo": "Análisis del proceso productivo para la determinación del coste",
+     "carpeta": "02_unidades/T07"
+    },
+    {
+     "id": "01GMAR-T08",
+     "clave": "T08",
+     "nombre": "Tema 8",
+     "titulo": "Modelos basados en la localización e imputación de los costes",
+     "carpeta": "02_unidades/T08"
+    },
+    {
+     "id": "01GMAR-T09",
+     "clave": "T09",
+     "nombre": "Tema 9",
+     "titulo": "Casos particulares en la determinación del coste de producción",
+     "carpeta": "02_unidades/T09"
+    },
+    {
+     "id": "01GMAR-T10",
+     "clave": "T10",
+     "nombre": "Tema 10",
+     "titulo": "Análisis de la variabilidad de los costes. Modelo de imputación racional",
+     "carpeta": "02_unidades/T10"
+    }
+   ],
+   "evaluacion": [
+    {
+     "item": "Actividad 1",
+     "peso": "30 %"
+    },
+    {
+     "item": "Actividad 2",
+     "peso": "20 %"
+    },
+    {
+     "item": "Examen",
+     "peso": "50 %",
+     "nota": "40 preguntas test, penalización −33 %."
+    }
+   ],
+   "biblioteca": [
+    {
+     "titulo": "GUIA DOCENTE.pdf",
+     "tipo": "Guía docente",
+     "origen": "oficial",
+     "carpeta": "{base}/00_guias",
+     "nota": "Confirmar que corresponde a esta asignatura."
+    },
+    {
+     "titulo": "GUIA DE LA ASIGNATURA.pdf",
+     "tipo": "Guía de la asignatura",
+     "origen": "oficial",
+     "carpeta": "{base}/00_guias",
+     "nota": "Confirmar que corresponde a esta asignatura."
+    },
+    {
+     "titulo": "contabilidad analítica y de costes.pdf",
+     "tipo": "Manual / temario",
+     "origen": "oficial",
+     "carpeta": "{base}/01_material_oficial",
+     "nota": "Clasificación por confirmar."
+    },
+    {
+     "titulo": "Guia_Contabilidad_Analitica_y_de_Costes_Cgpt.pdf",
+     "tipo": "Guía generada con IA",
+     "origen": "ia",
+     "carpeta": "{base}/04_material_IA_no_oficial",
+     "nota": "No oficial: contrastar con el manual."
+    }
+   ]
+  }
+ ],
+ "comun": [
+  {
+   "titulo": "Guía de uso de IA para estudiantes (P11_G01 v02)",
+   "tipo": "Normativa VIU",
+   "origen": "oficial",
+   "carpeta": "90_COMUN/normativa",
+   "nota": "Toda actividad evaluable con IA debe declararse. Incluye un modelo de declaración."
+  },
+  {
+   "titulo": "Cómo citar el uso de IA en trabajos académicos.pdf",
+   "tipo": "Normativa VIU",
+   "origen": "oficial",
+   "carpeta": "90_COMUN/normativa"
+  },
+  {
+   "titulo": "Calendario_Marketing_VIU_2026-2027.xlsx",
+   "tipo": "Calendario (elaborado a partir de las guías)",
+   "origen": "elaborado",
+   "carpeta": "00_PANEL_Y_CONTROL"
+  }
+ ],
+ "eventos": [
+  {
+   "fecha": "2026-10-13",
+   "ini": "20:00",
+   "fin": "22:00",
+   "asig": "02GMAR",
+   "detalle": "Tutoría colectiva de presentación",
+   "tipo": "tutoria",
+   "titulo": "Tutoría inicial",
+   "fiabilidad": "oficial",
+   "id": "02GMAR-2026-10-13-tut1"
+  },
+  {
+   "fecha": "2026-10-14",
+   "ini": "18:00",
+   "fin": "20:00",
+   "asig": "01GMAR",
+   "detalle": "Tutoría colectiva de presentación",
+   "tipo": "tutoria",
+   "titulo": "Tutoría inicial",
+   "fiabilidad": "oficial",
+   "id": "01GMAR-2026-10-14-tut1"
+  },
+  {
+   "fecha": "2026-10-15",
+   "ini": "20:00",
+   "fin": "22:00",
+   "asig": "03GMAR",
+   "detalle": "Tutoría colectiva de presentación",
+   "tipo": "tutoria",
+   "titulo": "Tutoría inicial",
+   "fiabilidad": "oficial",
+   "id": "03GMAR-2026-10-15-tut1"
+  },
+  {
+   "fecha": "2026-10-16",
+   "ini": "18:00",
+   "fin": "20:00",
+   "asig": "01GMAR",
+   "detalle": "Tema 1: Introducción financiera y contable (1.ª parte). Sesión teórica",
+   "tipo": "sesion",
+   "titulo": "Sesión 1",
+   "fiabilidad": "oficial",
+   "id": "01GMAR-2026-10-16-ses1"
+  },
+  {
+   "fecha": "2026-10-16",
+   "ini": "20:00",
+   "fin": "22:00",
+   "asig": "03GMAR",
+   "detalle": "UA 1: Sesión teórico-práctica",
+   "tipo": "sesion",
+   "titulo": "Sesión 1",
+   "fiabilidad": "oficial",
+   "id": "03GMAR-2026-10-16-ses1"
+  },
+  {
+   "fecha": "2026-10-19",
+   "ini": "18:00",
+   "fin": "20:00",
+   "asig": "02GMAR",
+   "detalle": "Tema 1: Introducción a la dirección de la comunicación. Sesión teórico-práctica",
+   "tipo": "sesion",
+   "titulo": "Sesión 1",
+   "fiabilidad": "oficial",
+   "id": "02GMAR-2026-10-19-ses1"
+  },
+  {
+   "fecha": "2026-10-20",
+   "ini": "18:00",
+   "fin": "20:00",
+   "asig": "04GMAR",
+   "detalle": "Tutoría colectiva de presentación",
+   "tipo": "tutoria",
+   "titulo": "Tutoría inicial",
+   "fiabilidad": "oficial",
+   "id": "04GMAR-2026-10-20-tut1"
+  },
+  {
+   "fecha": "2026-10-20",
+   "ini": "20:00",
+   "fin": "22:00",
+   "asig": "02GMAR",
+   "detalle": "Tema 2: Ética, cultura y valores. Sesión teórico-práctica",
+   "tipo": "sesion",
+   "titulo": "Sesión 2",
+   "fiabilidad": "oficial",
+   "id": "02GMAR-2026-10-20-ses1"
+  },
+  {
+   "fecha": "2026-10-21",
+   "ini": "18:00",
+   "fin": "20:00",
+   "asig": "01GMAR",
+   "detalle": "Tema 1: Introducción financiera y contable (2.ª parte). Sesión teórica",
+   "tipo": "sesion",
+   "titulo": "Sesión 2",
+   "fiabilidad": "oficial",
+   "id": "01GMAR-2026-10-21-ses1"
+  },
+  {
+   "fecha": "2026-10-22",
+   "ini": "20:00",
+   "fin": "22:00",
+   "asig": "03GMAR",
+   "detalle": "UA 1: Sesión teórico-práctica",
+   "tipo": "sesion",
+   "titulo": "Sesión 2",
+   "fiabilidad": "oficial",
+   "id": "03GMAR-2026-10-22-ses1"
+  },
+  {
+   "fecha": "2026-10-23",
+   "ini": "20:00",
+   "fin": "22:00",
+   "asig": "03GMAR",
+   "detalle": "UA 1: Sesión teórico-práctica",
+   "tipo": "sesion",
+   "titulo": "Sesión 3",
+   "fiabilidad": "oficial",
+   "id": "03GMAR-2026-10-23-ses1"
+  },
+  {
+   "fecha": "2026-10-26",
+   "ini": "18:00",
+   "fin": "20:00",
+   "asig": "02GMAR",
+   "detalle": "Tema 3: Comunicación interna. Sesión teórico-práctica",
+   "tipo": "sesion",
+   "titulo": "Sesión 3",
+   "fiabilidad": "oficial",
+   "id": "02GMAR-2026-10-26-ses1"
+  },
+  {
+   "fecha": "2026-10-27",
+   "ini": "18:00",
+   "fin": "20:00",
+   "asig": "04GMAR",
+   "detalle": "Clase teórica: Tema 1",
+   "tipo": "sesion",
+   "titulo": "Sesión 1",
+   "fiabilidad": "oficial",
+   "id": "04GMAR-2026-10-27-ses1"
+  },
+  {
+   "fecha": "2026-10-27",
+   "ini": "20:00",
+   "fin": "22:00",
+   "asig": "02GMAR",
+   "detalle": "Tema 4: Comunicación externa. Sesión teórico-práctica",
+   "tipo": "sesion",
+   "titulo": "Sesión 4",
+   "fiabilidad": "oficial",
+   "id": "02GMAR-2026-10-27-ses1"
+  },
+  {
+   "fecha": "2026-10-28",
+   "ini": "18:00",
+   "fin": "20:00",
+   "asig": "01GMAR",
+   "detalle": "Tema 2: La cuenta de resultados y el fondo de maniobra (1.ª parte)",
+   "tipo": "sesion",
+   "titulo": "Sesión 3",
+   "fiabilidad": "oficial",
+   "id": "01GMAR-2026-10-28-ses1"
+  },
+  {
+   "fecha": "2026-10-29",
+   "ini": "20:00",
+   "fin": "22:00",
+   "asig": "03GMAR",
+   "detalle": "UA 1: Sesión teórico-práctica",
+   "tipo": "sesion",
+   "titulo": "Sesión 4",
+   "fiabilidad": "oficial",
+   "id": "03GMAR-2026-10-29-ses1"
+  },
+  {
+   "fecha": "2026-10-30",
+   "ini": "18:00",
+   "fin": "20:00",
+   "asig": "01GMAR",
+   "detalle": "Tema 2: La cuenta de resultados y el fondo de maniobra (2.ª parte)",
+   "tipo": "sesion",
+   "titulo": "Sesión 4",
+   "fiabilidad": "oficial",
+   "id": "01GMAR-2026-10-30-ses1"
+  },
+  {
+   "fecha": "2026-11-02",
+   "ini": "18:00",
+   "fin": "20:00",
+   "asig": "02GMAR",
+   "detalle": "Sesión práctica: comunicación interna y externa",
+   "tipo": "sesion",
+   "titulo": "Sesión 5",
+   "fiabilidad": "oficial",
+   "id": "02GMAR-2026-11-02-ses1"
+  },
+  {
+   "fecha": "2026-11-03",
+   "ini": "18:00",
+   "fin": "20:00",
+   "asig": "04GMAR",
+   "detalle": "Clase teórico-práctica: Tema 1",
+   "tipo": "sesion",
+   "titulo": "Sesión 2",
+   "fiabilidad": "oficial",
+   "id": "04GMAR-2026-11-03-ses1"
+  },
+  {
+   "fecha": "2026-11-04",
+   "ini": "18:00",
+   "fin": "20:00",
+   "asig": "01GMAR",
+   "detalle": "Tema 3: Ratios económico-financieros (1.ª parte). Sesión teórica",
+   "tipo": "sesion",
+   "titulo": "Sesión 5",
+   "fiabilidad": "oficial",
+   "id": "01GMAR-2026-11-04-ses1"
+  },
+  {
+   "fecha": "2026-11-05",
+   "ini": "20:00",
+   "fin": "22:00",
+   "asig": "03GMAR",
+   "detalle": "UA 1: Sesión práctica",
+   "tipo": "sesion",
+   "titulo": "Sesión 5",
+   "fiabilidad": "oficial",
+   "id": "03GMAR-2026-11-05-ses1"
+  },
+  {
+   "fecha": "2026-11-05",
+   "ini": "20:00",
+   "fin": "22:00",
+   "asig": "04GMAR",
+   "detalle": "Clase teórico-práctica: Tema 2",
+   "tipo": "sesion",
+   "titulo": "Sesión 3",
+   "fiabilidad": "oficial",
+   "id": "04GMAR-2026-11-05-ses1"
+  },
+  {
+   "fecha": "2026-11-06",
+   "ini": "18:00",
+   "fin": "20:00",
+   "asig": "01GMAR",
+   "detalle": "Tema 3: Ratios económico-financieros (2.ª parte). Sesión teórico-práctica",
+   "tipo": "sesion",
+   "titulo": "Sesión 6",
+   "fiabilidad": "oficial",
+   "id": "01GMAR-2026-11-06-ses1"
+  },
+  {
+   "fecha": "2026-11-09",
+   "ini": "18:00",
+   "fin": "20:00",
+   "asig": "02GMAR",
+   "detalle": "Tema 5: Grupos de presión y comunicación de crisis. Sesión teórico-práctica",
+   "tipo": "sesion",
+   "titulo": "Sesión 6",
+   "fiabilidad": "oficial",
+   "id": "02GMAR-2026-11-09-ses1"
+  },
+  {
+   "fecha": "2026-11-10",
+   "ini": "18:00",
+   "fin": "20:00",
+   "asig": "04GMAR",
+   "detalle": "Clase teórico-práctica: Tema 2",
+   "tipo": "sesion",
+   "titulo": "Sesión 4",
+   "fiabilidad": "oficial",
+   "id": "04GMAR-2026-11-10-ses1"
+  },
+  {
+   "fecha": "2026-11-11",
+   "ini": "18:00",
+   "fin": "20:00",
+   "asig": "01GMAR",
+   "detalle": "Sesión práctica para la realización de la actividad 1",
+   "tipo": "sesion",
+   "titulo": "Sesión 7",
+   "fiabilidad": "oficial",
+   "id": "01GMAR-2026-11-11-ses1"
+  },
+  {
+   "fecha": "2026-11-12",
+   "ini": "20:00",
+   "fin": "22:00",
+   "asig": "03GMAR",
+   "detalle": "UA 2: Sesión teórico-práctica",
+   "tipo": "sesion",
+   "titulo": "Sesión 6",
+   "fiabilidad": "oficial",
+   "id": "03GMAR-2026-11-12-ses1"
+  },
+  {
+   "fecha": "2026-11-13",
+   "ini": "18:00",
+   "fin": "20:00",
+   "asig": "01GMAR",
+   "detalle": "Tema 4: Introducción a la estabilidad de costes. Sesión teórica",
+   "tipo": "sesion",
+   "titulo": "Sesión 8",
+   "fiabilidad": "oficial",
+   "id": "01GMAR-2026-11-13-ses1"
+  },
+  {
+   "fecha": "2026-11-13",
+   "ini": "20:00",
+   "fin": "22:00",
+   "asig": "03GMAR",
+   "detalle": "UA 2: Sesión teórico-práctica",
+   "tipo": "sesion",
+   "titulo": "Sesión 7",
+   "fiabilidad": "oficial",
+   "id": "03GMAR-2026-11-13-ses1"
+  },
+  {
+   "fecha": "2026-11-16",
+   "ini": "18:00",
+   "fin": "20:00",
+   "asig": "02GMAR",
+   "detalle": "Tema 6: Comunicación empresarial 2.0 (1.ª parte). Sesión teórico-práctica",
+   "tipo": "sesion",
+   "titulo": "Sesión 7",
+   "fiabilidad": "oficial",
+   "id": "02GMAR-2026-11-16-ses1"
+  },
+  {
+   "fecha": "2026-11-17",
+   "ini": "18:00",
+   "fin": "20:00",
+   "asig": "04GMAR",
+   "detalle": "Clase teórica: Tema 3",
+   "tipo": "sesion",
+   "titulo": "Sesión 5",
+   "fiabilidad": "oficial",
+   "id": "04GMAR-2026-11-17-ses1"
+  },
+  {
+   "fecha": "2026-11-18",
+   "ini": "18:00",
+   "fin": "20:00",
+   "asig": "01GMAR",
+   "detalle": "Tema 5: La magnitud del coste. Sesión teórica",
+   "tipo": "sesion",
+   "titulo": "Sesión 9",
+   "fiabilidad": "oficial",
+   "id": "01GMAR-2026-11-18-ses1"
+  },
+  {
+   "fecha": "2026-11-19",
+   "ini": "20:00",
+   "fin": "22:00",
+   "asig": "03GMAR",
+   "detalle": "UA 2: Sesión teórico-práctica",
+   "tipo": "sesion",
+   "titulo": "Sesión 8",
+   "fiabilidad": "oficial",
+   "id": "03GMAR-2026-11-19-ses1"
+  },
+  {
+   "fecha": "2026-11-19",
+   "ini": "20:00",
+   "fin": "22:00",
+   "asig": "04GMAR",
+   "detalle": "Clase teórica y práctica: Tema 3",
+   "tipo": "sesion",
+   "titulo": "Sesión 6",
+   "fiabilidad": "oficial",
+   "id": "04GMAR-2026-11-19-ses1"
+  },
+  {
+   "fecha": "2026-11-20",
+   "ini": "18:00",
+   "fin": "20:00",
+   "asig": "01GMAR",
+   "detalle": "Tema 6: Análisis de los factores de producción y cálculo de sus costes",
+   "tipo": "sesion",
+   "titulo": "Sesión 10",
+   "fiabilidad": "oficial",
+   "id": "01GMAR-2026-11-20-ses1"
+  },
+  {
+   "fecha": "2026-11-23",
+   "ini": "18:00",
+   "fin": "20:00",
+   "asig": "02GMAR",
+   "detalle": "Tema 6: Comunicación empresarial 2.0 (2.ª parte). Sesión teórico-práctica",
+   "tipo": "sesion",
+   "titulo": "Sesión 8",
+   "fiabilidad": "oficial",
+   "id": "02GMAR-2026-11-23-ses1"
+  },
+  {
+   "fecha": "2026-11-24",
+   "ini": "18:00",
+   "fin": "20:00",
+   "asig": "04GMAR",
+   "detalle": "Clase teórica: Tema 4",
+   "tipo": "sesion",
+   "titulo": "Sesión 7",
+   "fiabilidad": "oficial",
+   "id": "04GMAR-2026-11-24-ses1"
+  },
+  {
+   "fecha": "2026-11-25",
+   "ini": "18:00",
+   "fin": "20:00",
+   "asig": "01GMAR",
+   "detalle": "Tema 7: Análisis del proceso productivo para la determinación del coste",
+   "tipo": "sesion",
+   "titulo": "Sesión 11",
+   "fiabilidad": "oficial",
+   "id": "01GMAR-2026-11-25-ses1"
+  },
+  {
+   "fecha": "2026-11-26",
+   "ini": "20:00",
+   "fin": "22:00",
+   "asig": "03GMAR",
+   "detalle": "UA 2: Sesión teórico-práctica",
+   "tipo": "sesion",
+   "titulo": "Sesión 9",
+   "fiabilidad": "oficial",
+   "id": "03GMAR-2026-11-26-ses1"
+  },
+  {
+   "fecha": "2026-11-27",
+   "ini": "20:00",
+   "fin": "22:00",
+   "asig": "03GMAR",
+   "detalle": "UA 2: Sesión práctica",
+   "tipo": "sesion",
+   "titulo": "Sesión 10",
+   "fiabilidad": "oficial",
+   "id": "03GMAR-2026-11-27-ses1"
+  },
+  {
+   "fecha": "2026-11-30",
+   "ini": "18:00",
+   "fin": "20:00",
+   "asig": "02GMAR",
+   "detalle": "Sesión práctica: comunicación empresarial 2.0",
+   "tipo": "sesion",
+   "titulo": "Sesión 9",
+   "fiabilidad": "oficial",
+   "id": "02GMAR-2026-11-30-ses1"
+  },
+  {
+   "fecha": "2026-11-30",
+   "ini": "23:59",
+   "fin": null,
+   "asig": "01GMAR",
+   "detalle": "Diagnóstico económico-financiero de una empresa",
+   "tipo": "recomendada",
+   "titulo": "Actividad 1",
+   "fiabilidad": "recomendada",
+   "id": "01GMAR-2026-11-30-rec1"
+  },
+  {
+   "fecha": "2026-11-30",
+   "ini": "23:59",
+   "fin": null,
+   "asig": "02GMAR",
+   "detalle": "Estudio del caso 1; actividad-resumen de temas 1–4",
+   "tipo": "recomendada",
+   "titulo": "Evidencia 1",
+   "fiabilidad": "recomendada",
+   "id": "02GMAR-2026-11-30-rec1"
+  },
+  {
+   "fecha": "2026-12-01",
+   "ini": "20:00",
+   "fin": "22:00",
+   "asig": "04GMAR",
+   "detalle": "Clase teórica y práctica: Tema 4",
+   "tipo": "sesion",
+   "titulo": "Sesión 8",
+   "fiabilidad": "oficial",
+   "id": "04GMAR-2026-12-01-ses1"
+  },
+  {
+   "fecha": "2026-12-02",
+   "ini": "18:00",
+   "fin": "20:00",
+   "asig": "01GMAR",
+   "detalle": "Tema 8: Modelos basados en la localización e imputación de los costes",
+   "tipo": "sesion",
+   "titulo": "Sesión 12",
+   "fiabilidad": "oficial",
+   "id": "01GMAR-2026-12-02-ses1"
+  },
+  {
+   "fecha": "2026-12-03",
+   "ini": "20:00",
+   "fin": "22:00",
+   "asig": "03GMAR",
+   "detalle": "UA 3: Sesión teórico-práctica",
+   "tipo": "sesion",
+   "titulo": "Sesión 11",
+   "fiabilidad": "oficial",
+   "id": "03GMAR-2026-12-03-ses1"
+  },
+  {
+   "fecha": "2026-12-03",
+   "ini": "20:00",
+   "fin": "22:00",
+   "asig": "04GMAR",
+   "detalle": "Clase teórica: Temas 5–7",
+   "tipo": "sesion",
+   "titulo": "Sesión 9",
+   "fiabilidad": "oficial",
+   "id": "04GMAR-2026-12-03-ses1"
+  },
+  {
+   "fecha": "2026-12-04",
+   "ini": "18:00",
+   "fin": "20:00",
+   "asig": "01GMAR",
+   "detalle": "Sesión práctica para la realización de la actividad 2",
+   "tipo": "sesion",
+   "titulo": "Sesión 13",
+   "fiabilidad": "oficial",
+   "id": "01GMAR-2026-12-04-ses1"
+  },
+  {
+   "fecha": "2026-12-04",
+   "ini": "23:59",
+   "fin": null,
+   "asig": "04GMAR",
+   "detalle": "Ejercicios de los temas 1–4",
+   "tipo": "recomendada",
+   "titulo": "Evidencia 1",
+   "fiabilidad": "recomendada",
+   "id": "04GMAR-2026-12-04-rec1"
+  },
+  {
+   "fecha": "2026-12-07",
+   "ini": "18:00",
+   "fin": "20:00",
+   "asig": "02GMAR",
+   "detalle": "Tema 7: Redes sociales. Sesión teórico-práctica",
+   "tipo": "sesion",
+   "titulo": "Sesión 10",
+   "fiabilidad": "oficial",
+   "id": "02GMAR-2026-12-07-ses1"
+  },
+  {
+   "fecha": "2026-12-09",
+   "ini": "18:00",
+   "fin": "20:00",
+   "asig": "01GMAR",
+   "detalle": "Tema 9: Casos particulares en la determinación del coste de producción",
+   "tipo": "sesion",
+   "titulo": "Sesión 14",
+   "fiabilidad": "oficial",
+   "id": "01GMAR-2026-12-09-ses1"
+  },
+  {
+   "fecha": "2026-12-10",
+   "ini": "20:00",
+   "fin": "22:00",
+   "asig": "03GMAR",
+   "detalle": "UA 3: Sesión teórico-práctica",
+   "tipo": "sesion",
+   "titulo": "Sesión 12",
+   "fiabilidad": "oficial",
+   "id": "03GMAR-2026-12-10-ses1"
+  },
+  {
+   "fecha": "2026-12-11",
+   "ini": "18:00",
+   "fin": "20:00",
+   "asig": "01GMAR",
+   "detalle": "Tema 10: Análisis de la variabilidad de los costes. Modelo de imputación racional",
+   "tipo": "sesion",
+   "titulo": "Sesión 15",
+   "fiabilidad": "oficial",
+   "id": "01GMAR-2026-12-11-ses1"
+  },
+  {
+   "fecha": "2026-12-11",
+   "ini": "20:00",
+   "fin": "22:00",
+   "asig": "03GMAR",
+   "detalle": "UA 3: Sesión teórico-práctica",
+   "tipo": "sesion",
+   "titulo": "Sesión 13",
+   "fiabilidad": "oficial",
+   "id": "03GMAR-2026-12-11-ses1"
+  },
+  {
+   "fecha": "2026-12-14",
+   "ini": "18:00",
+   "fin": "20:00",
+   "asig": "02GMAR",
+   "detalle": "Tema 8: Publicidad en internet. Sesión teórico-práctica",
+   "tipo": "sesion",
+   "titulo": "Sesión 11",
+   "fiabilidad": "oficial",
+   "id": "02GMAR-2026-12-14-ses1"
+  },
+  {
+   "fecha": "2026-12-15",
+   "ini": "18:00",
+   "fin": "20:00",
+   "asig": "04GMAR",
+   "detalle": "Clase teórico-práctica: Temas 5–7",
+   "tipo": "sesion",
+   "titulo": "Sesión 10",
+   "fiabilidad": "oficial",
+   "id": "04GMAR-2026-12-15-ses1"
+  },
+  {
+   "fecha": "2026-12-16",
+   "ini": "18:00",
+   "fin": "20:00",
+   "asig": "01GMAR",
+   "detalle": "Repaso de la primera parte del curso (temas 1–3)",
+   "tipo": "sesion",
+   "titulo": "Sesión 16",
+   "fiabilidad": "oficial",
+   "id": "01GMAR-2026-12-16-ses1"
+  },
+  {
+   "fecha": "2026-12-17",
+   "ini": "20:00",
+   "fin": "22:00",
+   "asig": "03GMAR",
+   "detalle": "UA 3: Sesión teórico-práctica",
+   "tipo": "sesion",
+   "titulo": "Sesión 14",
+   "fiabilidad": "oficial",
+   "id": "03GMAR-2026-12-17-ses1"
+  },
+  {
+   "fecha": "2026-12-17",
+   "ini": "20:00",
+   "fin": "22:00",
+   "asig": "04GMAR",
+   "detalle": "Clase teórica: Tema 8",
+   "tipo": "sesion",
+   "titulo": "Sesión 11",
+   "fiabilidad": "oficial",
+   "id": "04GMAR-2026-12-17-ses1"
+  },
+  {
+   "fecha": "2026-12-18",
+   "ini": "20:00",
+   "fin": "22:00",
+   "asig": "03GMAR",
+   "detalle": "UA 3: Sesión teórico-práctica",
+   "tipo": "sesion",
+   "titulo": "Sesión 15",
+   "fiabilidad": "oficial",
+   "id": "03GMAR-2026-12-18-ses1"
+  },
+  {
+   "fecha": "2026-12-18",
+   "ini": "23:59",
+   "fin": null,
+   "asig": "04GMAR",
+   "detalle": "Ejercicios de los temas 5–8",
+   "tipo": "recomendada",
+   "titulo": "Evidencia 2",
+   "fiabilidad": "recomendada",
+   "id": "04GMAR-2026-12-18-rec1"
+  },
+  {
+   "fecha": "2026-12-20",
+   "ini": "23:59",
+   "fin": null,
+   "asig": "02GMAR",
+   "detalle": "Estudio del caso 2; resumen de temas 5–7",
+   "tipo": "recomendada",
+   "titulo": "Evidencia 2",
+   "fiabilidad": "recomendada",
+   "id": "02GMAR-2026-12-20-rec1"
+  },
+  {
+   "fecha": "2027-01-07",
+   "ini": "20:00",
+   "fin": "22:00",
+   "asig": "03GMAR",
+   "detalle": "UA 3: Sesión teórico-práctica",
+   "tipo": "sesion",
+   "titulo": "Sesión 16",
+   "fiabilidad": "oficial",
+   "id": "03GMAR-2027-01-07-ses1"
+  },
+  {
+   "fecha": "2027-01-08",
+   "ini": "18:00",
+   "fin": "20:00",
+   "asig": "01GMAR",
+   "detalle": "Repaso de la segunda parte del curso (temas 4–10)",
+   "tipo": "sesion",
+   "titulo": "Sesión 17",
+   "fiabilidad": "oficial",
+   "id": "01GMAR-2027-01-08-ses1"
+  },
+  {
+   "fecha": "2027-01-08",
+   "ini": "23:59",
+   "fin": null,
+   "asig": "04GMAR",
+   "detalle": "Fecha límite de entrega del portafolio",
+   "tipo": "portafolio",
+   "titulo": "Entrega del portafolio (1.ª convocatoria)",
+   "fiabilidad": "oficial",
+   "conv": 1,
+   "id": "04GMAR-2027-01-08-por1"
+  },
+  {
+   "fecha": "2027-01-11",
+   "ini": "18:00",
+   "fin": "20:00",
+   "asig": "02GMAR",
+   "detalle": "Tutoría colectiva de recapitulación",
+   "tipo": "tutoria",
+   "titulo": "Tutoría final",
+   "fiabilidad": "oficial",
+   "id": "02GMAR-2027-01-11-tut1"
+  },
+  {
+   "fecha": "2027-01-12",
+   "ini": "18:00",
+   "fin": "20:00",
+   "asig": "04GMAR",
+   "detalle": "Tutoría colectiva de recapitulación",
+   "tipo": "tutoria",
+   "titulo": "Tutoría final",
+   "fiabilidad": "oficial",
+   "id": "04GMAR-2027-01-12-tut1"
+  },
+  {
+   "fecha": "2027-01-12",
+   "ini": "23:59",
+   "fin": null,
+   "asig": "02GMAR",
+   "detalle": "Fecha límite de entrega del portafolio",
+   "tipo": "portafolio",
+   "titulo": "Entrega del portafolio (1.ª convocatoria)",
+   "fiabilidad": "oficial",
+   "conv": 1,
+   "id": "02GMAR-2027-01-12-por1"
+  },
+  {
+   "fecha": "2027-01-13",
+   "ini": "18:00",
+   "fin": "20:00",
+   "asig": "01GMAR",
+   "detalle": "Tutoría colectiva de recapitulación",
+   "tipo": "tutoria",
+   "titulo": "Tutoría final",
+   "fiabilidad": "oficial",
+   "id": "01GMAR-2027-01-13-tut1"
+  },
+  {
+   "fecha": "2027-01-14",
+   "ini": "20:00",
+   "fin": "22:00",
+   "asig": "03GMAR",
+   "detalle": "UA 3: Sesión práctica",
+   "tipo": "sesion",
+   "titulo": "Sesión 17",
+   "fiabilidad": "oficial",
+   "id": "03GMAR-2027-01-14-ses1"
+  },
+  {
+   "fecha": "2027-01-15",
+   "ini": "20:00",
+   "fin": "22:00",
+   "asig": "03GMAR",
+   "detalle": "Tutoría colectiva de recapitulación",
+   "tipo": "tutoria",
+   "titulo": "Tutoría final",
+   "fiabilidad": "oficial",
+   "id": "03GMAR-2027-01-15-tut1"
+  },
+  {
+   "fecha": "2027-01-15",
+   "ini": "23:59",
+   "fin": null,
+   "asig": "01GMAR",
+   "detalle": "Clasificación de costes",
+   "tipo": "recomendada",
+   "titulo": "Actividad 2",
+   "fiabilidad": "recomendada",
+   "id": "01GMAR-2027-01-15-rec1"
+  },
+  {
+   "fecha": "2027-01-25",
+   "ini": "18:00",
+   "fin": "22:00",
+   "asig": "02GMAR",
+   "detalle": "Prueba final",
+   "tipo": "examen",
+   "titulo": "Examen (1.ª convocatoria)",
+   "fiabilidad": "oficial",
+   "conv": 1,
+   "id": "02GMAR-2027-01-25-exa1"
+  },
+  {
+   "fecha": "2027-01-25",
+   "ini": "23:59",
+   "fin": null,
+   "asig": "03GMAR",
+   "detalle": "Fecha límite de entrega del portafolio",
+   "tipo": "portafolio",
+   "titulo": "Entrega del portafolio (1.ª convocatoria)",
+   "fiabilidad": "oficial",
+   "conv": 1,
+   "id": "03GMAR-2027-01-25-por1"
+  },
+  {
+   "fecha": "2027-01-27",
+   "ini": "18:00",
+   "fin": "22:00",
+   "asig": "04GMAR",
+   "detalle": "Examen",
+   "tipo": "examen",
+   "titulo": "Examen (1.ª convocatoria)",
+   "fiabilidad": "oficial",
+   "conv": 1,
+   "id": "04GMAR-2027-01-27-exa1"
+  },
+  {
+   "fecha": "2027-01-29",
+   "ini": "18:00",
+   "fin": "22:00",
+   "asig": "03GMAR",
+   "detalle": "Examen",
+   "tipo": "examen",
+   "titulo": "Examen (1.ª convocatoria)",
+   "fiabilidad": "oficial",
+   "conv": 1,
+   "id": "03GMAR-2027-01-29-exa1"
+  },
+  {
+   "fecha": "2027-02-02",
+   "ini": "18:00",
+   "fin": "22:00",
+   "asig": "01GMAR",
+   "detalle": "Examen",
+   "tipo": "examen",
+   "titulo": "Examen (1.ª convocatoria)",
+   "fiabilidad": "oficial",
+   "conv": 1,
+   "id": "01GMAR-2027-02-02-exa1"
+  },
+  {
+   "fecha": "2027-02-02",
+   "ini": "23:59",
+   "fin": null,
+   "asig": "01GMAR",
+   "detalle": "Fecha límite de entrega del portafolio",
+   "tipo": "portafolio",
+   "titulo": "Entrega del portafolio (1.ª convocatoria)",
+   "fiabilidad": "oficial",
+   "conv": 1,
+   "id": "01GMAR-2027-02-02-por1"
+  },
+  {
+   "fecha": "2027-05-18",
+   "ini": "23:59",
+   "fin": null,
+   "asig": "02GMAR",
+   "detalle": "Fecha límite de entrega del portafolio",
+   "tipo": "portafolio",
+   "titulo": "Entrega del portafolio (2.ª convocatoria)",
+   "fiabilidad": "oficial",
+   "conv": 2,
+   "id": "02GMAR-2027-05-18-por1"
+  },
+  {
+   "fecha": "2027-05-21",
+   "ini": "23:59",
+   "fin": null,
+   "asig": "04GMAR",
+   "detalle": "Fecha límite de entrega del portafolio",
+   "tipo": "portafolio",
+   "titulo": "Entrega del portafolio (2.ª convocatoria)",
+   "fiabilidad": "oficial",
+   "conv": 2,
+   "id": "04GMAR-2027-05-21-por1"
+  },
+  {
+   "fecha": "2027-05-31",
+   "ini": "18:00",
+   "fin": "22:00",
+   "asig": "02GMAR",
+   "detalle": "Prueba final",
+   "tipo": "examen",
+   "titulo": "Examen (2.ª convocatoria)",
+   "fiabilidad": "oficial",
+   "conv": 2,
+   "id": "02GMAR-2027-05-31-exa1"
+  },
+  {
+   "fecha": "2027-05-31",
+   "ini": "23:59",
+   "fin": null,
+   "asig": "03GMAR",
+   "detalle": "Fecha límite de entrega del portafolio",
+   "tipo": "portafolio",
+   "titulo": "Entrega del portafolio (2.ª convocatoria)",
+   "fiabilidad": "oficial",
+   "conv": 2,
+   "id": "03GMAR-2027-05-31-por1"
+  },
+  {
+   "fecha": "2027-06-02",
+   "ini": "18:00",
+   "fin": "22:00",
+   "asig": "04GMAR",
+   "detalle": "Examen",
+   "tipo": "examen",
+   "titulo": "Examen (2.ª convocatoria)",
+   "fiabilidad": "oficial",
+   "conv": 2,
+   "id": "04GMAR-2027-06-02-exa1"
+  },
+  {
+   "fecha": "2027-06-04",
+   "ini": "18:00",
+   "fin": "22:00",
+   "asig": "03GMAR",
+   "detalle": "Examen",
+   "tipo": "examen",
+   "titulo": "Examen (2.ª convocatoria)",
+   "fiabilidad": "oficial",
+   "conv": 2,
+   "id": "03GMAR-2027-06-04-exa1"
+  },
+  {
+   "fecha": "2027-06-08",
+   "ini": "18:00",
+   "fin": "22:00",
+   "asig": "01GMAR",
+   "detalle": "Examen",
+   "tipo": "examen",
+   "titulo": "Examen (2.ª convocatoria)",
+   "fiabilidad": "oficial",
+   "conv": 2,
+   "id": "01GMAR-2027-06-08-exa1"
+  },
+  {
+   "fecha": "2027-06-08",
+   "ini": "23:59",
+   "fin": null,
+   "asig": "01GMAR",
+   "detalle": "Fecha límite de entrega del portafolio",
+   "tipo": "portafolio",
+   "titulo": "Entrega del portafolio (2.ª convocatoria)",
+   "fiabilidad": "oficial",
+   "conv": 2,
+   "id": "01GMAR-2027-06-08-por1"
+  }
+ ],
+ "tareas": [
+  {
+   "id": "t-01GMAR-2026-11-30-rec1",
+   "evento": "01GMAR-2026-11-30-rec1",
+   "asig": "01GMAR",
+   "titulo": "Actividad 1",
+   "tipo": "recomendada",
+   "fecha": "2026-11-30",
+   "hora": "23:59",
+   "fiabilidad": "recomendada",
+   "prioridad": "media",
+   "detalle": "Diagnóstico económico-financiero de una empresa"
+  },
+  {
+   "id": "t-02GMAR-2026-11-30-rec1",
+   "evento": "02GMAR-2026-11-30-rec1",
+   "asig": "02GMAR",
+   "titulo": "Evidencia 1",
+   "tipo": "recomendada",
+   "fecha": "2026-11-30",
+   "hora": "23:59",
+   "fiabilidad": "recomendada",
+   "prioridad": "media",
+   "detalle": "Estudio del caso 1; actividad-resumen de temas 1–4"
+  },
+  {
+   "id": "t-04GMAR-2026-12-04-rec1",
+   "evento": "04GMAR-2026-12-04-rec1",
+   "asig": "04GMAR",
+   "titulo": "Evidencia 1",
+   "tipo": "recomendada",
+   "fecha": "2026-12-04",
+   "hora": "23:59",
+   "fiabilidad": "recomendada",
+   "prioridad": "media",
+   "detalle": "Ejercicios de los temas 1–4"
+  },
+  {
+   "id": "t-04GMAR-2026-12-18-rec1",
+   "evento": "04GMAR-2026-12-18-rec1",
+   "asig": "04GMAR",
+   "titulo": "Evidencia 2",
+   "tipo": "recomendada",
+   "fecha": "2026-12-18",
+   "hora": "23:59",
+   "fiabilidad": "recomendada",
+   "prioridad": "media",
+   "detalle": "Ejercicios de los temas 5–8"
+  },
+  {
+   "id": "t-02GMAR-2026-12-20-rec1",
+   "evento": "02GMAR-2026-12-20-rec1",
+   "asig": "02GMAR",
+   "titulo": "Evidencia 2",
+   "tipo": "recomendada",
+   "fecha": "2026-12-20",
+   "hora": "23:59",
+   "fiabilidad": "recomendada",
+   "prioridad": "media",
+   "detalle": "Estudio del caso 2; resumen de temas 5–7"
+  },
+  {
+   "id": "t-04GMAR-2027-01-08-por1",
+   "evento": "04GMAR-2027-01-08-por1",
+   "asig": "04GMAR",
+   "titulo": "Entrega del portafolio (1.ª convocatoria)",
+   "tipo": "portafolio",
+   "fecha": "2027-01-08",
+   "hora": "23:59",
+   "fiabilidad": "oficial",
+   "prioridad": "alta",
+   "detalle": "Fecha límite de entrega del portafolio",
+   "conv": 1
+  },
+  {
+   "id": "t-02GMAR-2027-01-12-por1",
+   "evento": "02GMAR-2027-01-12-por1",
+   "asig": "02GMAR",
+   "titulo": "Entrega del portafolio (1.ª convocatoria)",
+   "tipo": "portafolio",
+   "fecha": "2027-01-12",
+   "hora": "23:59",
+   "fiabilidad": "oficial",
+   "prioridad": "alta",
+   "detalle": "Fecha límite de entrega del portafolio",
+   "conv": 1
+  },
+  {
+   "id": "t-01GMAR-2027-01-15-rec1",
+   "evento": "01GMAR-2027-01-15-rec1",
+   "asig": "01GMAR",
+   "titulo": "Actividad 2",
+   "tipo": "recomendada",
+   "fecha": "2027-01-15",
+   "hora": "23:59",
+   "fiabilidad": "recomendada",
+   "prioridad": "media",
+   "detalle": "Clasificación de costes"
+  },
+  {
+   "id": "t-02GMAR-2027-01-25-exa1",
+   "evento": "02GMAR-2027-01-25-exa1",
+   "asig": "02GMAR",
+   "titulo": "Examen (1.ª convocatoria)",
+   "tipo": "examen",
+   "fecha": "2027-01-25",
+   "hora": "22:00",
+   "fiabilidad": "oficial",
+   "prioridad": "alta",
+   "detalle": "Prueba final",
+   "conv": 1
+  },
+  {
+   "id": "t-03GMAR-2027-01-25-por1",
+   "evento": "03GMAR-2027-01-25-por1",
+   "asig": "03GMAR",
+   "titulo": "Entrega del portafolio (1.ª convocatoria)",
+   "tipo": "portafolio",
+   "fecha": "2027-01-25",
+   "hora": "23:59",
+   "fiabilidad": "oficial",
+   "prioridad": "alta",
+   "detalle": "Fecha límite de entrega del portafolio",
+   "conv": 1
+  },
+  {
+   "id": "t-04GMAR-2027-01-27-exa1",
+   "evento": "04GMAR-2027-01-27-exa1",
+   "asig": "04GMAR",
+   "titulo": "Examen (1.ª convocatoria)",
+   "tipo": "examen",
+   "fecha": "2027-01-27",
+   "hora": "22:00",
+   "fiabilidad": "oficial",
+   "prioridad": "alta",
+   "detalle": "Examen",
+   "conv": 1
+  },
+  {
+   "id": "t-03GMAR-2027-01-29-exa1",
+   "evento": "03GMAR-2027-01-29-exa1",
+   "asig": "03GMAR",
+   "titulo": "Examen (1.ª convocatoria)",
+   "tipo": "examen",
+   "fecha": "2027-01-29",
+   "hora": "22:00",
+   "fiabilidad": "oficial",
+   "prioridad": "alta",
+   "detalle": "Examen",
+   "conv": 1
+  },
+  {
+   "id": "t-01GMAR-2027-02-02-exa1",
+   "evento": "01GMAR-2027-02-02-exa1",
+   "asig": "01GMAR",
+   "titulo": "Examen (1.ª convocatoria)",
+   "tipo": "examen",
+   "fecha": "2027-02-02",
+   "hora": "22:00",
+   "fiabilidad": "oficial",
+   "prioridad": "alta",
+   "detalle": "Examen",
+   "conv": 1
+  },
+  {
+   "id": "t-01GMAR-2027-02-02-por1",
+   "evento": "01GMAR-2027-02-02-por1",
+   "asig": "01GMAR",
+   "titulo": "Entrega del portafolio (1.ª convocatoria)",
+   "tipo": "portafolio",
+   "fecha": "2027-02-02",
+   "hora": "23:59",
+   "fiabilidad": "oficial",
+   "prioridad": "alta",
+   "detalle": "Fecha límite de entrega del portafolio",
+   "conv": 1
+  },
+  {
+   "id": "t-02GMAR-2027-05-18-por1",
+   "evento": "02GMAR-2027-05-18-por1",
+   "asig": "02GMAR",
+   "titulo": "Entrega del portafolio (2.ª convocatoria)",
+   "tipo": "portafolio",
+   "fecha": "2027-05-18",
+   "hora": "23:59",
+   "fiabilidad": "oficial",
+   "prioridad": "baja",
+   "detalle": "Fecha límite de entrega del portafolio",
+   "conv": 2
+  },
+  {
+   "id": "t-04GMAR-2027-05-21-por1",
+   "evento": "04GMAR-2027-05-21-por1",
+   "asig": "04GMAR",
+   "titulo": "Entrega del portafolio (2.ª convocatoria)",
+   "tipo": "portafolio",
+   "fecha": "2027-05-21",
+   "hora": "23:59",
+   "fiabilidad": "oficial",
+   "prioridad": "baja",
+   "detalle": "Fecha límite de entrega del portafolio",
+   "conv": 2
+  },
+  {
+   "id": "t-02GMAR-2027-05-31-exa1",
+   "evento": "02GMAR-2027-05-31-exa1",
+   "asig": "02GMAR",
+   "titulo": "Examen (2.ª convocatoria)",
+   "tipo": "examen",
+   "fecha": "2027-05-31",
+   "hora": "22:00",
+   "fiabilidad": "oficial",
+   "prioridad": "baja",
+   "detalle": "Prueba final",
+   "conv": 2
+  },
+  {
+   "id": "t-03GMAR-2027-05-31-por1",
+   "evento": "03GMAR-2027-05-31-por1",
+   "asig": "03GMAR",
+   "titulo": "Entrega del portafolio (2.ª convocatoria)",
+   "tipo": "portafolio",
+   "fecha": "2027-05-31",
+   "hora": "23:59",
+   "fiabilidad": "oficial",
+   "prioridad": "baja",
+   "detalle": "Fecha límite de entrega del portafolio",
+   "conv": 2
+  },
+  {
+   "id": "t-04GMAR-2027-06-02-exa1",
+   "evento": "04GMAR-2027-06-02-exa1",
+   "asig": "04GMAR",
+   "titulo": "Examen (2.ª convocatoria)",
+   "tipo": "examen",
+   "fecha": "2027-06-02",
+   "hora": "22:00",
+   "fiabilidad": "oficial",
+   "prioridad": "baja",
+   "detalle": "Examen",
+   "conv": 2
+  },
+  {
+   "id": "t-03GMAR-2027-06-04-exa1",
+   "evento": "03GMAR-2027-06-04-exa1",
+   "asig": "03GMAR",
+   "titulo": "Examen (2.ª convocatoria)",
+   "tipo": "examen",
+   "fecha": "2027-06-04",
+   "hora": "22:00",
+   "fiabilidad": "oficial",
+   "prioridad": "baja",
+   "detalle": "Examen",
+   "conv": 2
+  },
+  {
+   "id": "t-01GMAR-2027-06-08-exa1",
+   "evento": "01GMAR-2027-06-08-exa1",
+   "asig": "01GMAR",
+   "titulo": "Examen (2.ª convocatoria)",
+   "tipo": "examen",
+   "fecha": "2027-06-08",
+   "hora": "22:00",
+   "fiabilidad": "oficial",
+   "prioridad": "baja",
+   "detalle": "Examen",
+   "conv": 2
+  },
+  {
+   "id": "t-01GMAR-2027-06-08-por1",
+   "evento": "01GMAR-2027-06-08-por1",
+   "asig": "01GMAR",
+   "titulo": "Entrega del portafolio (2.ª convocatoria)",
+   "tipo": "portafolio",
+   "fecha": "2027-06-08",
+   "hora": "23:59",
+   "fiabilidad": "oficial",
+   "prioridad": "baja",
+   "detalle": "Fecha límite de entrega del portafolio",
+   "conv": 2
+  },
+  {
+   "id": "t-pend-03GMAR-1",
+   "asig": "03GMAR",
+   "titulo": "Evidencia 1",
+   "tipo": "recomendada",
+   "fecha": null,
+   "hora": null,
+   "fiabilidad": "pendiente",
+   "prioridad": "media",
+   "detalle": "Evidencia 1 (20 %). Fecha recomendada por confirmar en el campus."
+  },
+  {
+   "id": "t-pend-03GMAR-2",
+   "asig": "03GMAR",
+   "titulo": "Evidencia 2",
+   "tipo": "recomendada",
+   "fecha": null,
+   "hora": null,
+   "fiabilidad": "pendiente",
+   "prioridad": "media",
+   "detalle": "Evidencia 2 (20 %). Fecha recomendada por confirmar en el campus."
+  },
+  {
+   "id": "t-pend-03GMAR-3",
+   "asig": "03GMAR",
+   "titulo": "Evidencia 3",
+   "tipo": "recomendada",
+   "fecha": null,
+   "hora": null,
+   "fiabilidad": "pendiente",
+   "prioridad": "media",
+   "detalle": "Evidencia 3 (20 %). Fecha recomendada por confirmar en el campus."
+  },
+  {
+   "id": "t-pend-02GMAR-4",
+   "asig": "02GMAR",
+   "titulo": "Foro (10 % del portafolio)",
+   "tipo": "recomendada",
+   "fecha": null,
+   "hora": null,
+   "fiabilidad": "pendiente",
+   "prioridad": "media",
+   "detalle": "Fecha del foro por confirmar en el campus."
+  }
+ ],
+ "avisos": [
+  {
+   "id": "av-estad-ects",
+   "nivel": "alto",
+   "asig": [
+    "03GMAR"
+   ],
+   "titulo": "Estadística: créditos ECTS contradictorios",
+   "detalle": "Los documentos del proyecto indican 6 y 9 ECTS. Confírmalo en el campus."
+  },
+  {
+   "id": "av-cont-mismo-dia",
+   "nivel": "alto",
+   "asig": [
+    "01GMAR"
+   ],
+   "titulo": "Contabilidad: portafolio y examen el mismo día",
+   "detalle": "El 02/02/2027 el portafolio vence a las 23:59 y el examen es de 18:00 a 22:00. Planifica la entrega antes del examen."
+  },
+  {
+   "id": "av-estad-com",
+   "nivel": "medio",
+   "asig": [
+    "03GMAR",
+    "02GMAR"
+   ],
+   "titulo": "Portafolio de Estadística el día del examen de Comunicación (2.ª conv.)",
+   "detalle": "El 31/05/2027 vence el portafolio de Estadística (23:59) y se celebra el examen de Comunicación (18:00–22:00)."
+  },
+  {
+   "id": "av-eco-examen",
+   "nivel": "medio",
+   "asig": [
+    "04GMAR"
+   ],
+   "titulo": "Economía: formato del examen sin concretar",
+   "detalle": "La guía dice que el formato se concretará en la tutoría final (12/01/2027)."
+  },
+  {
+   "id": "av-estad-evid",
+   "nivel": "medio",
+   "asig": [
+    "03GMAR"
+   ],
+   "titulo": "Estadística: evidencias sin fecha recomendada",
+   "detalle": "El calendario Excel no recoge fechas recomendadas para las tres evidencias."
+  },
+  {
+   "id": "av-com-foro",
+   "nivel": "medio",
+   "asig": [
+    "02GMAR"
+   ],
+   "titulo": "Comunicación: fecha del foro sin confirmar",
+   "detalle": "No figura fecha del foro (10 % del portafolio). Las evidencias 1 y 2 sí tienen fecha recomendada."
+  },
+  {
+   "id": "av-com-domingo",
+   "nivel": "bajo",
+   "asig": [
+    "02GMAR"
+   ],
+   "titulo": "Comunicación: la Evidencia 2 recomendada cae en domingo",
+   "detalle": "20/12/2026 es domingo. Es una fecha recomendada, no el plazo oficial (el plazo oficial es el 12/01/2027)."
+  },
+  {
+   "id": "av-cont-temas",
+   "nivel": "bajo",
+   "asig": [
+    "01GMAR"
+   ],
+   "titulo": "Contabilidad: 10 temas en el calendario",
+   "detalle": "Las sesiones del calendario llegan al Tema 10, pero la estructura de carpetas inicial reservó un Tema 11 (T11). Confirma con la guía docente cuántos temas hay."
+  },
+  {
+   "id": "av-fuente",
+   "nivel": "bajo",
+   "asig": [],
+   "titulo": "Fuente del calendario",
+   "detalle": "Las fechas proceden del Excel «Calendario_Marketing_VIU_2026-2027», transcrito de las guías docentes (hora peninsular). No es un documento oficial de VIU: verifica en el campus."
+  }
+ ],
+ "actividades": [
+  {
+   "id": "act-04GMAR-1",
+   "asig": "04GMAR",
+   "nombre": "Evidencia 1",
+   "peso": 30,
+   "bloque": "Portafolio",
+   "descripcion": "Ejercicios de los temas 1–4.",
+   "evento": "04GMAR-2026-12-04-rec1",
+   "tarea": "t-04GMAR-2026-12-04-rec1",
+   "temas": [
+    "04GMAR-T01",
+    "04GMAR-T02",
+    "04GMAR-T03",
+    "04GMAR-T04"
+   ],
+   "sesiones": []
+  },
+  {
+   "id": "act-04GMAR-2",
+   "asig": "04GMAR",
+   "nombre": "Evidencia 2",
+   "peso": 30,
+   "bloque": "Portafolio",
+   "descripcion": "Ejercicios de los temas 5–8.",
+   "evento": "04GMAR-2026-12-18-rec1",
+   "tarea": "t-04GMAR-2026-12-18-rec1",
+   "temas": [
+    "04GMAR-T05",
+    "04GMAR-T06",
+    "04GMAR-T07",
+    "04GMAR-T08"
+   ],
+   "sesiones": []
+  },
+  {
+   "id": "act-03GMAR-1",
+   "asig": "03GMAR",
+   "nombre": "Evidencia 1",
+   "peso": 20,
+   "bloque": "Portafolio",
+   "descripcion": "Evidencia 1 del portafolio de Estadística. La fecha recomendada no figura en el calendario: consúltala en el campus.",
+   "evento": null,
+   "tarea": "t-pend-03GMAR-1",
+   "temas": [],
+   "sesiones": []
+  },
+  {
+   "id": "act-03GMAR-2",
+   "asig": "03GMAR",
+   "nombre": "Evidencia 2",
+   "peso": 20,
+   "bloque": "Portafolio",
+   "descripcion": "Evidencia 2 del portafolio de Estadística. Fecha recomendada por confirmar en el campus.",
+   "evento": null,
+   "tarea": "t-pend-03GMAR-2",
+   "temas": [],
+   "sesiones": []
+  },
+  {
+   "id": "act-03GMAR-3",
+   "asig": "03GMAR",
+   "nombre": "Evidencia 3",
+   "peso": 20,
+   "bloque": "Portafolio",
+   "descripcion": "Evidencia 3 del portafolio de Estadística. Fecha recomendada por confirmar en el campus.",
+   "evento": null,
+   "tarea": "t-pend-03GMAR-3",
+   "temas": [],
+   "sesiones": []
+  },
+  {
+   "id": "act-02GMAR-1",
+   "asig": "02GMAR",
+   "nombre": "Informe 1 / Evidencia 1",
+   "peso": 20,
+   "bloque": "Portafolio",
+   "descripcion": "Estudio del caso 1; actividad-resumen de los temas 1–4.",
+   "evento": "02GMAR-2026-11-30-rec1",
+   "tarea": "t-02GMAR-2026-11-30-rec1",
+   "temas": [
+    "02GMAR-T01",
+    "02GMAR-T02",
+    "02GMAR-T03",
+    "02GMAR-T04"
+   ],
+   "sesiones": [],
+   "nota": "Entrega por el campus en PDF, no por correo."
+  },
+  {
+   "id": "act-02GMAR-2",
+   "asig": "02GMAR",
+   "nombre": "Informe 2 / Evidencia 2",
+   "peso": 20,
+   "bloque": "Portafolio",
+   "descripcion": "Estudio del caso 2; resumen de los temas 5–7.",
+   "evento": "02GMAR-2026-12-20-rec1",
+   "tarea": "t-02GMAR-2026-12-20-rec1",
+   "temas": [
+    "02GMAR-T05",
+    "02GMAR-T06",
+    "02GMAR-T07"
+   ],
+   "sesiones": [],
+   "nota": "Entrega por el campus en PDF, no por correo. La fecha recomendada cae en domingo; el plazo oficial es el del portafolio."
+  },
+  {
+   "id": "act-02GMAR-3",
+   "asig": "02GMAR",
+   "nombre": "Foro",
+   "peso": 10,
+   "bloque": "Portafolio",
+   "descripcion": "Participación en el foro (10 % del portafolio). La fecha no figura en las fuentes: confírmala en el campus.",
+   "evento": null,
+   "tarea": "t-pend-02GMAR-4",
+   "temas": [],
+   "sesiones": []
+  },
+  {
+   "id": "act-01GMAR-1",
+   "asig": "01GMAR",
+   "nombre": "Actividad 1",
+   "peso": 30,
+   "bloque": "Portafolio",
+   "descripcion": "Diagnóstico económico-financiero de una empresa.",
+   "evento": "01GMAR-2026-11-30-rec1",
+   "tarea": "t-01GMAR-2026-11-30-rec1",
+   "temas": [],
+   "sesiones": [
+    "01GMAR-2026-11-11-ses1"
+   ],
+   "nota": "Hay una sesión práctica dedicada a esta actividad."
+  },
+  {
+   "id": "act-01GMAR-2",
+   "asig": "01GMAR",
+   "nombre": "Actividad 2",
+   "peso": 20,
+   "bloque": "Portafolio",
+   "descripcion": "Clasificación de costes.",
+   "evento": "01GMAR-2027-01-15-rec1",
+   "tarea": "t-01GMAR-2027-01-15-rec1",
+   "temas": [],
+   "sesiones": [
+    "01GMAR-2026-12-04-ses1"
+   ],
+   "nota": "Hay una sesión práctica dedicada a esta actividad."
+  }
+ ],
+ "examenes": [
+  {
+   "asig": "01GMAR",
+   "peso": 50,
+   "formato": "40 preguntas tipo test con penalización de −33 % en los errores.",
+   "cubre": "Temas 1–10 de la asignatura.",
+   "material": "Por confirmar en el campus.",
+   "duracion": "4 h (18:00–22:00)"
+  },
+  {
+   "asig": "02GMAR",
+   "peso": 50,
+   "formato": "20 preguntas test (0,4 puntos cada una, penalización −33 %) + 2 preguntas de desarrollo (1 punto cada una).",
+   "cubre": "Temas 1–8 de la asignatura.",
+   "material": "Por confirmar en el campus.",
+   "duracion": "4 h (18:00–22:00)"
+  },
+  {
+   "asig": "03GMAR",
+   "peso": 40,
+   "formato": "10 preguntas numéricas. Según la guía docente se permite usar software.",
+   "cubre": "Unidades de aprendizaje 1–3.",
+   "material": "Software permitido según la guía; confirma cuál en el campus.",
+   "duracion": "4 h (18:00–22:00)"
+  },
+  {
+   "asig": "04GMAR",
+   "peso": 40,
+   "formato": "Formato por concretar: la guía dice que se concretará en la tutoría final (12/01/2027).",
+   "cubre": "Temas 1–8 de la asignatura.",
+   "material": "Por confirmar en la tutoría final.",
+   "duracion": "4 h (18:00–22:00)"
+  }
+ ]
+});
+
+</script>
+  <script>
+/* ===== Campus VIU · lógica de la web (v1.1) =====
+   - Los DATOS están en datos/*.js (un archivo por curso). Esta lógica no contiene fechas.
+   - Lo que marcas (tareas, progreso, preferencias) se guarda en el navegador (localStorage)
+     y se puede exportar/importar como copia de seguridad (botones del menú lateral).
+*/
+(function () {
+  'use strict';
+
+  const CURSOS = window.CAMPUS_CURSOS || [];
+  const main = document.getElementById('main');
+  const KEY = 'campus_viu_v1';
+  // Los enlaces a carpetas solo tienen sentido abriendo la web desde el ordenador (file://).
+  const ENLACES = location.protocol === 'file:' && !window.CAMPUS_SIN_ENLACES;
+
+  /* ---------- utilidades ---------- */
+  const $ = (s, el) => (el || document).querySelector(s);
+  const $$ = (s, el) => Array.from((el || document).querySelectorAll(s));
+  const esc = (t) => String(t == null ? '' : t).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  const pad = (n) => String(n).padStart(2, '0');
+  const ymd = (d) => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+  const parse = (s) => { const [y, m, d] = s.split('-').map(Number); return new Date(y, m - 1, d); };
+  const hoy = () => ymd(new Date());
+  const fmtLargo = (s) => new Intl.DateTimeFormat('es-ES', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }).format(parse(s));
+  const fmtCorto = (s) => new Intl.DateTimeFormat('es-ES', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' }).format(parse(s));
+  const diasHasta = (s) => Math.round((parse(s) - parse(hoy())) / 864e5);
+  const groupBy = (arr, k) => arr.reduce((o, x) => { (o[x[k]] = o[x[k]] || []).push(x); return o; }, {});
+  const uniq = (a) => Array.from(new Set(a));
+
+  const TIPOS = {
+    sesion: 'Clase', tutoria: 'Tutoría', recomendada: 'Entrega recomendada',
+    portafolio: 'Portafolio (fecha límite)', examen: 'Examen', personal: 'Tarea personal'
+  };
+  const TIPOS_CAL = ['sesion', 'tutoria', 'recomendada', 'portafolio', 'examen'];
+  const PILL = { sesion: 'Clase', tutoria: 'Tutoría', recomendada: 'Entrega rec.', portafolio: 'Portafolio', examen: 'Examen' };
+  const FIAB = {
+    oficial: { l: 'Oficial (guía docente)', c: 'b-oficial', t: 'Fecha según la guía docente, transcrita en el calendario Excel. Confírmala en el campus.' },
+    recomendada: { l: 'Recomendada', c: 'b-recomendada', t: 'Fecha recomendada para repartir el trabajo. NO es la fecha límite oficial: esa es la del portafolio.' },
+    pendiente: { l: 'Por confirmar', c: 'b-pendiente', t: 'Las fuentes no indican fecha. Pendiente de confirmar en el campus.' },
+    personal: { l: 'Personal', c: 'b-elaborado', t: 'Tarea creada por ti.' }
+  };
+  const ORIGEN = { oficial: ['Oficial VIU', 'b-oficial'], ia: ['IA · no oficial', 'b-ia'], elaborado: ['Elaborado', 'b-elaborado'] };
+  const ESTADOS = { pendiente: 'Pendiente', curso: 'En curso', hecha: 'Hecha' };
+  const PRIO = { alta: 'Alta', media: 'Media', baja: 'Baja' };
+  const PASOS = [['leido', 'Leído'], ['apuntes', 'Apuntes'], ['ejercicios', 'Ejercicios'], ['test', 'Test']];
+  const CARPETAS = [
+    ['00_guias', 'Guías'], ['01_material_oficial', 'Material oficial'], ['02_unidades', 'Unidades (apuntes, ejercicios, fórmulas, test)'],
+    ['03_evaluacion', 'Evaluación'], ['04_material_IA_no_oficial', 'Material IA (no oficial)'], ['05_dudas_y_errores', 'Dudas y errores']
+  ];
+
+  /* ---------- gráficos (estética original) ---------- */
+  const ART={
+  '04GMAR':'<g fill="rgba(255,255,255,.12)"><rect x="40" y="90" width="34" height="60"/><rect x="100" y="72" width="34" height="78"/><rect x="160" y="80" width="34" height="70"/><rect x="220" y="52" width="34" height="98"/><rect x="280" y="36" width="34" height="114"/></g><polyline points="30,104 100,84 170,92 240,56 310,38 380,16" fill="none" stroke="#e0454b" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>',
+  '03GMAR':'<path d="M0 150C90 150 120 28 200 28S310 150 400 150" fill="rgba(255,255,255,.1)" stroke="#e0454b" stroke-width="3"/><g fill="rgba(255,255,255,.55)"><circle cx="60" cy="120" r="3"/><circle cx="110" cy="96" r="3"/><circle cx="150" cy="70" r="3"/><circle cx="215" cy="50" r="3"/><circle cx="265" cy="84" r="3"/><circle cx="330" cy="116" r="3"/></g>',
+  '02GMAR':'<g fill="none" stroke="rgba(255,255,255,.22)" stroke-width="2"><circle cx="320" cy="60" r="24"/><circle cx="320" cy="60" r="50"/><circle cx="320" cy="60" r="78"/></g><rect x="40" y="30" width="130" height="38" rx="10" fill="rgba(255,255,255,.14)"/><rect x="90" y="80" width="150" height="38" rx="10" fill="#e0454b" opacity=".85"/>',
+  '01GMAR':'<g stroke="rgba(255,255,255,.16)" stroke-width="2"><path d="M0 30H400M0 60H400M0 90H400M0 120H400"/><path d="M80 0V150M200 0V150M300 0V150"/></g><g fill="#e0454b"><rect x="92" y="96" width="46" height="8" rx="2"/><rect x="212" y="66" width="62" height="8" rx="2"/><rect x="312" y="36" width="50" height="8" rx="2"/></g>'};
+  const BANNER = '<svg viewBox="0 0 1200 360" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><defs><linearGradient id="hg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1c1e22"/><stop offset="1" stop-color="#42464d"/></linearGradient></defs><rect width="1200" height="360" fill="url(#hg)"/><circle cx="930" cy="120" r="160" fill="#c0262d" opacity=".22"/><g stroke="rgba(255,255,255,.07)" stroke-width="2"><path d="M0 90H1200M0 180H1200M0 270H1200"/></g><g fill="rgba(255,255,255,.09)"><rect x="620" y="200" width="70" height="160"/><rect x="700" y="150" width="90" height="210"/><rect x="800" y="220" width="60" height="140"/><rect x="870" y="110" width="110" height="250"/><rect x="990" y="180" width="80" height="180"/><rect x="1080" y="140" width="90" height="220"/></g><polyline points="560,300 680,262 780,276 880,200 980,150 1100,70" fill="none" stroke="#e0454b" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/><g fill="#e0454b"><circle cx="880" cy="200" r="7"/><circle cx="980" cy="150" r="7"/><circle cx="1100" cy="70" r="7"/></g></svg>';
+  const sigla = (a) => a.sigla || a.corto.slice(0, 3).toUpperCase();
+  const cover = (a, grande) => `<div class="cov${grande ? ' big' : ''}" role="img" aria-label="Portada de ${esc(a.nombre)}"><svg viewBox="0 0 400 150" preserveAspectRatio="xMidYMid slice" aria-hidden="true">${ART[a.code] || ''}</svg><span>${esc(sigla(a))}</span></div>`;
+
+  /* ---------- sin datos ---------- */
+  if (!CURSOS.length) {
+    main.innerHTML = '<div class="card notice alto"><b>No se han cargado los datos del curso.</b>Comprueba que la carpeta <code>datos</code> está junto a <code>index.html</code> y que contiene <code>curso1_2026-27.js</code>. Si moviste archivos, vuelve a descomprimir la carpeta 95_CAMPUS_WEB completa.</div>';
+    return;
+  }
+
+  /* ---------- estado guardado ---------- */
+  const defaults = () => ({
+    v: 1, tareas: {}, personales: [], progreso: {}, nombresTemas: {}, sesiones: {}, sesExp: {}, act: {}, exam: {},
+    prefs: { tema: 'auto', curso: CURSOS[0].id, ultimaCopia: null,
+      cal: { vista: 'mes', asigsOff: [], tiposOff: [], fiab: '', pasados: false },
+      tar: { asig: '', estado: '', tipo: '', prioridad: '', ocultarHechas: false },
+      bib: { asig: '', origen: '', q: '' },
+      ses: { asig: '', estado: '', q: '' },
+      act: { asig: '', estado: '' }, exa: { conv: '' } }
+  });
+  const merge = (base, extra) => {
+    if (!extra || typeof extra !== 'object' || Array.isArray(extra)) return base;
+    for (const k of Object.keys(base)) {
+      if (!(k in extra)) continue;
+      const esObjeto = base[k] && typeof base[k] === 'object' && !Array.isArray(base[k]);
+      // Objetos con claves fijas (prefs) se mezclan clave a clave; los diccionarios vacíos
+      // (tareas, progreso, nombresTemas) se copian enteros para no perder lo guardado.
+      if (esObjeto && Object.keys(base[k]).length) base[k] = merge(base[k], extra[k]);
+      else base[k] = extra[k];
+    }
+    return base;
+  };
+  let storageOK = true;
+  try { localStorage.setItem('__t', '1'); localStorage.removeItem('__t'); } catch (e) { storageOK = false; }
+  let S = defaults();
+  if (storageOK) {
+    try { const raw = localStorage.getItem(KEY); if (raw) S = merge(defaults(), JSON.parse(raw)); } catch (e) { S = defaults(); }
+  }
+  function save() {
+    if (!storageOK) return;
+    try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) { storageOK = false; }
+  }
+
+  /* ---------- curso actual ---------- */
+  const curso = () => CURSOS.find((c) => c.id === S.prefs.curso) || CURSOS[0];
+  const asigs = () => curso().asignaturas;
+  const asigDe = (code) => asigs().find((a) => a.code === code);
+  const rutaAsig = (a) => `${curso().base}/${a.carpeta}`;
+  const enlace = (ruta) => '../' + ruta.split('/').map(encodeURIComponent).join('/') + '/';
+  const rutaDoc = (a, d) => d.carpeta.replace('{base}', rutaAsig(a));
+
+  const chip = (code) => {
+    const a = asigDe(code);
+    return a ? `<span class="chip" style="--c:${esc(a.color)}"><span class="dot"></span>${esc(a.corto)}</span>` : esc(code);
+  };
+  const tipoLabel = (t) => TIPOS[t] || t;
+  const hora = (e) => (e.fin ? `${e.ini}–${e.fin}` : e.ini ? `hasta las ${e.ini}` : '');
+  const badgeFiab = (f) => { const x = FIAB[f] || FIAB.oficial; return `<span class="badge ${x.c}" title="${esc(x.t)}">${esc(x.l)}</span>`; };
+
+  function cuando(fecha, hecha) {
+    if (!fecha) return { txt: 'Sin fecha', cls: '' };
+    const d = diasHasta(fecha);
+    let txt;
+    if (d === 0) txt = 'Hoy'; else if (d === 1) txt = 'Mañana'; else if (d === -1) txt = 'Ayer';
+    else if (d > 1) txt = `En ${d} días`; else txt = `Hace ${-d} días`;
+    let cls = '';
+    if (!hecha) { if (d < 0) cls = 'when-late'; else if (d <= 3) cls = 'when-soon'; }
+    return { txt, cls };
+  }
+
+  /* ---------- tareas ---------- */
+  function tareas() {
+    const c = curso();
+    const base = c.tareas.map((t) => Object.assign({}, t));
+    const pers = S.personales.filter((p) => p.curso === c.id).map((p) => Object.assign({ tipo: 'personal', fiabilidad: 'personal', personal: true }, p));
+    return base.concat(pers).map((t) => {
+      const o = S.tareas[t.id] || {};
+      return Object.assign({}, t, { estado: o.estado || 'pendiente', prioridad: o.prioridad || t.prioridad || 'media' });
+    });
+  }
+  const ordenFecha = (a, b) => (a.fecha || '9999').localeCompare(b.fecha || '9999') || a.asig.localeCompare(b.asig);
+
+  /* ---------- progreso ---------- */
+  const nombreTema = (t) => {
+    const extra = S.nombresTemas[t.id] || t.titulo || '';
+    return extra ? `${t.nombre} · ${extra}` : t.nombre;
+  };
+  function progresoAsig(a) {
+    let hechos = 0;
+    a.temas.forEach((t) => { const p = S.progreso[t.id] || {}; PASOS.forEach(([k]) => { if (p[k]) hechos++; }); });
+    const total = a.temas.length * PASOS.length;
+    return { hechos, total, pct: total ? Math.round((hechos * 100) / total) : 0 };
+  }
+  function progresoGlobal() {
+    let h = 0, t = 0;
+    asigs().forEach((a) => { const p = progresoAsig(a); h += p.hechos; t += p.total; });
+    return t ? Math.round((h * 100) / t) : 0;
+  }
+
+    /* ---------- coincidencias de fechas clave (se usan en Exámenes) ---------- */
+  function coincidencias() {
+    const out = [];
+    const claves = curso().eventos.filter((e) => ['portafolio', 'examen'].includes(e.tipo));
+    const g = groupBy(claves, 'fecha');
+    Object.keys(g).sort().forEach((f) => {
+      if (g[f].length >= 2) {
+        out.push({ fecha: f, titulo: `Varias fechas clave el mismo día · ${fmtCorto(f)}`,
+          detalle: g[f].map((e) => `${(asigDe(e.asig) || {}).corto}: ${e.titulo} (${e.tipo === 'examen' ? hora(e) : 'hasta las ' + e.ini})`).join(' · ') });
+      }
+    });
+    return out;
+  }
+
+  /* ---------- texto: normalizar y resaltar ---------- */
+  const norm = (s) => String(s == null ? '' : s).normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+  function hl(text, toks) {
+    const t = String(text == null ? '' : text);
+    if (!toks || !toks.length) return esc(t);
+    const n = norm(t);
+    if (n.length !== t.length) return esc(t);
+    const rg = [];
+    toks.forEach((k) => { if (k.length < 2) return; let i = n.indexOf(k); while (i >= 0) { rg.push([i, i + k.length]); i = n.indexOf(k, i + k.length); } });
+    if (!rg.length) return esc(t);
+    rg.sort((a, b) => a[0] - b[0]);
+    const m = [];
+    rg.forEach((r) => { const l = m[m.length - 1]; if (l && r[0] <= l[1]) l[1] = Math.max(l[1], r[1]); else m.push(r.slice()); });
+    let out = '', p = 0;
+    m.forEach(([a, b]) => { out += esc(t.slice(p, a)) + '<mark>' + esc(t.slice(a, b)) + '</mark>'; p = b; });
+    return out + esc(t.slice(p));
+  }
+
+  /* ---------- eventos ---------- */
+  function sesBtn(id) {
+    const st = sesEstado(id);
+    return st ? `<span class="badge ${st === 'hecha' ? 'b-oficial' : 'b-elaborado'}">${st === 'hecha' ? 'Exportada' : 'A exportar'}</span>`
+      : `<button type="button" class="btn small" data-act="ses-add" data-id="${esc(id)}">＋ A exportar</button>`;
+  }
+  function eventoItem(e, mostrarFecha, toks, ver) {
+    const pasado = diasHasta(e.fecha) < 0;
+    const esSes = e.tipo === 'sesion' || e.tipo === 'tutoria';
+    return `<li class="${pasado ? 'past' : ''}">
+      <div class="li-main">
+        <div class="row" style="gap:6px">${chip(e.asig)} <span class="badge b-tipo">${esc(tipoLabel(e.tipo))}</span> ${badgeFiab(e.fiabilidad)}</div>
+        <b>${hl(e.titulo, toks)}</b>
+        ${e.detalle ? `<span class="muted small">${hl(e.detalle, toks)}</span>` : ''}
+        ${(FIAB[e.fiabilidad] && e.fiabilidad === 'recomendada') ? `<span class="small muted">${esc(FIAB.recomendada.t)}</span>` : ''}
+      </div>
+      <div class="li-date">${mostrarFecha ? `<b>${esc(fmtCorto(e.fecha))}</b><br>` : ''}${esc(hora(e))}<br><span class="${cuando(e.fecha).cls}">${esc(cuando(e.fecha).txt)}</span>
+        ${ver ? `<div style="margin-top:6px"><button type="button" class="btn small" data-act="ir-dia" data-fecha="${esc(e.fecha)}">Ver en calendario</button></div>` : ''}
+        ${esSes ? `<div style="margin-top:6px">${sesBtn(e.id)}</div>` : ''}</div>
+    </li>`;
+  }
+
+  /* =====================================================
+     VISTAS
+     ===================================================== */
+  const V = {};
+
+  /* ----- INICIO ----- */
+  V.inicio = function () {
+    const c = curso();
+    const h = hoy();
+    const proxClases = c.eventos.filter((e) => (e.tipo === 'sesion' || e.tipo === 'tutoria') && e.fecha >= h)
+      .sort((a, b) => (a.fecha + a.ini).localeCompare(b.fecha + b.ini)).slice(0, 6);
+    const ts = tareas().filter((t) => t.estado !== 'hecha');
+    const conFecha = ts.filter((t) => t.fecha).sort(ordenFecha);
+    const vencidas = conFecha.filter((t) => t.fecha < h);
+    const proximas = conFecha.filter((t) => t.fecha >= h);
+    const lista = vencidas.slice(-2).concat(proximas).slice(0, 6);
+    const sinFecha = ts.filter((t) => !t.fecha).length;
+    const clave = c.eventos.filter((e) => (e.tipo === 'portafolio' || e.tipo === 'examen') && e.fecha >= h)
+      .sort((a, b) => (a.fecha + a.ini).localeCompare(b.fecha + b.ini))[0];
+    const ar = actResumen();
+    const ult = S.prefs.ultimaCopia;
+    const copiaVieja = !ult || (Date.now() - new Date(ult).getTime()) > 30 * 864e5;
+
+    const ahora = new Date();
+    const finEv = (e) => { const d = parse(e.fecha); const [hh, mm] = (e.fin || e.ini || '23:59').split(':'); d.setHours(+hh, +mm, 0, 0); return d; };
+    const sig = c.eventos.slice().sort((a, b) => (a.fecha + a.ini).localeCompare(b.fecha + b.ini)).find((e) => finEv(e) >= ahora);
+    const sigAsig = sig ? asigDe(sig.asig) : null;
+    const hero = sig && sigAsig ? `<section class="hero" style="--c:${esc(sigAsig.color)}"><div class="muted">Lo siguiente en tu agenda · ${esc(cuando(sig.fecha).txt.toLowerCase())}</div>
+      <div class="big">${esc(sigAsig.nombre)}</div>
+      <div>${esc(tipoLabel(sig.tipo))}: ${esc(sig.titulo)} · ${esc(fmtCorto(sig.fecha))}, ${esc(hora(sig))} ${badgeFiab(sig.fiabilidad)}</div>
+      ${sig.detalle ? `<div class="muted">${esc(sig.detalle)}</div>` : ''}</section>` : '';
+    return `
+    <div class="banner"><svg viewBox="0 0 1200 360" preserveAspectRatio="xMidYMid slice" aria-hidden="true">${BANNER.replace(/^<svg[^>]*>/, '').replace(/<\/svg>$/, '')}</svg><div class="bt"><small>Grado en Marketing · VIU</small><h1>Bienvenido a tu campus</h1><i></i></div></div>
+    ${hero}
+    <div class="page-head"><div><h2 style="font-size:1.3rem">Resumen del curso</h2>
+      <p>${esc(c.nombre)} · ${esc(c.cuatrimestre)} · ${esc(fmtLargo(h))}</p></div></div>
+    ${!storageOK ? '<div class="notice alto" style="margin-bottom:14px"><b>Tu navegador no permite guardar datos.</b>Lo que marques se perderá al cerrar la pestaña. Usa «Exportar copia» para conservarlo.</div>' : ''}
+    ${copiaVieja ? `<div class="notice" style="margin-bottom:14px"><b>Haz una copia de seguridad.</b>${ult ? 'La última copia exportada fue el ' + esc(fmtCorto(ult.slice(0, 10))) + '.' : 'Aún no has exportado ninguna copia.'} Pulsa «Exportar copia» en el menú (☰ en el móvil) y guarda el archivo en un sitio seguro (Drive, iCloud, OneDrive o tu carpeta 99_ARCHIVO_Y_COPIAS).</div>` : ''}
+    <div class="grid g4" style="margin-bottom:16px">
+      <div class="card stat"><b>${ts.length}</b><span>entregas y tareas sin completar${sinFecha ? ` (${sinFecha} sin fecha)` : ''}</span></div>
+      <div class="card stat"><b>${clave ? esc(parse(clave.fecha).toLocaleDateString('es-ES', { day: 'numeric', month: 'short' })) : '—'}</b><span>${clave ? esc(`${(asigDe(clave.asig) || {}).corto} · ${clave.titulo}`) + ' · ' + esc(cuando(clave.fecha).txt) : 'sin próximos portafolios/exámenes'}</span></div>
+      <div class="card stat"><b>${progresoGlobal()} %</b><span>progreso global de estudio</span><div class="bar" style="margin-top:8px"><i style="width:${progresoGlobal()}%"></i></div></div>
+      <div class="card stat"><b>${ar.ent}/${ar.n}</b><span><a href="#/actividades">actividades entregadas</a> · ${ar.pct} % de pasos</span><div class="bar" style="margin-top:8px"><i style="width:${ar.pct}%"></i></div></div>
+    </div>
+    <div class="grid g2" style="margin-bottom:16px">
+      <section class="card"><h2>Próximas clases y tutorías <a class="small" href="#/calendario">Calendario</a></h2>
+        ${proxClases.length ? `<ul class="list">${proxClases.map((e) => `<li><div class="li-main">${chip(e.asig)} <b>${esc(e.titulo)}</b><span class="muted small">${esc(e.detalle)}</span></div><div class="li-date"><b>${esc(fmtCorto(e.fecha))}</b><br>${esc(hora(e))}<br><span class="${cuando(e.fecha).cls}">${esc(cuando(e.fecha).txt)}</span></div></li>`).join('')}</ul>` : '<p class="empty">No quedan clases ni tutorías programadas.</p>'}
+      </section>
+      <section class="card"><h2>Próximas entregas <a class="small" href="#/tareas">Todas las tareas</a></h2>
+        ${lista.length ? `<ul class="list">${lista.map((t) => `<li><div class="li-main">${chip(t.asig)} <span class="badge b-tipo">${esc(tipoLabel(t.tipo))}</span> ${badgeFiab(t.fiabilidad)}<b>${esc(t.titulo)}</b></div><div class="li-date"><b>${esc(fmtCorto(t.fecha))}</b><br><span class="${cuando(t.fecha).cls}">${esc(cuando(t.fecha).txt)}</span></div></li>`).join('')}</ul>` : '<p class="empty">No hay entregas pendientes con fecha.</p>'}
+        ${sinFecha ? `<p class="small muted" style="margin-top:8px">Además hay ${sinFecha} entregas cuya fecha está por confirmar.</p>` : ''}
+      </section>
+    </div>
+    <h2 style="margin:0 0 10px">Asignaturas</h2>
+    <div class="grid g4" style="margin-bottom:16px">${asigs().map((a) => {
+      const p = progresoAsig(a);
+      const sig = c.eventos.filter((e) => e.asig === a.code && e.fecha >= h && (e.tipo === 'sesion' || e.tipo === 'tutoria')).sort((x, y) => (x.fecha + x.ini).localeCompare(y.fecha + y.ini))[0];
+      return `<a class="card subject-card" style="--c:${esc(a.color)};text-decoration:none;color:inherit" href="#/asignaturas/${esc(a.code)}">
+        <h3>${esc(a.corto)}</h3><span class="muted small">${esc(a.code)}</span>
+        <div class="bar"><i style="width:${p.pct}%"></i></div><span class="small muted">${p.pct} % estudiado</span>
+        <span class="small">${sig ? 'Próxima: ' + esc(fmtCorto(sig.fecha)) + ' ' + esc(sig.ini) : 'Sin próximas clases'}</span></a>`;
+    }).join('')}</div>
+    <section class="card"><h2>Reglas generales del curso</h2><ul>${c.reglas.map((r) => `<li>${esc(r)}</li>`).join('')}</ul>
+      <p class="small muted">Resumen de las guías docentes. Si el campus indica otra cosa, manda el campus.</p></section>`;
+  };
+
+  /* ----- ASIGNATURAS ----- */
+  V.asignaturas = function (code) {
+    const a = code ? asigDe(code) : null;
+    if (code && a) return asignaturaDetalle(a);
+    const h = hoy();
+    return `<div class="page-head"><div><h1>Asignaturas</h1><p>${esc(curso().nombre)} · ${esc(curso().cuatrimestre)}</p></div></div>
+    <div class="grid g2">${asigs().map((x) => {
+      const p = progresoAsig(x);
+      const pend = tareas().filter((t) => t.asig === x.code && t.estado !== 'hecha').length;
+      const sig = curso().eventos.filter((e) => e.asig === x.code && e.fecha >= h && ['portafolio', 'examen'].includes(e.tipo)).sort((m, n) => m.fecha.localeCompare(n.fecha))[0];
+      return `<a class="card subject-card has-cover" style="--c:${esc(x.color)};text-decoration:none;color:inherit" href="#/asignaturas/${esc(x.code)}">
+        ${cover(x)}
+        <div class="row between"><h3>${esc(x.nombre)}</h3><span class="chip">${esc(x.code)}</span></div>
+        <span class="muted small">${esc(x.profesor)} · ${esc(x.ects)} ECTS</span>
+        <div class="bar"><i style="width:${p.pct}%"></i></div>
+        <div class="row between small"><span>${p.pct} % estudiado</span><span>${pend} entregas sin completar</span></div>
+        <span class="small">${sig ? 'Próxima fecha límite oficial: <b>' + esc(sig.titulo) + ' · ' + esc(fmtCorto(sig.fecha)) + '</b>' : 'Sin fechas límite próximas'}</span></a>`;
+    }).join('')}</div>`;
+  };
+
+  function asignaturaDetalle(a) {
+    const c = curso();
+    const h = hoy();
+    const evs = c.eventos.filter((e) => e.asig === a.code);
+    const sesiones = evs.filter((e) => e.tipo === 'sesion' || e.tipo === 'tutoria');
+    const claves = evs.filter((e) => !['sesion', 'tutoria'].includes(e.tipo));
+    const pend = tareas().filter((t) => t.asig === a.code && !t.fecha);
+    const p = progresoAsig(a);
+    const base = rutaAsig(a);
+    const docs = a.biblioteca || [];
+    return `<div class="page-head"><div><p><a href="#/asignaturas">← Todas las asignaturas</a></p></div></div>
+    <div style="margin-bottom:16px">${cover(a, true)}</div>
+    <div class="page-head"><div>
+      <h1 style="border-left:6px solid ${esc(a.color)};padding-left:12px">${esc(a.nombre)}</h1>
+      <p>Código <b>${esc(a.code)}</b> · ${esc(a.profesor)} · ${esc(a.ects)} ECTS</p></div></div>
+    <div class="grid g2" style="margin-bottom:16px">
+      <section class="card"><h2>Evaluación</h2>
+        <div class="table-wrap"><table><thead><tr><th>Componente</th><th class="c">Peso</th></tr></thead><tbody>
+        ${a.evaluacion.map((e) => `<tr><td>${esc(e.item)}${e.nota ? `<br><span class="small muted">${esc(e.nota)}</span>` : ''}</td><td class="c"><b>${esc(e.peso)}</b></td></tr>`).join('')}
+        </tbody></table></div>
+        <p class="small muted" style="margin-top:8px">Resumen de la guía docente. Reglas del curso: ${c.reglas.slice(0, 3).map(esc).join(' ')}</p></section>
+      <section class="card"><h2>Fechas clave</h2>
+        <ul class="list">${claves.map((e) => eventoItem(e, true)).join('') || '<li class="empty">Sin fechas.</li>'}</ul>
+        ${pend.length ? `<p class="small" style="margin-top:8px"><span class="badge b-pendiente">Por confirmar</span> ${pend.map((t) => esc(t.titulo)).join(', ')}: la fecha no figura en las fuentes.</p>` : ''}</section>
+    </div>
+    <div class="grid g2" style="margin-bottom:16px">
+      <section class="card"><h2>Temas y progreso <a class="small" href="#/progreso">Editar</a></h2>
+        <div class="bar" style="margin-bottom:6px"><i style="width:${p.pct}%;--c:${esc(a.color)}"></i></div><p class="small muted">${p.pct} % (${p.hechos} de ${p.total} pasos)</p>
+        <ul class="list">${a.temas.map((t) => { const pr = S.progreso[t.id] || {}; const n = PASOS.filter(([k]) => pr[k]).length; return `<li><div class="li-main">${esc(nombreTema(t))}</div><span class="small muted">${n}/${PASOS.length}</span></li>`; }).join('')}</ul></section>
+      <section class="card"><h2>Material <a class="small" href="#/biblioteca">Biblioteca</a></h2>
+        <ul class="list">${docs.map((d) => `<li><div class="li-main"><b>${esc(d.titulo)}</b><span class="small muted">${esc(d.tipo)}</span>${d.nota ? `<span class="small muted">${esc(d.nota)}</span>` : ''}</div><span class="badge ${ORIGEN[d.origen] ? ORIGEN[d.origen][1] : ''}">${esc(ORIGEN[d.origen] ? ORIGEN[d.origen][0] : d.origen)}</span></li>`).join('')}</ul>
+        <p class="small muted" style="margin-top:8px">Carpeta: <code>${esc(base)}</code></p></section>
+    </div>
+    <section class="card"><h2>Sesiones y tutorías (${sesiones.length}) <a class="small" href="#/sesiones" data-act="ir-sesiones" data-v="${esc(a.code)}">Vídeos y enlaces</a></h2>
+      <details><summary>Ver todas</summary><ul class="list" style="margin-top:10px">${sesiones.map((e) => eventoItem(e, true)).join('')}</ul></details></section>`;
+  }
+
+  /* ----- CALENDARIO ----- */
+  const fechasEv = () => curso().eventos.map((e) => e.fecha).sort();
+  let cal = null, selDay = null;
+  function initCal() {
+    const f = fechasEv();
+    const min = parse(f[0]), max = parse(f[f.length - 1]);
+    cal = { minY: min.getFullYear(), minM: min.getMonth(), maxY: max.getFullYear(), maxM: max.getMonth() };
+    let t = new Date();
+    let idx = t.getFullYear() * 12 + t.getMonth();
+    idx = Math.max(cal.minY * 12 + cal.minM, Math.min(cal.maxY * 12 + cal.maxM, idx));
+    cal.y = Math.floor(idx / 12); cal.m = idx % 12;
+    selDay = null;
+  }
+  const calFiltrados = () => {
+    const f = S.prefs.cal;
+    return curso().eventos.filter((e) => !f.asigsOff.includes(e.asig) && !f.tiposOff.includes(e.tipo) && (!f.fiab || e.fiabilidad === f.fiab));
+  };
+  function dayPanel() {
+    if (!selDay) return '<p class="muted small">Pulsa un día del calendario para ver el detalle de sus eventos.</p>';
+    const L = calFiltrados().filter((e) => e.fecha === selDay).sort((a, b) => a.ini.localeCompare(b.ini));
+    return `<h2>${esc(fmtLargo(selDay))}</h2>${L.length ? `<ul class="list">${L.map((e) => eventoItem(e, false)).join('')}</ul>` : '<p class="empty">Sin eventos con los filtros actuales.</p>'}`;
+  }
+  function calMes() {
+    const evs = groupBy(calFiltrados(), 'fecha');
+    const { y, m } = cal;
+    const off = (new Date(y, m, 1).getDay() + 6) % 7;
+    const dim = new Date(y, m + 1, 0).getDate();
+    const nombreMes = new Intl.DateTimeFormat('es-ES', { month: 'long', year: 'numeric' }).format(new Date(y, m, 1));
+    const idx = y * 12 + m;
+    let g = ['L', 'M', 'X', 'J', 'V', 'S', 'D'].map((d) => `<div class="dow">${d}</div>`).join('');
+    for (let i = 0; i < off; i++) g += '<div></div>';
+    const h = hoy();
+    for (let d = 1; d <= dim; d++) {
+      const f = `${y}-${pad(m + 1)}-${pad(d)}`;
+      const L = (evs[f] || []).sort((a, b) => a.ini.localeCompare(b.ini));
+      const pills = L.slice(0, 3).map((e) => { const a = asigDe(e.asig) || {}; return `<span class="ev t-${esc(e.tipo)}" style="--c:${esc(a.color)}" title="${esc((a.corto || '') + ' · ' + e.titulo)}">${esc(a.corto)} · ${esc(PILL[e.tipo] || e.tipo)}</span>`; }).join('');
+      g += `<button type="button" class="day${f === h ? ' today' : ''}${f === selDay ? ' sel' : ''}" data-act="dia" data-fecha="${f}" aria-label="${d} de ${esc(nombreMes)}: ${L.length} eventos"><span class="n">${d}</span>${pills}${L.length > 3 ? `<span class="more">+${L.length - 3} más</span>` : ''}</button>`;
+    }
+    return `<div class="cal-head"><button class="btn small" data-act="mes" data-d="-1" ${idx <= cal.minY * 12 + cal.minM ? 'disabled' : ''} aria-label="Mes anterior">◀</button>
+      <h2>${esc(nombreMes)}</h2>
+      <button class="btn small" data-act="mes" data-d="1" ${idx >= cal.maxY * 12 + cal.maxM ? 'disabled' : ''} aria-label="Mes siguiente">▶</button>
+      <button class="btn small" data-act="mes" data-d="hoy">Hoy</button></div>
+      <div class="cal">${g}</div>
+      <div class="card day-panel" id="dayPanel">${dayPanel()}</div>`;
+  }
+  function calAgenda() {
+    const h = hoy();
+    let L = calFiltrados();
+    if (!S.prefs.cal.pasados) L = L.filter((e) => e.fecha >= h);
+    L = L.sort((a, b) => (a.fecha + a.ini).localeCompare(b.fecha + b.ini));
+    if (!L.length) return '<div class="card"><p class="empty">No hay eventos con los filtros actuales.</p></div>';
+    const g = groupBy(L, 'fecha');
+    return Object.keys(g).sort().map((f) => `<section class="card" style="margin-bottom:12px"><h2>${esc(fmtLargo(f))} <span class="small ${cuando(f).cls}">${esc(cuando(f).txt)}</span></h2><ul class="list">${g[f].map((e) => eventoItem(e, false)).join('')}</ul></section>`).join('');
+  }
+  const calBody = () => (S.prefs.cal.vista === 'agenda' ? calAgenda() : calMes());
+
+  V.calendario = function () {
+    if (!cal) initCal();
+    const f = S.prefs.cal;
+    return `<div class="page-head"><div><h1>Calendario</h1><p>Clases, tutorías, entregas recomendadas, portafolios y exámenes.</p></div>
+      <div class="row"><button class="btn small ${f.vista === 'mes' ? 'primary' : ''}" data-act="vista" data-v="mes">Mes</button>
+      <button class="btn small ${f.vista === 'agenda' ? 'primary' : ''}" data-act="vista" data-v="agenda">Agenda</button></div></div>
+    <div class="card searchbox" role="search">
+      <label class="field" for="calQ">Buscador inteligente: eventos, entregas, fechas, actividades, exámenes…</label>
+      <div class="row" style="flex-wrap:nowrap"><input type="search" id="calQ" data-act="cal-q" value="${esc(calQ)}" placeholder="Ej.: examen estadística · 30 noviembre · entrega contabilidad · tutoría final" autocomplete="off" spellcheck="false" style="flex:1">
+      <button type="button" class="btn" data-act="cal-clear" aria-label="Borrar búsqueda">✕</button></div>
+      <div class="qchips">${QUICK.map(([l, q]) => `<button type="button" class="btn small" data-act="cal-quick" data-q="${esc(q)}">${esc(l)}</button>`).join('')}</div>
+      <p class="small muted" style="margin:0">Entiende fechas (<i>30/11</i>, <i>30 noviembre</i>, <i>enero 2027</i>, <i>hoy</i>, <i>esta semana</i>), asignaturas, tipos (examen, entrega, clase, tutoría, portafolio), convocatorias y números de sesión o tema. Tolera tildes y erratas. Los filtros de abajo también se aplican.</p>
+    </div>
+    <div id="calRes">${calResultados()}</div>
+    <div class="card filters" id="calFilters">
+      <div><div class="small muted" style="margin-bottom:4px">Asignaturas</div><div class="row" style="gap:6px">${asigs().map((a) => `<button type="button" class="chip" data-act="cal-asig" data-v="${esc(a.code)}" style="--c:${esc(a.color)};cursor:pointer" aria-pressed="${!f.asigsOff.includes(a.code)}"><span class="dot"></span>${esc(a.corto)}</button>`).join('')}</div></div>
+      <div><div class="small muted" style="margin-bottom:4px">Tipo</div><div class="row" style="gap:10px">${TIPOS_CAL.map((t) => `<label class="check"><input type="checkbox" data-act="cal-tipo" data-v="${t}" ${f.tiposOff.includes(t) ? '' : 'checked'}> ${esc(TIPOS[t])}</label>`).join('')}</div></div>
+      <label class="field">Fiabilidad de la fecha<select data-act="cal-fiab"><option value="">Todas</option><option value="oficial" ${f.fiab === 'oficial' ? 'selected' : ''}>Solo oficiales</option><option value="recomendada" ${f.fiab === 'recomendada' ? 'selected' : ''}>Solo recomendadas</option></select></label>
+      ${f.vista === 'agenda' ? `<label class="check"><input type="checkbox" data-act="cal-pasados" ${f.pasados ? 'checked' : ''}> Incluir pasados</label>` : ''}
+    </div>
+    <div id="calMain" ${calQ.trim() ? 'hidden' : ''}>
+    <div class="legend" style="margin-bottom:12px"><span><span class="badge b-oficial">Oficial (guía docente)</span> clases, tutorías, portafolios y exámenes</span>
+      <span><span class="badge b-recomendada">Recomendada</span> entregas sugeridas (borde discontinuo): no son la fecha límite</span></div>
+    <div id="calBody">${calBody()}</div></div>`;
+  };
+
+  /* ----- BUSCADOR INTELIGENTE DEL CALENDARIO ----- */
+  const MESES = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
+  const DIAS = ['domingo', 'lunes', 'martes', 'miercoles', 'jueves', 'viernes', 'sabado'];
+  const STOP = new Set(['de', 'del', 'la', 'el', 'los', 'las', 'en', 'a', 'al', 'y', 'e', 'o', 'un', 'una', 'mi', 'mis', 'para', 'con', 'por', 'que', 'cuando', 'cual', 'hay', 'tengo', 'es', 'son', 'dia', 'dias', 'me', 'toca']);
+  const SYN = {
+    clase: ['sesion'], clases: ['sesion'], sesiones: ['sesion'], teoria: ['teorica'], practica: ['practico'], practicas: ['practica'],
+    tutorias: ['tutoria'], entregas: ['entrega'], entrega: ['recomendada', 'portafolio'], evidencia: ['entrega'], evidencias: ['evidencia'],
+    actividad: ['entrega'], actividades: ['actividad'], informe: ['evidencia'], informes: ['informe'], tarea: ['entrega'], tareas: ['entrega'],
+    plazo: ['portafolio'], limite: ['portafolio'], deadline: ['portafolio'], portafolios: ['portafolio'], foro: ['portafolio'],
+    examenes: ['examen'], prueba: ['examen'], pruebas: ['examen'], final: ['examen'], test: ['examen'], parcial: ['examen'],
+    eco: ['economia'], conta: ['contabilidad'], stats: ['estadistica'], estadistica: ['estadistica'], comu: ['comunicacion'], costes: ['contabilidad'],
+    recomendadas: ['recomendada'], oficiales: ['oficial']
+  };
+  const lev = (a, b) => {
+    const m = a.length, n = b.length; if (!m) return n; if (!n) return m;
+    let prev = Array.from({ length: n + 1 }, (_, j) => j);
+    for (let i = 1; i <= m; i++) {
+      const cur = [i];
+      for (let j = 1; j <= n; j++) cur[j] = Math.min(prev[j] + 1, cur[j - 1] + 1, prev[j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1));
+      prev = cur;
+    }
+    return prev[n];
+  };
+  const hayCache = new Map();
+  function hayDe(e) {
+    const k = curso().id + '|' + e.id;
+    if (hayCache.has(k)) return hayCache.get(k);
+    const a = asigDe(e.asig) || {};
+    const d = parse(e.fecha);
+    const dd = pad(d.getDate()), mm = pad(d.getMonth() + 1), yy = d.getFullYear();
+    const conv = (/(\d)\.ª/.exec(e.titulo) || [])[1];
+    const txt = [e.titulo, e.detalle, tipoLabel(e.tipo), a.nombre, a.corto, e.asig, hora(e), e.ini, e.fin || '',
+      e.fiabilidad === 'recomendada' ? 'recomendada sugerida' : 'oficial', MESES[d.getMonth()], DIAS[d.getDay()],
+      `${dd}/${mm}/${yy}`, `${dd}/${mm}`, `${+dd}/${+mm}`, `${+dd}/${+mm}/${yy}`, String(+dd), String(yy), `${MESES[d.getMonth()]} ${yy}`,
+      conv ? `conv${conv}` : '', e.tipo === 'sesion' ? 'clase' : '', e.tipo === 'examen' ? 'prueba final' : '',
+      e.tipo === 'portafolio' ? 'plazo limite entrega' : '', e.tipo === 'recomendada' ? 'entrega' : ''].join(' ');
+    const hay = norm(txt);
+    const out = { hay, words: hay.split(/[^a-z0-9:\/]+/).filter(Boolean) };
+    hayCache.set(k, out);
+    return out;
+  }
+  function qParse(raw) {
+    let q = ' ' + norm(raw).replace(/\s+/g, ' ') + ' ';
+    const h = hoy();
+    const pr = [];
+    const lunes = (f) => { const d = parse(f); const dow = (d.getDay() + 6) % 7; return ymd(new Date(d.getFullYear(), d.getMonth(), d.getDate() - dow)); };
+    const take = (re, fn) => { if (re.test(q)) { q = q.replace(new RegExp(re.source, 'g'), ' '); pr.push(fn); } };
+    const mas7 = ymd(new Date(parse(h).getTime() + 7 * 864e5));
+    take(/ (semana que viene|proxima semana|siguiente semana) /, (e) => lunes(e.fecha) === lunes(mas7));
+    take(/ esta semana /, (e) => lunes(e.fecha) === lunes(h));
+    take(/ este mes /, (e) => e.fecha.slice(0, 7) === h.slice(0, 7));
+    take(/ hoy /, (e) => e.fecha === h);
+    take(/ manana /, (e) => e.fecha === ymd(new Date(parse(h).getTime() + 864e5)));
+    take(/ (proximos|proximas|proximo|proxima|siguientes|futuros|futuras|pendientes) /, (e) => e.fecha >= h);
+    take(/ (pasados|pasadas|pasado|anteriores) /, (e) => e.fecha < h);
+    q = q.replace(/ (?:primera|1\.?ª?|1a) (?:convocatoria|convoc\.?|conv\.?) /g, ' conv1 ').replace(/ (?:segunda|2\.?ª?|2a) (?:convocatoria|convoc\.?|conv\.?) /g, ' conv2 ')
+      .replace(/ ordinaria /g, ' conv1 ').replace(/ (extraordinaria|recuperacion) /g, ' conv2 ');
+    q = q.replace(/\b(\d{4})-(\d{1,2})-(\d{1,2})\b/g, (m, y, mo, d) => `${pad(+d)}/${pad(+mo)}/${y}`)
+      .replace(/\b(\d{1,2})-(\d{1,2})(?:-(\d{4}))?\b/g, (m, d, mo, y) => `${pad(+d)}/${pad(+mo)}${y ? '/' + y : ''}`);
+    const toks = uniq(q.split(/[^a-z0-9:\/]+/).filter((t) => t && !STOP.has(t)));
+    return { pr, toks };
+  }
+  function scoreTok(tok, words, hay) {
+    const alts = [tok].concat(SYN[tok] || []);
+    let best = 0;
+    alts.forEach((t, idx) => {
+      let s = 0;
+      if (/^\d+$/.test(t)) s = words.includes(t) ? 3 : (words.some((w) => w.startsWith(t + ':')) ? 2 : 0);
+      else if (words.includes(t)) s = 3;
+      else if (t.length >= 2 && words.some((w) => w.startsWith(t))) s = 2;
+      else if (t.length >= 4 && hay.includes(t)) s = 1.5;
+      else if (t.length >= 5 && !/\d/.test(t)) { const mx = t.length >= 8 ? 2 : 1; if (words.some((w) => Math.abs(w.length - t.length) <= mx && lev(w, t) <= mx)) s = 1; }
+      if (idx > 0) s *= 0.9;
+      if (s > best) best = s;
+    });
+    return best;
+  }
+  const cmpEv = (a, b) => (a.fecha + a.ini).localeCompare(b.fecha + b.ini);
+  function buscarEventos(raw) {
+    const { pr, toks } = qParse(raw);
+    const base = calFiltrados().filter((e) => pr.every((p) => p(e)));
+    if (!toks.length) return { L: pr.length ? base.sort(cmpEv) : [], toks, parcial: false };
+    const sc = base.map((e) => { const { hay, words } = hayDe(e); return { e, parts: toks.map((t) => scoreTok(t, words, hay)) }; });
+    let L = sc.filter((x) => x.parts.every((p) => p > 0));
+    let parcial = false;
+    if (!L.length && toks.length > 1) {
+      L = sc.filter((x) => x.parts.some((p) => p > 0)).sort((a, b) => b.parts.filter(Boolean).length - a.parts.filter(Boolean).length || cmpEv(a.e, b.e));
+      parcial = true;
+    } else L.sort((a, b) => cmpEv(a.e, b.e));
+    return { L: L.map((x) => x.e), toks: toks.filter((t) => !/^conv\d$/.test(t)), parcial };
+  }
+  let calQ = '';
+  const QUICK = [['Próximos exámenes', 'proximos examen'], ['Entregas pendientes', 'proximas entrega'], ['Esta semana', 'esta semana'], ['Tutorías', 'tutoria'], ['Portafolios', 'portafolio'], ['Hoy', 'hoy']];
+  function calResultados() {
+    const q = calQ.trim();
+    if (!q) return '';
+    const { L, toks, parcial } = buscarEventos(q);
+    const f = S.prefs.cal;
+    const filtros = f.asigsOff.length || f.tiposOff.length || f.fiab;
+    if (!L.length) {
+      return `<div class="card"><p class="empty">Sin resultados para «${esc(q)}».</p>
+        <p class="small muted">Prueba con una asignatura (<i>estadística</i>), un tipo (<i>examen, entrega, clase, tutoría, portafolio</i>), una fecha (<i>30/11</i>, <i>30 noviembre</i>, <i>enero</i>) o una combinación (<i>examen 2.ª convocatoria</i>).</p>
+        ${filtros ? '<p class="small">Hay filtros activos (asignaturas, tipos o fiabilidad) que pueden ocultar resultados.</p>' : ''}</div>`;
+    }
+    const shown = L.slice(0, 120);
+    return `<p class="small muted" style="margin:0 0 8px">${L.length} resultado${L.length > 1 ? 's' : ''}${parcial ? ' · coincidencias parciales (ningún evento cumple todo lo que has escrito)' : ''}${filtros ? ' · con los filtros activos' : ''}</p>
+      <div class="card"><ul class="list">${shown.map((e) => eventoItem(e, true, toks, true)).join('')}</ul>${L.length > 120 ? '<p class="small muted">Se muestran los 120 primeros: afina la búsqueda.</p>' : ''}</div>`;
+  }
+  function refCal() {
+    const b = $('#calBody'); if (b) b.innerHTML = calBody();
+    const r = $('#calRes'); if (r) r.innerHTML = calResultados();
+    const m = $('#calMain'); if (m) m.hidden = !!calQ.trim();
+  }
+
+  /* ----- TAREAS ----- */
+  function tareasFiltradas() {
+    const f = S.prefs.tar;
+    return tareas().filter((t) => (!f.asig || t.asig === f.asig) && (!f.estado || t.estado === f.estado) && (!f.tipo || t.tipo === f.tipo) &&
+      (!f.prioridad || t.prioridad === f.prioridad) && !(f.ocultarHechas && t.estado === 'hecha')).sort(ordenFecha);
+  }
+  const optSel = (obj, val, todas) => `<option value="">${todas}</option>` + Object.keys(obj).map((k) => `<option value="${k}" ${val === k ? 'selected' : ''}>${esc(obj[k])}</option>`).join('');
+  function tareaItem(t) {
+    const w = cuando(t.fecha, t.estado === 'hecha');
+    const hecha = t.estado === 'hecha';
+    return `<li data-id="${esc(t.id)}">
+      <input type="checkbox" data-act="tarea-check" data-id="${esc(t.id)}" ${hecha ? 'checked' : ''} aria-label="Marcar «${esc(t.titulo)}» como hecha">
+      <div class="li-main ${hecha ? 'done' : ''}">
+        <div class="row" style="gap:6px">${chip(t.asig)} <span class="badge b-tipo">${esc(tipoLabel(t.tipo) + (t.convocatoria ? ' · ' + t.convocatoria + '.ª conv.' : ''))}</span> ${badgeFiab(t.fiabilidad)}</div>
+        <b>${esc(t.titulo)}</b>
+        ${t.detalle ? `<span class="small muted">${esc(t.detalle)}</span>` : ''}
+        ${t.peso ? `<span class="small muted">${esc(t.peso)}</span>` : ''}
+      </div>
+      <div class="li-ctrl">
+        <div class="li-date"><b>${t.fecha ? esc(fmtCorto(t.fecha)) : 'Fecha por confirmar'}</b>${t.hora ? '<br>' + esc(t.hora) : ''}<br><span class="${w.cls}">${esc(w.txt)}</span></div>
+        <select data-act="tarea-estado" data-id="${esc(t.id)}" aria-label="Estado">${Object.keys(ESTADOS).map((k) => `<option value="${k}" ${t.estado === k ? 'selected' : ''}>${ESTADOS[k]}</option>`).join('')}</select>
+        <select data-act="tarea-prio" data-id="${esc(t.id)}" aria-label="Prioridad">${Object.keys(PRIO).map((k) => `<option value="${k}" ${t.prioridad === k ? 'selected' : ''}>Prioridad ${PRIO[k].toLowerCase()}</option>`).join('')}</select>
+        ${t.personal ? `<button class="btn small danger" data-act="tarea-borrar" data-id="${esc(t.id)}">Borrar</button>` : ''}
+      </div></li>`;
+  }
+  function tareasLista() {
+    const L = tareasFiltradas();
+    const todas = tareas();
+    const hechas = todas.filter((t) => t.estado === 'hecha').length;
+    return `<p class="small muted" style="margin:0 0 8px">${L.length} de ${todas.length} tareas mostradas · ${hechas} completadas</p>
+      <div class="card">${L.length ? `<ul class="list">${L.map(tareaItem).join('')}</ul>` : '<p class="empty">Ninguna tarea coincide con los filtros.</p>'}</div>`;
+  }
+  V.tareas = function () {
+    const f = S.prefs.tar;
+    const tiposT = { recomendada: TIPOS.recomendada, portafolio: TIPOS.portafolio, examen: TIPOS.examen, personal: TIPOS.personal };
+    return `<div class="page-head"><div><h1>Tareas</h1><p>Entregas, portafolios y exámenes. Marca lo que vayas completando; se guarda en este navegador.</p></div></div>
+    <div class="card filters">
+      <label class="field">Asignatura<select data-act="tar-f" data-k="asig"><option value="">Todas</option>${asigs().map((a) => `<option value="${esc(a.code)}" ${f.asig === a.code ? 'selected' : ''}>${esc(a.corto)} (${esc(a.code)})</option>`).join('')}</select></label>
+      <label class="field">Estado<select data-act="tar-f" data-k="estado">${optSel(ESTADOS, f.estado, 'Todos')}</select></label>
+      <label class="field">Tipo<select data-act="tar-f" data-k="tipo">${optSel(tiposT, f.tipo, 'Todos')}</select></label>
+      <label class="field">Prioridad<select data-act="tar-f" data-k="prioridad">${optSel(PRIO, f.prioridad, 'Todas')}</select></label>
+      <label class="check"><input type="checkbox" data-act="tar-ocultar" ${f.ocultarHechas ? 'checked' : ''}> Ocultar hechas</label>
+    </div>
+    <p class="small muted">La prioridad inicial es una sugerencia (portafolios y exámenes: alta; entregas recomendadas: media). Puedes cambiarla en cada tarea.</p>
+    <div id="tarLista">${tareasLista()}</div>
+    <details class="card" style="margin-top:16px"><summary><b>Añadir una tarea personal</b></summary>
+      <form id="formTarea" class="row" style="margin-top:12px;align-items:flex-end">
+        <label class="field">Título<input type="text" name="titulo" required maxlength="120" placeholder="Ej.: Repasar tema 2"></label>
+        <label class="field">Asignatura<select name="asig">${asigs().map((a) => `<option value="${esc(a.code)}">${esc(a.corto)}</option>`).join('')}</select></label>
+        <label class="field">Fecha (opcional)<input type="date" name="fecha"></label>
+        <label class="field">Prioridad<select name="prioridad">${Object.keys(PRIO).map((k) => `<option value="${k}" ${k === 'media' ? 'selected' : ''}>${PRIO[k]}</option>`).join('')}</select></label>
+        <button class="btn primary" type="submit">Añadir</button>
+      </form></details>`;
+  };
+
+  /* ----- BIBLIOTECA ----- */
+  const CATS = { apuntes: 'Apuntes', ejercicios: 'Ejercicios', actividad: 'Actividad / entrega', examen: 'Examen', material: 'Material / lectura', otro: 'Otro' };
+  const FS = { db: null, cache: [], err: false };
+  function fsOpen() {
+    if (FS.db) return Promise.resolve(FS.db);
+    return new Promise((res, rej) => {
+      if (!window.indexedDB) return rej(new Error('sin IndexedDB'));
+      let r; try { r = indexedDB.open('campus_viu_archivos', 1); } catch (e) { return rej(e); }
+      r.onupgradeneeded = () => { r.result.createObjectStore('files', { keyPath: 'id' }); };
+      r.onsuccess = () => { FS.db = r.result; res(FS.db); };
+      r.onerror = () => rej(r.error);
+    });
+  }
+  const fsAll = () => fsOpen().then((db) => new Promise((res, rej) => { const r = db.transaction('files').objectStore('files').getAll(); r.onsuccess = () => res(r.result || []); r.onerror = () => rej(r.error); }));
+  const fsWrite = (fn) => fsOpen().then((db) => new Promise((res, rej) => { const tx = db.transaction('files', 'readwrite'); fn(tx.objectStore('files')); tx.oncomplete = () => res(); tx.onerror = () => rej(tx.error); tx.onabort = () => rej(tx.error); }));
+  const fmtSize = (b) => (b < 1024 ? b + ' B' : b < 1048576 ? (b / 1024).toFixed(0) + ' KB' : (b / 1048576).toFixed(1) + ' MB');
+  const fmtFecha = (iso) => new Intl.DateTimeFormat('es-ES', { day: 'numeric', month: 'short', year: 'numeric' }).format(new Date(iso));
+
+  function bibItems() {
+    const c = curso();
+    const out = [];
+    c.asignaturas.forEach((a) => (a.biblioteca || []).forEach((d) => out.push({ asig: a.code, d, ruta: rutaDoc(a, d) })));
+    (c.comun || []).forEach((d) => out.push({ asig: 'comun', d, ruta: d.carpeta }));
+    return out;
+  }
+  function bibLista() {
+    const f = S.prefs.bib;
+    const q = norm(f.q.trim());
+    if (f.origen === 'adjunto') return '';
+    const L = bibItems().filter((x) => (!f.asig || x.asig === f.asig) && (!f.origen || x.d.origen === f.origen) &&
+      (!q || norm(x.d.titulo + ' ' + x.d.tipo + ' ' + (x.d.nota || '')).includes(q)));
+    if (!L.length) return '<div class="card"><p class="empty">Ningún documento del índice coincide con los filtros.</p></div>';
+    const g = groupBy(L, 'asig');
+    return `<h2 style="margin:18px 0 10px">Índice de documentos del curso</h2>` + Object.keys(g).map((k) => {
+      const a = asigDe(k);
+      return `<section class="card" style="margin-bottom:12px;${a ? `border-top:5px solid ${esc(a.color)}` : ''}"><h2>${a ? esc(a.nombre) + ' <span class="chip">' + esc(a.code) + '</span>' : 'Común a toda la carrera'}</h2>
+      <ul class="list">${g[k].map((x) => {
+        const o = ORIGEN[x.d.origen] || [x.d.origen, ''];
+        return `<li><div class="li-main"><b>${esc(x.d.titulo)}</b><span class="small muted">${esc(x.d.tipo)} · <code>${esc(x.ruta)}</code></span>
+          ${x.d.nota ? `<span class="small muted">${esc(x.d.nota)}</span>` : ''}
+          ${x.d.origen === 'ia' ? '<span class="small" style="color:var(--bad)">Material generado con IA: no es oficial. Contrástalo con el material de VIU y decláralo si lo usas en una actividad evaluable.</span>' : ''}</div>
+          <div class="li-ctrl"><span class="badge ${o[1]}">${esc(o[0])}</span>${ENLACES ? `<a class="btn small" href="${esc(enlace(x.ruta))}" target="_blank" rel="noopener">Abrir carpeta</a>` : ''}</div></li>`;
+      }).join('')}</ul></section>`;
+    }).join('');
+  }
+  function bibFilesHtml() {
+    if (FS.err) return '<div class="notice alto"><b>No se pueden guardar archivos en este navegador.</b>Puede ocurrir en navegación privada o si el navegador bloquea el almacenamiento. El resto de la web funciona igual.</div>';
+    const f = S.prefs.bib; const q = norm(f.q.trim());
+    const all = FS.cache.filter((r) => r.curso === curso().id);
+    const L = all.filter((r) => (!f.asig || r.asig === f.asig) && (!f.origen || f.origen === 'adjunto') && (!q || norm(`${r.name} ${r.nota || ''} ${CATS[r.cat] || ''}`).includes(q)))
+      .sort((a, b) => b.fecha.localeCompare(a.fecha));
+    const total = all.reduce((s, r) => s + r.size, 0);
+    if (!L.length) return `<div class="card"><p class="empty">${all.length ? 'Ningún archivo adjunto coincide con los filtros.' : 'Aún no has adjuntado ningún archivo. Elige asignatura y tipo, y arrastra los archivos o pulsa la zona de arriba.'}</p></div>`;
+    const g = groupBy(L, 'asig');
+    return `<p class="small muted" style="margin:0 0 8px">${L.length} de ${all.length} archivos · ${esc(fmtSize(total))} en total</p>` +
+      Object.keys(g).map((k) => {
+        const a = asigDe(k);
+        return `<section class="card" style="margin-bottom:12px;${a ? `border-top:5px solid ${esc(a.color)}` : ''}"><h2>${a ? esc(a.nombre) + ' <span class="chip">' + esc(a.code) + '</span>' : 'Común a toda la carrera'}</h2>
+        <ul class="list">${g[k].map((r) => `<li><div class="li-main"><b>${esc(r.name)}</b>
+          <span class="small muted">${esc(CATS[r.cat] || 'Otro')} · ${esc(fmtSize(r.size))} · adjuntado el ${esc(fmtFecha(r.fecha))}</span>
+          ${r.nota ? `<span class="small muted">${esc(r.nota)}</span>` : ''}</div>
+          <div class="li-ctrl"><span class="badge b-elaborado">Adjunto mío</span><div class="row" style="gap:6px">
+          <button class="btn small primary" data-act="bib-open" data-id="${esc(r.id)}">Abrir</button>
+          <button class="btn small" data-act="bib-dl" data-id="${esc(r.id)}">Descargar</button>
+          <button class="btn small danger" data-act="bib-del" data-id="${esc(r.id)}">Borrar</button></div></div></li>`).join('')}</ul></section>`;
+      }).join('');
+  }
+  function cargarArchivos() {
+    fsAll().then((L) => { FS.cache = L; FS.err = false; const el = $('#bibFiles'); if (el) el.innerHTML = bibFilesHtml(); })
+      .catch(() => { FS.err = true; const el = $('#bibFiles'); if (el) el.innerHTML = bibFilesHtml(); });
+  }
+  async function adjuntar(files) {
+    const form = $('#formArchivos');
+    if (!form || !files || !files.length) return;
+    const asig = form.elements.asig.value, cat = form.elements.cat.value, nota = form.elements.nota.value.trim().slice(0, 140);
+    try { await fsOpen(); } catch (e) { FS.err = true; const el = $('#bibFiles'); if (el) el.innerHTML = bibFilesHtml(); alert('Tu navegador no permite guardar archivos aquí (¿navegación privada?).'); return; }
+    let n = 0;
+    for (const f of Array.from(files)) {
+      if (f.size > 250 * 1024 * 1024) { alert(`«${f.name}» pesa más de 250 MB y no se ha adjuntado.`); continue; }
+      try {
+        const rec = { id: 'f-' + Date.now().toString(36) + Math.random().toString(36).slice(2, 7), curso: curso().id, asig, cat, nota, name: f.name, size: f.size, mime: f.type || '', fecha: new Date().toISOString(), blob: f };
+        await fsWrite((st) => st.put(rec)); n++;
+      } catch (e) { alert(`No se pudo guardar «${f.name}» (¿almacenamiento lleno?).`); }
+    }
+    try { if (navigator.storage && navigator.storage.persist) navigator.storage.persist(); } catch (e) { /* opcional */ }
+    if (n) { toast(`${n} archivo${n > 1 ? 's' : ''} adjuntado${n > 1 ? 's' : ''}`); form.elements.nota.value = ''; cargarArchivos(); }
+  }
+  function descargarBlob(r) {
+    const a = document.createElement('a'); a.href = URL.createObjectURL(r.blob); a.download = r.name;
+    document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 4000);
+  }
+  V.biblioteca = function () {
+    const f = S.prefs.bib;
+    return `<div class="page-head"><div><h1>Biblioteca</h1><p>Materiales de cada asignatura. Adjunta tus propios archivos para ir completándola durante el curso.</p></div></div>
+    <section class="card" style="margin-bottom:16px"><h2>Adjuntar archivos</h2>
+      <form id="formArchivos" onsubmit="return false">
+        <div class="row" style="align-items:flex-end;margin:8px 0 12px">
+          <label class="field">Asignatura<select name="asig">${asigs().map((a) => `<option value="${esc(a.code)}" ${f.asig === a.code ? 'selected' : ''}>${esc(a.corto)}</option>`).join('')}<option value="comun">Común a toda la carrera</option></select></label>
+          <label class="field">Tipo<select name="cat">${Object.keys(CATS).map((k) => `<option value="${k}">${esc(CATS[k])}</option>`).join('')}</select></label>
+          <label class="field" style="flex:1;min-width:200px">Nota (opcional)<input type="text" name="nota" maxlength="140" placeholder="Ej.: apuntes tema 2, versión final…"></label>
+        </div>
+        <label class="drop" id="dropZone"><input type="file" id="fileInput" data-act="bib-file" multiple hidden>
+          <b>Arrastra aquí tus archivos</b><br><span class="small muted">o pulsa para elegirlos (PDF, Word, Excel, imágenes… hasta 250 MB cada uno)</span></label>
+      </form>
+      <p class="small muted" style="margin-top:8px">Los archivos se guardan en <b>este navegador</b> (no se suben a ningún sitio ni se copian a tus carpetas). Descárgalos si quieres tener copia, y no borres los datos del navegador. La copia «Exportar» del menú no incluye los archivos adjuntos.</p></section>
+    <div class="card filters">
+      <label class="field">Asignatura<select data-act="bib-f" data-k="asig"><option value="">Todas</option>${asigs().map((a) => `<option value="${esc(a.code)}" ${f.asig === a.code ? 'selected' : ''}>${esc(a.corto)}</option>`).join('')}<option value="comun" ${f.asig === 'comun' ? 'selected' : ''}>Común</option></select></label>
+      <label class="field">Origen<select data-act="bib-f" data-k="origen">${optSel({ adjunto: 'Adjuntados por mí', oficial: 'Oficial VIU', ia: 'IA · no oficial', elaborado: 'Elaborado' }, f.origen, 'Todos')}</select></label>
+      <label class="field">Buscar<input type="text" data-act="bib-q" value="${esc(f.q)}" placeholder="Nombre, título o tipo…"></label>
+    </div>
+    <h2 style="margin:6px 0 10px">Mis archivos adjuntos</h2>
+    <div id="bibFiles"><div class="card"><p class="empty">Cargando archivos…</p></div></div>
+    <div id="bibLista">${bibLista()}</div>
+    ${ENLACES ? `<details class="card" style="margin-top:16px"><summary><b>Accesos rápidos a carpetas del ordenador</b></summary>
+      <p class="small muted" style="margin:8px 0">Esta web no puede ver el contenido de tus carpetas. Los botones abren la carpeta correspondiente, siempre que la web esté dentro de <code>VIU_Grado_Marketing/95_CAMPUS_WEB</code>.</p>
+      <div class="grid g2">${asigs().map((a) => `<section class="card subject-card" style="--c:${esc(a.color)}"><h3>${esc(a.corto)} <span class="chip">${esc(a.code)}</span></h3>
+      <div class="stack" style="gap:4px">${CARPETAS.map(([k, l]) => `<a href="${esc(enlace(rutaAsig(a) + '/' + k))}" target="_blank" rel="noopener">${esc(l)}</a>`).join('')}</div></section>`).join('')}</div></details>` : ''}`;
+  };
+
+  /* ----- PROGRESO ----- */
+  V.progreso = function () {
+    return `<div class="page-head"><div><h1>Progreso</h1><p>Marca cada paso por tema. El porcentaje se calcula con los pasos marcados (leído, apuntes, ejercicios, test).</p></div>
+      <div class="card stat" style="padding:10px 16px"><b>${progresoGlobal()} %</b><span>global</span></div></div>
+    <div class="stack">${asigs().map((a) => {
+      const p = progresoAsig(a);
+      return `<section class="card" style="border-top:5px solid ${esc(a.color)}" id="prog-${esc(a.code)}">
+        <h2>${esc(a.nombre)} <span class="chip">${esc(a.code)}</span></h2>
+        <div class="row"><div class="bar" style="flex:1;--c:${esc(a.color)}"><i style="width:${p.pct}%"></i></div><b data-pct="${esc(a.code)}">${p.pct} %</b></div>
+        <div class="table-wrap"><table><thead><tr><th>Tema</th>${PASOS.map(([, l]) => `<th class="c">${l}</th>`).join('')}<th></th></tr></thead><tbody>
+        ${a.temas.map((t) => { const pr = S.progreso[t.id] || {}; return `<tr><td>${esc(nombreTema(t))}</td>${PASOS.map(([k, l]) => `<td class="c"><input type="checkbox" data-act="prog" data-tema="${esc(t.id)}" data-k="${k}" ${pr[k] ? 'checked' : ''} aria-label="${esc(l + ' · ' + nombreTema(t))}"></td>`).join('')}<td class="c"><button class="btn small" data-act="rename-tema" data-tema="${esc(t.id)}" title="Poner o cambiar el nombre del tema">Renombrar</button></td></tr>`; }).join('')}
+        </tbody></table></div>
+        ${a.temas.some((t) => !t.titulo && !S.nombresTemas[t.id]) ? '<p class="small muted" style="margin-top:6px">Los títulos de los temas sin nombre aún no están confirmados: puedes ponerlos tú con «Renombrar».</p>' : ''}
+      </section>`;
+    }).join('')}</div>`;
+  };
+
+  /* ----- SESIONES (vídeos y enlaces de cada clase) ----- */
+  const sesionesCurso = () => curso().eventos.filter((e) => e.tipo === 'sesion' || e.tipo === 'tutoria')
+    .sort((a, b) => (a.fecha + a.ini).localeCompare(b.fecha + b.ini));
+  const sesDe = (id) => S.sesiones[id] || { links: [], nota: '', visto: false };
+  const sesGet = (id) => (S.sesiones[id] = S.sesiones[id] || { links: [], nota: '', visto: false });
+  // Solo se admiten enlaces http/https (se descarta javascript:, file:, etc.).
+  const urlOk = (u) => {
+    try {
+      const t = String(u || '').trim();
+      const x = new URL(/^[a-z][a-z0-9+.-]*:/i.test(t) ? t : 'https://' + t);
+      return (x.protocol === 'https:' || x.protocol === 'http:') && x.hostname.includes('.') ? x.href : null;
+    } catch (e) { return null; }
+  };
+  const dominio = (u) => { try { return new URL(u).hostname.replace(/^www\./, ''); } catch (e) { return ''; } };
+  const linksSeguros = (s) => (s.links || []).map((l, i) => ({ i, t: l.t || '', u: urlOk(l.u) })).filter((l) => l.u);
+
+  function sesDetalle(id) {
+    const L = sesionesCurso(); const i = L.findIndex((e) => e.id === id);
+    if (i < 0) return '<div class="card"><p>Esa sesión no existe en este curso. <a href="#/sesiones">Volver a Sesiones</a></p></div>';
+    const e = L[i]; const s = sesDe(id); const links = linksSeguros(s);
+    const ant = L.slice(0, i).reverse().find((x) => x.asig === e.asig); const sig = L.slice(i + 1).find((x) => x.asig === e.asig);
+    const a = asigDe(e.asig) || {};
+    return `<div class="page-head"><div><p><a href="#/sesiones">← Todas las sesiones</a></p>
+      <h1 style="border-left:6px solid ${esc(a.color)};padding-left:12px">${esc(e.titulo)}</h1>
+      <p>${chip(e.asig)} <span class="badge b-tipo">${esc(tipoLabel(e.tipo))}</span> ${badgeFiab(e.fiabilidad)}</p>
+      <p>${esc(fmtLargo(e.fecha))} · ${esc(hora(e))} · <span class="${cuando(e.fecha).cls}">${esc(cuando(e.fecha).txt)}</span></p>
+      ${e.detalle ? `<p class="muted">${esc(e.detalle)}</p>` : ''}</div>
+      <div class="stack" style="gap:8px"><label class="check card" style="padding:10px 14px"><input type="checkbox" data-act="ses-visto" data-id="${esc(id)}" ${s.visto ? 'checked' : ''}> Marcar como vista</label>
+      <label class="field card" style="padding:10px 14px">Exportación<select data-act="ses-estado-sel" data-id="${esc(id)}"><option value="">No incluida en la lista</option><option value="pend" ${sesEstado(id) === 'pend' ? 'selected' : ''}>A exportar</option><option value="hecha" ${sesEstado(id) === 'hecha' ? 'selected' : ''}>Exportada</option></select></label></div></div>
+    <section class="card" style="margin-bottom:16px"><h2>Vídeos y enlaces de esta clase</h2>
+      ${links.length ? `<ul class="list">${links.map((l) => `<li><div class="li-main"><b>${esc(l.t || 'Enlace ' + (l.i + 1))}</b><span class="small muted">${esc(dominio(l.u))}</span></div>
+        <div class="li-ctrl"><div class="row" style="gap:6px"><a class="btn small primary" href="${esc(l.u)}" target="_blank" rel="noopener">Abrir</a>
+        <button class="btn small" data-act="ses-share" data-id="${esc(id)}" data-i="${l.i}">Compartir</button>
+        <button class="btn small danger" data-act="ses-del" data-id="${esc(id)}" data-i="${l.i}">Quitar</button></div></div></li>`).join('')}</ul>`
+      : '<p class="empty">Todavía no has guardado ningún enlace de esta clase.</p>'}
+      <form id="formEnlace" data-id="${esc(id)}" class="row" style="align-items:flex-end;margin-top:12px">
+        <label class="field">Título (opcional)<input type="text" name="t" maxlength="80" placeholder="Grabación, presentación…"></label>
+        <label class="field" style="flex:1;min-width:220px">Enlace<input type="text" name="u" required inputmode="url" autocapitalize="off" autocomplete="off" placeholder="https://…"></label>
+        <button class="btn primary" type="submit">Añadir enlace</button></form>
+      <p class="small muted" style="margin-top:8px">Aquí se guardan enlaces (a la grabación del campus, YouTube, Drive…), no los vídeos en sí. Solo se admiten direcciones http o https.</p></section>
+    <section class="card" style="margin-bottom:16px"><h2>Mis notas de esta clase</h2>
+      <textarea data-act="ses-nota" data-id="${esc(id)}" maxlength="2000" rows="5" placeholder="Ideas clave, dudas, tareas que te mandaron…" aria-label="Notas de la clase">${esc(s.nota || '')}</textarea>
+      <p class="small muted">Se guardan solas al escribir. Máximo 2000 caracteres.</p></section>
+    <div class="row between">${ant ? `<a class="btn" href="#/sesiones/${esc(ant.id)}">← ${esc(ant.titulo)}</a>` : '<span></span>'}${sig ? `<a class="btn" href="#/sesiones/${esc(sig.id)}">${esc(sig.titulo)} →</a>` : ''}</div>`;
+  }
+  function toast(t) {
+    let el = $('#toast');
+    if (!el) { el = document.createElement('div'); el.id = 'toast'; el.setAttribute('role', 'status'); document.body.appendChild(el); }
+    el.textContent = t; el.className = 'show'; clearTimeout(toast._t); toast._t = setTimeout(() => { el.className = ''; }, 2600);
+  }
+  async function compartir(texto, url) {
+    try { if (navigator.share) { await navigator.share({ title: texto, text: texto, url }); return; } } catch (e) { if (e && e.name === 'AbortError') return; }
+    try { if (navigator.clipboard && window.isSecureContext) { await navigator.clipboard.writeText(`${texto}\n${url}`); toast('Enlace copiado'); return; } } catch (e) { /* sigue */ }
+    prompt('Copia el enlace (mantén pulsado o Ctrl+C):', `${texto}\n${url}`);
+  }
+  /* Solo aparecen en «Sesiones» las sesiones a exportar o ya exportadas (las demás se consultan en Calendario). */
+  function sesEstado(id) {
+    const v = S.sesExp[id];
+    if (v === 'pend' || v === 'hecha') return v;
+    if (v === 'no') return null;
+    const s = S.sesiones[id];
+    return s && (s.links || []).length ? 'pend' : null; // enlaces guardados en versiones anteriores
+  }
+  const sesionesLista = () => sesionesCurso().filter((e) => sesEstado(e.id));
+  const SES_EST = { pend: 'A exportar', hecha: 'Exportadas', con: 'Con enlace', sin: 'Sin enlace', vistas: 'Vistas' };
+  function sesFiltradas() {
+    const f = S.prefs.ses; const q = norm(f.q.trim());
+    return sesionesLista().filter((e) => {
+      const s = sesDe(e.id); const n = linksSeguros(s).length; const st = sesEstado(e.id);
+      if (f.asig && e.asig !== f.asig) return false;
+      if (f.estado === 'pend' && st !== 'pend') return false;
+      if (f.estado === 'hecha' && st !== 'hecha') return false;
+      if (f.estado === 'con' && !n) return false;
+      if (f.estado === 'sin' && n) return false;
+      if (f.estado === 'vistas' && !s.visto) return false;
+      if (q && !norm(`${e.titulo} ${e.detalle} ${s.nota || ''} ${(s.links || []).map((l) => l.t).join(' ')} ${(asigDe(e.asig) || {}).nombre || ''}`).includes(q)) return false;
+      return true;
+    });
+  }
+  function sesItem(e) {
+    const s = sesDe(e.id); const L = linksSeguros(s); const n = L.length; const st = sesEstado(e.id);
+    return `<li><div class="li-main">
+      <div class="row" style="gap:6px">${chip(e.asig)} <span class="badge b-tipo">${esc(tipoLabel(e.tipo))}</span>
+        <span class="badge ${st === 'hecha' ? 'b-oficial' : 'b-recomendada'}">${st === 'hecha' ? 'Exportada' : 'A exportar'}</span>${s.visto ? ' <span class="badge b-oficial">Vista</span>' : ''}${n ? ` <span class="badge b-elaborado">${n} enlace${n > 1 ? 's' : ''}</span>` : ''}</div>
+      <b>${esc(e.titulo)}</b><span class="muted small">${esc(e.detalle)}</span></div>
+      <div class="li-ctrl"><div class="li-date"><b>${esc(fmtCorto(e.fecha))}</b><br>${esc(hora(e))}</div>
+      <div class="row" style="gap:6px">${n ? `<a class="btn small primary" href="${esc(L[0].u)}" target="_blank" rel="noopener">▶ Abrir vídeo</a>` : ''}<a class="btn small" href="#/sesiones/${esc(e.id)}">${n ? 'Detalle' : 'Añadir enlace'}</a></div>
+      <div class="row" style="gap:6px"><button class="btn small" data-act="ses-estado" data-id="${esc(e.id)}" data-v="${st === 'hecha' ? 'pend' : 'hecha'}">${st === 'hecha' ? 'Volver a «a exportar»' : '✓ Marcar exportada'}</button>
+      <button class="btn small danger" data-act="ses-quitar" data-id="${esc(e.id)}">Quitar</button></div></div></li>`;
+  }
+  function sesLista() {
+    const L = sesFiltradas(); const todas = sesionesLista();
+    const pend = todas.filter((e) => sesEstado(e.id) === 'pend').length;
+    const hecha = todas.length - pend;
+    return `<p class="small muted" style="margin:0 0 8px">${L.length} de ${todas.length} sesiones de la lista · ${pend} a exportar · ${hecha} exportadas</p>
+      <div class="card">${L.length ? `<ul class="list">${L.map(sesItem).join('')}</ul>`
+      : `<p class="empty">${todas.length ? 'Ninguna sesión coincide con los filtros.' : 'La lista está vacía. Añade con el selector de arriba las sesiones que quieras exportar (o pulsa «＋ A exportar» en cualquier clase del Calendario o de una asignatura).'}</p>`}</div>`;
+  }
+  function sesPickHtml() {
+    const libres = sesionesCurso().filter((e) => !sesEstado(e.id));
+    if (!libres.length) return '<option value="">Todas las sesiones ya están en la lista</option>';
+    const g = groupBy(libres, 'asig');
+    return '<option value="">Elige una sesión del calendario…</option>' + asigs().filter((a) => g[a.code]).map((a) =>
+      `<optgroup label="${esc(a.nombre)}">${g[a.code].map((e) => `<option value="${esc(e.id)}">${esc(fmtCorto(e.fecha))} · ${esc(e.titulo)} · ${esc(hora(e))}</option>`).join('')}</optgroup>`).join('');
+  }
+  V.sesiones = function (id) {
+    if (id) return sesDetalle(id);
+    const f = S.prefs.ses;
+    const estado = SES_EST[f.estado] ? f.estado : '';
+    const pend = sesionesLista().filter((e) => sesEstado(e.id) === 'pend').length;
+    return `<div class="page-head"><div><h1>Sesiones</h1><p>Solo las sesiones <b>a exportar</b> o ya <b>exportadas</b>. Guarda el enlace al vídeo, tus notas y márcalas cuando las hayas exportado.</p></div>
+      <button class="btn" data-act="ses-export">⬇ Exportar lista (CSV)${pend ? ` · ${pend} a exportar` : ''}</button></div>
+    <section class="card" style="margin-bottom:14px"><h2>Añadir sesiones a la lista</h2>
+      <p class="small muted">Hay ${sesionesCurso().length} clases y tutorías en el calendario; aquí solo se muestran las que tú elijas.</p>
+      <div class="row" style="align-items:flex-end;margin-top:8px">
+        <label class="field" style="flex:1;min-width:230px">Sesión del calendario<select id="sesPick">${sesPickHtml()}</select></label>
+        <button class="btn primary" data-act="ses-add-pick">Añadir a exportar</button>
+        <button class="btn" data-act="ses-add-pasadas">Añadir todas las ya celebradas</button></div></section>
+    <div class="card filters">
+      <label class="field">Asignatura<select data-act="ses-f" data-k="asig"><option value="">Todas</option>${asigs().map((a) => `<option value="${esc(a.code)}" ${f.asig === a.code ? 'selected' : ''}>${esc(a.corto)}</option>`).join('')}</select></label>
+      <label class="field">Mostrar<select data-act="ses-f" data-k="estado">${optSel(SES_EST, estado, 'Todas')}</select></label>
+      <label class="field">Buscar<input type="text" data-act="ses-q" value="${esc(f.q)}" placeholder="Tema, nota o título…"></label>
+    </div>
+    <div id="sesLista">${sesLista()}</div>`;
+  };
+  function exportarEnlaces() {
+    const lista = sesionesLista();
+    if (!lista.length) { alert('La lista está vacía: añade primero las sesiones que quieras exportar.'); return; }
+    const q = (v) => { let t = String(v == null ? '' : v); if (/^[=+\-@\t\r]/.test(t)) t = "'" + t; return '"' + t.replace(/"/g, '""') + '"'; };
+    const rows = [['Asignatura', 'Código', 'Sesión', 'Contenido', 'Fecha', 'Hora', 'Estado de exportación', 'Enlaces', 'Vista', 'Notas']];
+    lista.forEach((e) => {
+      const s = sesDe(e.id); const a = asigDe(e.asig) || {};
+      rows.push([a.nombre, e.asig, e.titulo, e.detalle, e.fecha, hora(e), sesEstado(e.id) === 'hecha' ? 'Exportada' : 'A exportar', linksSeguros(s).map((l) => (l.t ? l.t + ': ' : '') + l.u).join(' | '), s.visto ? 'Sí' : 'No', s.nota]);
+    });
+    const csv = '﻿' + rows.map((r) => r.map(q).join(';')).join('\r\n');
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv;charset=utf-8' }));
+    a.download = `campus_viu_sesiones_${hoy()}.csv`;
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(() => URL.revokeObjectURL(a.href), 2000);
+    const pend = lista.filter((e) => sesEstado(e.id) === 'pend');
+    if (pend.length && confirm(`CSV descargado. ¿Marcar como exportadas las ${pend.length} sesiones que estaban «a exportar»?`)) {
+      pend.forEach((e) => { S.sesExp[e.id] = 'hecha'; }); save(); keepRender();
+    } else toast('Archivo CSV descargado');
+  }
+
+  /* ----- ACTIVIDADES (progreso) ----- */
+  const ACT_PASOS = [
+    ['enunciado', 'Enunciado', 'Leer el enunciado y la rúbrica / criterios de evaluación'],
+    ['material', 'Material', 'Reunir el material y las fuentes necesarias'],
+    ['borrador', 'Borrador', 'Redactar o resolver el primer borrador'],
+    ['revision', 'Revisión', 'Revisar con los criterios de evaluación'],
+    ['ia', 'Uso de IA', 'Declarar el uso de IA si lo has usado (obligatorio en actividades evaluables)'],
+    ['formato', 'Archivo', 'Preparar el archivo final para subir'],
+    ['entregada', 'Entregada', 'Subir la actividad al campus y comprobar que consta como entregada']
+  ];
+  const ACT_EST = { sin: 'Sin empezar', curso: 'En curso', ent: 'Entregada' };
+  const actVacio = () => ({ pasos: {}, nota: '', objetivo: '', link: '', txt: '' });
+  const actD = (id) => S.act[id] || actVacio();
+  const actS = (id) => (S.act[id] = S.act[id] || actVacio());
+  const actPasos = (id) => { const p = actD(id).pasos || {}; return ACT_PASOS.filter(([k]) => p[k]).length; };
+  const actEstado = (id) => { const n = actPasos(id); return n === 0 ? 'sin' : n === ACT_PASOS.length ? 'ent' : 'curso'; };
+  const actividades = () => curso().actividades || [];
+  const eventoDe = (id) => curso().eventos.find((e) => e.id === id);
+  const convDe = (e) => { const m = /(\d)\.ª/.exec(e.titulo); return m ? Number(m[1]) : null; };
+  const notaNum = (v) => { const n = parseFloat(String(v == null ? '' : v).replace(',', '.')); return isFinite(n) && n >= 0 && n <= 10 ? n : null; };
+  const fmtNota = (n) => (n == null ? '—' : n.toFixed(2).replace('.', ','));
+  function actResumen() {
+    const L = actividades();
+    const pasos = L.reduce((s, a) => s + actPasos(a.id), 0);
+    const tot = L.length * ACT_PASOS.length;
+    return { n: L.length, ent: L.filter((a) => actEstado(a.id) === 'ent').length, pct: tot ? Math.round(pasos * 100 / tot) : 0 };
+  }
+  function portafolioAsig(code) {
+    const L = actividades().filter((a) => a.asig === code);
+    let sp = 0, sn = 0, n = 0;
+    L.forEach((a) => { const v = notaNum(actD(a.id).nota); if (v !== null) { sp += a.peso; sn += v * a.peso; n++; } });
+    return { total: L.reduce((s, a) => s + a.peso, 0), n, de: L.length, nota: sp ? sn / sp : null, completo: L.length > 0 && n === L.length, puntos: sn / 100 };
+  }
+  function notaFinal(code) {
+    const ex = (curso().examenes || []).find((x) => x.asig === code);
+    const po = portafolioAsig(code);
+    const ne = notaNum((S.exam[code] || {}).nota);
+    if (!ex || !po.completo || ne === null) return null;
+    const fin = (po.nota * po.total + ne * ex.peso) / (po.total + ex.peso);
+    return { fin, po, ne, ok: po.nota >= 5 && ne >= 5 && fin >= 5 };
+  }
+  function syncTarea(a) {
+    if (!a.tarea) return;
+    const n = actPasos(a.id);
+    const o = S.tareas[a.tarea] = S.tareas[a.tarea] || {};
+    const cur = o.estado || 'pendiente';
+    if (n === ACT_PASOS.length) o.estado = 'hecha';
+    else if (n === 0) { if (cur === 'hecha' || cur === 'curso') o.estado = 'pendiente'; }
+    else o.estado = 'curso';
+  }
+  const portsDe = (code) => curso().eventos.filter((e) => e.asig === code && e.tipo === 'portafolio').sort((a, b) => a.fecha.localeCompare(b.fecha));
+
+  function actCard(a) {
+    const as = asigDe(a.asig) || {};
+    const d = actD(a.id), n = actPasos(a.id), tot = ACT_PASOS.length, pct = Math.round(n * 100 / tot), est = actEstado(a.id);
+    const ev = a.evento ? eventoDe(a.evento) : null;
+    const ent = est === 'ent';
+    const w = ev ? cuando(ev.fecha, ent) : null;
+    const ports = portsDe(a.asig);
+    const ses = (a.sesiones || []).map(eventoDe).filter(Boolean);
+    const temas = (a.temas || []).map((id) => (as.temas || []).find((x) => x.id === id)).filter(Boolean);
+    const link = urlOk(d.link);
+    const siguiente = ACT_PASOS.find(([k]) => !(d.pasos || {})[k]);
+    const obj = d.objetivo || '';
+    const wo = obj ? cuando(obj, ent) : null;
+    return `<article class="card act" style="--c:${esc(as.color)}" id="${esc(a.id)}">
+      <div class="row between" style="align-items:flex-start;gap:8px">
+        <div><div class="row" style="gap:6px">${chip(a.asig)} <span class="badge b-tipo">${esc(a.bloque)}</span> <span class="badge ${ent ? 'b-oficial' : est === 'curso' ? 'b-recomendada' : 'b-elaborado'}">${ACT_EST[est]}</span></div>
+        <h3 style="margin-top:6px;font-size:1.1rem">${esc(a.nombre)}</h3></div>
+        <div class="stat" style="text-align:right"><b style="font-size:1.4rem">${esc(a.peso)} %</b><span>de la asignatura</span></div></div>
+      <div class="row" style="margin-top:8px"><div class="bar" style="flex:1"><i style="width:${pct}%"></i></div><b>${pct} %</b></div>
+      <p class="small muted" style="margin:2px 0 0">${n} de ${tot} pasos${siguiente && !ent ? ` · siguiente: <b>${esc(siguiente[2])}</b>` : ent ? ' · ¡completada!' : ''}</p>
+      <ol class="stepper" aria-label="Pasos de la actividad">${ACT_PASOS.map(([k, l, t]) => { const on = !!(d.pasos || {})[k]; return `<li class="${on ? 'on' : ''}"><button type="button" class="step ${on ? 'on' : ''}" data-act="act-paso" data-id="${esc(a.id)}" data-k="${k}" aria-pressed="${on}" title="${esc(t)}"><span class="sn">${on ? '✓' : ACT_PASOS.findIndex((x) => x[0] === k) + 1}</span><span class="sl">${esc(l)}</span></button></li>`; }).join('')}</ol>
+      <div class="grid g2 act-info" style="gap:10px">
+        <div><div class="small muted">Qué hay que hacer</div><p style="margin:2px 0">${esc(a.descripcion)}</p>${a.nota ? `<p class="small muted" style="margin:4px 0 0">${esc(a.nota)}</p>` : ''}</div>
+        <div><div class="small muted">Fechas</div>
+          ${ev ? `<p style="margin:2px 0"><span class="badge b-recomendada">Recomendada</span> <b>${esc(fmtCorto(ev.fecha))}</b>, ${esc(ev.ini)} · <span class="${w.cls}">${esc(w.txt)}</span></p>` : '<p style="margin:2px 0"><span class="badge b-pendiente">Por confirmar</span> la fecha recomendada no figura en el calendario.</p>'}
+          ${ports.length ? `<p class="small" style="margin:2px 0"><span class="badge b-oficial">Plazo oficial</span> ${ports.map((p) => `${convDe(p) || ''}.ª conv.: <b>${esc(fmtCorto(p.fecha))}</b> ${esc(p.ini)}`).join(' · ')}</p>` : ''}
+          ${obj ? `<p class="small" style="margin:2px 0"><span class="badge b-elaborado">Mi objetivo</span> <b>${esc(fmtCorto(obj))}</b> · <span class="${wo.cls}">${esc(wo.txt)}</span></p>` : ''}</div>
+      </div>
+      ${temas.length || ses.length ? `<div class="small" style="margin-top:8px">${temas.length ? `<div>Temas relacionados: ${temas.map((t) => { const pr = S.progreso[t.id] || {}; const k = PASOS.filter(([x]) => pr[x]).length; return `<span class="chip" title="Estudio: ${k}/${PASOS.length} pasos">${esc(t.nombre.replace('Tema ', 'T'))} · ${k}/${PASOS.length}</span>`; }).join(' ')} <a href="#/progreso">Ver progreso de estudio</a></div>` : ''}
+        ${ses.length ? `<div>Sesión práctica: ${ses.map((e) => `<a href="#/calendario" data-act="ir-dia" data-fecha="${esc(e.fecha)}">${esc(e.titulo)} · ${esc(fmtCorto(e.fecha))}, ${esc(hora(e))}</a>`).join(' · ')}</div>` : ''}</div>` : ''}
+      <details style="margin-top:10px"><summary><b>Mis datos de la actividad</b>${d.nota !== '' && notaNum(d.nota) !== null ? ` · nota ${esc(fmtNota(notaNum(d.nota)))}` : ''}</summary>
+        <div class="row" style="align-items:flex-end;margin-top:10px">
+          <label class="field">Mi fecha objetivo<input type="date" data-act="act-num" data-id="${esc(a.id)}" data-k="objetivo" value="${esc(d.objetivo || '')}"></label>
+          <label class="field">Nota obtenida (0–10)<input type="number" min="0" max="10" step="0.1" inputmode="decimal" data-act="act-num" data-id="${esc(a.id)}" data-k="nota" value="${esc(d.nota)}" style="width:110px"></label>
+          <label class="field" style="flex:1;min-width:200px">Enlace al enunciado o a la entrega<input type="text" data-act="act-txt" data-id="${esc(a.id)}" data-k="link" value="${esc(d.link || '')}" placeholder="https://…"></label></div>
+        ${link ? `<p class="small" style="margin:6px 0 0"><a href="${esc(link)}" target="_blank" rel="noopener">Abrir enlace (${esc(dominio(link))})</a></p>` : ''}
+        <label class="field" style="margin-top:10px">Notas, dudas y comentarios del profesor<textarea rows="3" maxlength="1500" data-act="act-txt" data-id="${esc(a.id)}" data-k="txt" placeholder="Qué falta, qué te pidió el profesor, feedback recibido…">${esc(d.txt || '')}</textarea></label></details>
+    </article>`;
+  }
+  function actProximas() {
+    const h = hoy();
+    return actividades().map((a) => ({ a, ev: a.evento ? eventoDe(a.evento) : null })).filter((x) => x.ev && x.ev.fecha >= h && actEstado(x.a.id) !== 'ent')
+      .sort((x, y) => x.ev.fecha.localeCompare(y.ev.fecha)).slice(0, 4);
+  }
+  V.actividades = function () {
+    const f = S.prefs.act; const r = actResumen();
+    const L = actividades();
+    const sinFecha = L.filter((a) => !a.evento && actEstado(a.id) !== 'ent').length;
+    const prox = actProximas();
+    const vis = L.filter((a) => (!f.asig || a.asig === f.asig) && (!f.estado || actEstado(a.id) === f.estado));
+    const g = groupBy(vis, 'asig');
+    return `<div class="page-head"><div><h1>Actividades</h1><p>Seguimiento paso a paso de cada entrega del portafolio: marca lo que vas completando y verás tu progreso.</p></div></div>
+    <div class="grid g4" style="margin-bottom:14px">
+      <div class="card stat"><b>${r.pct} %</b><span>progreso global de actividades</span><div class="bar" style="margin-top:8px"><i style="width:${r.pct}%"></i></div></div>
+      <div class="card stat"><b>${r.ent}/${r.n}</b><span>actividades entregadas</span></div>
+      <div class="card stat"><b>${prox[0] ? esc(parse(prox[0].ev.fecha).toLocaleDateString('es-ES', { day: 'numeric', month: 'short' })) : '—'}</b><span>${prox[0] ? esc(`${(asigDe(prox[0].a.asig) || {}).corto} · ${prox[0].a.nombre} · ${cuando(prox[0].ev.fecha).txt}`) : 'sin próximas fechas recomendadas'}</span></div>
+      <div class="card stat"><b>${sinFecha}</b><span>sin fecha recomendada (consulta el campus)</span></div></div>
+    ${prox.length ? `<section class="card" style="margin-bottom:14px"><h2>Próximas fechas recomendadas</h2><ul class="list">${prox.map((x) => `<li><div class="li-main">${chip(x.a.asig)} <b>${esc(x.a.nombre)}</b><span class="small muted">${esc(x.a.descripcion)}</span></div><div class="li-date"><b>${esc(fmtCorto(x.ev.fecha))}</b><br>hasta las ${esc(x.ev.ini)}<br><span class="${cuando(x.ev.fecha).cls}">${esc(cuando(x.ev.fecha).txt)}</span></div></li>`).join('')}</ul>
+      <p class="small muted">Son fechas <b>recomendadas</b> para repartir el trabajo; el plazo oficial es el del portafolio (se indica en cada actividad).</p></section>` : ''}
+    <div class="notice bajo" style="margin-bottom:14px"><b>Reglas que afectan a todas las actividades</b>${curso().reglas.map(esc).join(' ')}</div>
+    <div class="card filters">
+      <label class="field">Asignatura<select data-act="act-f" data-k="asig"><option value="">Todas</option>${asigs().map((a) => `<option value="${esc(a.code)}" ${f.asig === a.code ? 'selected' : ''}>${esc(a.corto)}</option>`).join('')}</select></label>
+      <label class="field">Estado<select data-act="act-f" data-k="estado">${optSel(ACT_EST, f.estado, 'Todos')}</select></label>
+    </div>
+    ${asigs().filter((a) => g[a.code]).map((a) => {
+      const all = L.filter((x) => x.asig === a.code); const po = portafolioAsig(a.code);
+      const pasos = all.reduce((s, x) => s + actPasos(x.id), 0); const pct = Math.round(pasos * 100 / (all.length * ACT_PASOS.length));
+      const ports = portsDe(a.code);
+      return `<section style="margin-bottom:18px"><div class="card" style="border-top:5px solid ${esc(a.color)};margin-bottom:10px">
+        <div class="row between"><h2>${esc(a.nombre)} <span class="chip">${esc(a.code)}</span></h2><b>${pct} %</b></div>
+        <div class="bar" style="--c:${esc(a.color)};margin:8px 0"><i style="width:${pct}%"></i></div>
+        <p class="small muted" style="margin:0">Portafolio: ${po.total} % de la nota · ${all.length} actividades${ports.length ? ' · plazo oficial ' + ports.map((p) => `${convDe(p)}.ª conv. ${esc(fmtCorto(p.fecha))}`).join(' / ') : ''}</p>
+        <p class="small" style="margin:4px 0 0">${po.n ? `Nota media ponderada de lo calificado (${po.n}/${po.de}): <b>${fmtNota(po.nota)}</b>${po.nota < 5 ? ' <span style="color:var(--bad)">· recuerda: se exige mínimo 5 en el portafolio</span>' : ''}` : 'Aún no has anotado ninguna nota (se anotan dentro de cada actividad).'}</p></div>
+        <div class="stack">${g[a.code].map(actCard).join('')}</div></section>`;
+    }).join('') || '<div class="card"><p class="empty">Ninguna actividad coincide con los filtros.</p></div>'}`;
+  };
+
+  /* ----- EXÁMENES ----- */
+  const EXA_CHECK = [
+    ['fecha', 'Confirmar fecha, hora y modalidad en el campus'],
+    ['formato', 'Confirmar el formato y el material permitido'],
+    ['temas', 'Repasar todos los temas (pestaña Progreso)'],
+    ['practica', 'Hacer ejercicios o test de práctica'],
+    ['dudas', 'Resolver las dudas pendientes (tutoría final o foro)'],
+    ['equipo', 'Preparar lo necesario: equipo, conexión o documentación'],
+    ['descanso', 'Descansar y llegar con margen el día del examen']
+  ];
+  const exaD = (code) => S.exam[code] || { check: {}, nota: '', modalidad: '', txt: '' };
+  const exaS = (code) => { const o = (S.exam[code] = S.exam[code] || { check: {}, nota: '', modalidad: '', txt: '' }); o.check = o.check || {}; return o; };
+  function examCard(a) {
+    const c = curso(); const h = hoy();
+    const info = (c.examenes || []).find((x) => x.asig === a.code) || {};
+    const evs = c.eventos.filter((e) => e.asig === a.code && e.tipo === 'examen').sort((x, y) => x.fecha.localeCompare(y.fecha));
+    const d = exaD(a.code); const chk = d.check || {};
+    const prog = progresoAsig(a);
+    const tfin = c.eventos.find((e) => e.asig === a.code && e.titulo === 'Tutoría final');
+    const repasos = c.eventos.filter((e) => e.asig === a.code && /repaso/i.test(e.detalle));
+    const e1 = evs.find((e) => convDe(e) === 1);
+    const pend = prog.total - prog.hechos;
+    const semanas = e1 && e1.fecha >= h ? Math.max(1, Math.ceil(diasHasta(e1.fecha) / 7)) : 0;
+    const po = portafolioAsig(a.code); const nf = notaFinal(a.code); const ne = notaNum(d.nota);
+    const nChk = EXA_CHECK.filter(([k]) => chk[k]).length;
+    let calc;
+    if (po.completo) {
+      const req = info.peso ? (500 - po.nota * po.total) / info.peso : null;
+      const need = req == null ? null : Math.max(5, Math.ceil(req * 10) / 10);
+      calc = `<p class="small" style="margin:0">Portafolio (con tus notas de Actividades): <b>${fmtNota(po.nota)}</b>.${need != null ? (need > 10 ? ' Con esa nota ya no se alcanza el 5 final, ni sacando 10 en el examen.' : ` Para llegar a 5 de nota final necesitas al menos <b>${fmtNota(need)}</b> en el examen (y mínimo 5 en cada parte).`) : ''}</p>`;
+    } else {
+      calc = `<p class="small muted" style="margin:0">Anota las notas de las ${po.de} actividades (pestaña Actividades) para calcular la nota final${po.n ? ` · llevas ${po.n}/${po.de}, aportan ${fmtNota(po.puntos)} puntos` : ''}.</p>`;
+    }
+    return `<article class="card exam" style="border-top:5px solid ${esc(a.color)}" id="exa-${esc(a.code)}">
+      <div class="row between" style="align-items:flex-start"><div><h2>${esc(a.nombre)} <span class="chip">${esc(a.code)}</span></h2><p class="small muted" style="margin:2px 0 0">${esc(a.profesor)}</p></div>
+        <div class="stat" style="text-align:right"><b style="font-size:1.4rem">${esc(info.peso || '?')} %</b><span>de la asignatura</span></div></div>
+      <div class="grid g2" style="margin:10px 0;gap:10px">
+        <div><div class="small muted">Convocatorias</div><ul class="list" style="margin:2px 0">${evs.map((e) => { const w = cuando(e.fecha); return `<li style="padding:6px 0"><div class="li-main"><b>${convDe(e)}.ª convocatoria</b><span class="small muted">${esc(info.duracion || hora(e))}</span></div><div class="li-date"><b>${esc(fmtCorto(e.fecha))}</b><br>${esc(hora(e))}<br><span class="${w.cls}">${esc(w.txt)}</span></div></li>`; }).join('')}</ul></div>
+        <div><div class="small muted">Formato</div><p style="margin:2px 0">${esc(info.formato || 'Por confirmar')}</p>
+          <div class="small muted" style="margin-top:6px">Materia</div><p style="margin:2px 0">${esc(info.cubre || '')}</p>
+          <div class="small muted" style="margin-top:6px">Material permitido</div><p style="margin:2px 0">${esc(info.material || 'Por confirmar en el campus.')}</p></div></div>
+      <div class="notice bajo" style="margin-bottom:10px"><b>Para aprobar</b>Se exige un mínimo de 5 tanto en el portafolio como en el examen. El examen vale el ${esc(info.peso || '?')} % y el portafolio el ${po.total} %.</div>
+      <div class="grid g2" style="gap:12px">
+        <div><h3>Preparación</h3>
+          <div class="row" style="margin:6px 0"><div class="bar" style="flex:1;--c:${esc(a.color)}"><i style="width:${prog.pct}%"></i></div><b>${prog.pct} %</b></div>
+          <p class="small muted" style="margin:0 0 6px">Estudio de temas: ${prog.hechos} de ${prog.total} pasos · <a href="#/progreso">Editar en Progreso</a>${semanas && pend ? ` · para llegar al 100 % antes de la 1.ª convocatoria: unos <b>${Math.ceil(pend / semanas)} pasos por semana</b> (${semanas} sem.)` : ''}</p>
+          <div class="row" style="gap:5px">${a.temas.map((t) => { const pr = S.progreso[t.id] || {}; const k = PASOS.filter(([x]) => pr[x]).length; return `<span class="chip" style="${k === PASOS.length ? 'background:var(--ok-soft);color:var(--ok)' : ''}" title="${esc(nombreTema(t))}">${esc(t.clave)} · ${k}/${PASOS.length}</span>`; }).join('')}</div>
+          <p class="small" style="margin:8px 0 0">${tfin ? `Tutoría final: <b>${esc(fmtCorto(tfin.fecha))}</b>, ${esc(hora(tfin))}.` : ''}${repasos.length ? ` Sesiones de repaso: ${repasos.map((e) => `${esc(e.titulo)} (${esc(fmtCorto(e.fecha))})`).join(' · ')}.` : ''}</p></div>
+        <div><h3>Lista de comprobación <span class="small muted">${nChk}/${EXA_CHECK.length}</span></h3>
+          <ul class="checks">${EXA_CHECK.map(([k, l]) => `<li><label class="check"><input type="checkbox" data-act="exa-check" data-asig="${esc(a.code)}" data-k="${k}" ${chk[k] ? 'checked' : ''}> ${esc(l)}</label></li>`).join('')}</ul>
+          <p class="small muted" style="margin:4px 0 0">Lista orientativa: ajusta con lo que indique el campus.</p></div></div>
+      <details style="margin-top:12px" ${d.nota !== '' || d.modalidad || d.txt ? 'open' : ''}><summary><b>Mi examen: nota, modalidad y notas</b>${nf ? ` · final ${esc(fmtNota(nf.fin))}` : ''}</summary>
+        <div class="row" style="align-items:flex-end;margin-top:10px">
+          <label class="field" style="flex:1;min-width:180px">Modalidad / aula / plataforma<input type="text" data-act="exa-txt" data-asig="${esc(a.code)}" data-k="modalidad" value="${esc(d.modalidad || '')}" maxlength="120" placeholder="Lo que indique el campus"></label>
+          <label class="field">Nota del examen (0–10)<input type="number" min="0" max="10" step="0.1" inputmode="decimal" data-act="exa-num" data-asig="${esc(a.code)}" data-k="nota" value="${esc(d.nota)}" style="width:110px"></label></div>
+        <div style="margin-top:10px">${calc}
+          ${nf ? `<div class="notice ${nf.ok ? 'bajo' : 'alto'}" style="margin-top:8px"><b>Nota final estimada: ${esc(fmtNota(nf.fin))}</b>${nf.ok ? 'Cumples el mínimo de 5 en portafolio y examen: aprobada.' : (nf.po.nota < 5 || nf.ne < 5 ? 'Aunque la media llegue a 5, no se aprueba si el portafolio o el examen están por debajo de 5.' : 'La nota final no llega a 5.')}</div>` : (ne !== null && !po.completo ? '' : '')}</div>
+        <label class="field" style="margin-top:10px">Notas del examen<textarea rows="3" maxlength="1500" data-act="exa-txt" data-asig="${esc(a.code)}" data-k="txt" placeholder="Qué entra, trucos, errores a evitar, resultado…">${esc(d.txt || '')}</textarea></label></details>
+    </article>`;
+  }
+  V.examenes = function () {
+    const c = curso(); const h = hoy(); const f = S.prefs.exa;
+    const todos = c.eventos.filter((e) => e.tipo === 'examen').sort(cmpEv);
+    const lista = todos.filter((e) => !f.conv || String(convDe(e)) === f.conv);
+    const prox = todos.find((e) => e.fecha >= h);
+    const pa = prox ? asigDe(prox.asig) : null;
+    const co = coincidencias();
+    return `<div class="page-head"><div><h1>Exámenes</h1><p>Fechas, formato, materia, preparación y nota de cada examen de ${esc(c.cuatrimestre.toLowerCase())}. Datos de las guías docentes (transcritos en el Excel): confírmalos en el campus.</p></div></div>
+    ${prox && pa ? `<section class="hero" style="--c:${esc(pa.color)}"><div class="muted">Tu próximo examen · ${esc(cuando(prox.fecha).txt.toLowerCase())}</div><div class="big">${esc(pa.nombre)}</div>
+      <div>${convDe(prox)}.ª convocatoria · ${esc(fmtLargo(prox.fecha))}, ${esc(hora(prox))}</div></section>` : ''}
+    <section class="card" style="margin-bottom:16px"><div class="row between"><h2>Calendario de exámenes</h2>
+      <label class="field" style="flex-direction:row;align-items:center;gap:8px">Convocatoria <select data-act="exa-conv"><option value="">Todas</option><option value="1" ${f.conv === '1' ? 'selected' : ''}>1.ª</option><option value="2" ${f.conv === '2' ? 'selected' : ''}>2.ª</option></select></label></div>
+      <div class="table-wrap"><table><thead><tr><th>Fecha</th><th>Hora</th><th>Asignatura</th><th class="c">Conv.</th><th>Faltan</th></tr></thead><tbody>
+      ${lista.map((e) => { const w = cuando(e.fecha); return `<tr class="${e.fecha < h ? 'past' : ''}"><td><b>${esc(fmtCorto(e.fecha))}</b></td><td>${esc(hora(e))}</td><td>${chip(e.asig)}</td><td class="c">${convDe(e)}.ª</td><td><span class="${w.cls}">${esc(w.txt)}</span></td></tr>`; }).join('')}
+      </tbody></table></div>
+      <p class="small muted" style="margin-top:6px">Duración orientativa: 4 horas (18:00–22:00), hora peninsular española.</p></section>
+    ${co.length ? `<section style="margin-bottom:16px"><h2 style="margin-bottom:8px">Fechas que coinciden</h2><div class="stack">${co.map((x) => `<div class="notice"><b>${esc(x.titulo)}</b>${esc(x.detalle)}</div>`).join('')}</div></section>` : ''}
+    <div class="stack">${asigs().map(examCard).join('')}</div>`;
+  };
+
+  /* =====================================================
+     ACCIONES NUEVAS (v1.1)
+     ===================================================== */
+  function keepRender() { const y = window.scrollY; render(); window.scrollTo(0, y); }
+  function refBib() { const l = $('#bibLista'); if (l) l.innerHTML = bibLista(); const f = $('#bibFiles'); if (f) f.innerHTML = bibFilesHtml(); }
+
+  function clickExtra(el, act) {
+    switch (act) {
+      case 'cal-quick': calQ = el.dataset.q; { const i = $('#calQ'); if (i) i.value = calQ; } refCal(); return true;
+      case 'cal-clear': calQ = ''; { const i = $('#calQ'); if (i) { i.value = ''; i.focus(); } } refCal(); return true;
+      case 'ir-dia': {
+        calQ = ''; if (!cal) initCal();
+        const d = parse(el.dataset.fecha); cal.y = d.getFullYear(); cal.m = d.getMonth(); selDay = el.dataset.fecha;
+        S.prefs.cal.vista = 'mes'; save();
+        if (currentView() === 'calendario') render(); else location.hash = '#/calendario';
+        return true;
+      }
+      case 'ses-add': {
+        S.sesExp[el.dataset.id] = 'pend'; save();
+        el.outerHTML = '<span class="badge b-elaborado">A exportar</span>'; toast('Añadida a la lista de Sesiones'); return true;
+      }
+      case 'ses-add-pick': {
+        const id = ($('#sesPick') || {}).value;
+        if (!id) { toast('Elige primero una sesión'); return true; }
+        S.sesExp[id] = 'pend'; save(); keepRender(); toast('Sesión añadida a exportar'); return true;
+      }
+      case 'ses-add-pasadas': {
+        const h = hoy(); const L = sesionesCurso().filter((e) => e.fecha < h && !sesEstado(e.id));
+        if (!L.length) { toast('No hay sesiones celebradas por añadir'); return true; }
+        if (confirm(`Se añadirán ${L.length} sesiones ya celebradas a la lista «a exportar». ¿Continuar?`)) { L.forEach((e) => { S.sesExp[e.id] = 'pend'; }); save(); keepRender(); }
+        return true;
+      }
+      case 'ses-estado': S.sesExp[el.dataset.id] = el.dataset.v; save(); $('#sesLista').innerHTML = sesLista(); return true;
+      case 'ses-quitar':
+        if (confirm('¿Quitar esta sesión de la lista? (Los enlaces y notas que hayas guardado se conservan.)')) { S.sesExp[el.dataset.id] = 'no'; save(); keepRender(); }
+        return true;
+      case 'bib-open': {
+        const r = FS.cache.find((x) => x.id === el.dataset.id); if (!r) return true;
+        const u = URL.createObjectURL(r.blob); const w = window.open(u, '_blank');
+        if (!w) descargarBlob(r);
+        setTimeout(() => URL.revokeObjectURL(u), 120000); return true;
+      }
+      case 'bib-dl': { const r = FS.cache.find((x) => x.id === el.dataset.id); if (r) descargarBlob(r); return true; }
+      case 'bib-del': {
+        const r = FS.cache.find((x) => x.id === el.dataset.id);
+        if (r && confirm(`¿Borrar «${r.name}» de la biblioteca? Esta acción no se puede deshacer.`)) fsWrite((st) => st.delete(r.id)).then(cargarArchivos).catch(() => alert('No se pudo borrar el archivo.'));
+        return true;
+      }
+      case 'act-paso': {
+        const a = actividades().find((x) => x.id === el.dataset.id); if (!a) return true;
+        const d = actS(a.id); d.pasos = d.pasos || {}; d.pasos[el.dataset.k] = !d.pasos[el.dataset.k];
+        syncTarea(a); save(); keepRender(); return true;
+      }
+      default: return false;
+    }
+  }
+  function changeExtra(el, act) {
+    switch (act) {
+      case 'ses-estado-sel': S.sesExp[el.dataset.id] = el.value || 'no'; save(); toast('Guardado'); return true;
+      case 'bib-file': adjuntar(el.files).then(() => { el.value = ''; }); return true;
+      case 'act-f': S.prefs.act[el.dataset.k] = el.value; save(); render(); return true;
+      case 'exa-conv': S.prefs.exa.conv = el.value; save(); keepRender(); return true;
+      case 'act-num': { const d = actS(el.dataset.id); d[el.dataset.k] = el.value; save(); keepRender(); return true; }
+      case 'exa-num': { exaS(el.dataset.asig)[el.dataset.k] = el.value; save(); keepRender(); return true; }
+      case 'exa-check': { const o = exaS(el.dataset.asig); o.check[el.dataset.k] = el.checked; save(); keepRender(); return true; }
+      default: return false;
+    }
+  }
+  function inputExtra(el, act) {
+    switch (act) {
+      case 'cal-q': calQ = el.value; refCal(); return true;
+      case 'act-txt': actS(el.dataset.id)[el.dataset.k] = el.value.slice(0, 1500); save(); return true;
+      case 'exa-txt': exaS(el.dataset.asig)[el.dataset.k] = el.value.slice(0, 1500); save(); return true;
+      default: return false;
+    }
+  }
+  document.addEventListener('dragover', (ev) => { const z = ev.target.closest && ev.target.closest('#dropZone'); if (z) { ev.preventDefault(); z.classList.add('over'); } });
+  document.addEventListener('dragleave', (ev) => { const z = ev.target.closest && ev.target.closest('#dropZone'); if (z) z.classList.remove('over'); });
+  document.addEventListener('drop', (ev) => {
+    const z = ev.target.closest && ev.target.closest('#dropZone');
+    if (z) { ev.preventDefault(); z.classList.remove('over'); adjuntar(ev.dataTransfer.files); }
+  });
+
+  /* ---------- menú lateral: todas las secciones ---------- */
+  const IC = {
+    inicio: 'M3 11l9-8 9 8v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z',
+    asignaturas: 'M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2zM4 19V5',
+    sesiones: 'M5 4h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2zM10 9l5 3-5 3z',
+    calendario: 'M5 5h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2zM3 10h18M8 3v4M16 3v4',
+    tareas: 'M9 11l3 3 8-8M20 12v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h15',
+    actividades: 'M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2M9 5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2M9 5h6M9 14l2 2 4-4',
+    examenes: 'M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8zM14 3v5h5M9 13h6M9 17h4',
+    biblioteca: 'M4 4h4v16H4zM10 4h4v16h-4zM16 6l4 1-3 13-4-1z',
+    progreso: 'M4 20V10M10 20V4M16 20v-8M22 20H2',
+    menu: 'M4 7h16M4 12h16M4 17h16'
+  };
+  const NAV = [['inicio', 'Inicio'], ['asignaturas', 'Asignaturas'], ['sesiones', 'Sesiones'], ['calendario', 'Calendario'], ['tareas', 'Tareas'],
+    ['actividades', 'Actividades'], ['examenes', 'Exámenes'], ['biblioteca', 'Biblioteca'], ['progreso', 'Progreso']];
+  const NAV_MOVIL = ['inicio', 'calendario', 'actividades', 'examenes'];
+  const icono = (k) => `<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="${IC[k]}"/></svg>`;
+  function buildNav() {
+    const n = $('#nav'); if (n) n.innerHTML = NAV.map(([k, l]) => `<a href="#/${k}" data-r="${k}">${icono(k)}<span>${l}</span></a>`).join('');
+    const b = $('#bottomNav');
+    if (b) b.innerHTML = NAV.filter(([k]) => NAV_MOVIL.includes(k)).map(([k, l]) => `<a href="#/${k}" data-r="${k}">${icono(k)}<span>${l}</span></a>`).join('') +
+      `<button type="button" id="bottomMenu" aria-label="Abrir menú con todas las secciones" aria-expanded="false">${icono('menu')}<span>Menú</span></button>`;
+    const bm = $('#bottomMenu');
+    if (bm) bm.addEventListener('click', () => { const open = document.body.classList.toggle('nav-open'); bm.setAttribute('aria-expanded', String(open)); });
+  }
+
+
+  /* =====================================================
+     ENRUTADO
+     ===================================================== */
+  function render() {
+    const h = location.hash.replace(/^#\/?/, '');
+    const [sec, arg] = h.split('/');
+    const vista = V[sec] ? sec : 'inicio';
+    $$('[data-r]').forEach((a) => { if (a.dataset.r === vista) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current'); });
+    main.innerHTML = V[vista](arg ? decodeURIComponent(arg) : undefined);
+    if (vista === 'biblioteca') cargarArchivos();
+    const bm = $('#bottomMenu'); if (bm) bm.setAttribute('aria-expanded', 'false');
+    document.title = `${vista.charAt(0).toUpperCase() + vista.slice(1)} · Mi Campus VIU`;
+    window.scrollTo(0, 0);
+    document.body.classList.remove('nav-open');
+    $('#menuBtn') && $('#menuBtn').setAttribute('aria-expanded', 'false');
+  }
+  const currentView = () => (location.hash.replace(/^#\/?/, '').split('/')[0] || 'inicio');
+
+  /* =====================================================
+     EVENTOS
+     ===================================================== */
+  document.addEventListener('click', (ev) => {
+    const el = ev.target.closest('[data-act]');
+    if (!el) return;
+    const act = el.dataset.act;
+    if (clickExtra(el, act, ev)) return;
+    if (act === 'dia') {
+      selDay = el.dataset.fecha;
+      $('#calBody').innerHTML = calBody();
+      const p = $('#dayPanel'); if (p) p.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+    } else if (act === 'mes') {
+      const d = el.dataset.d;
+      let idx = cal.y * 12 + cal.m;
+      if (d === 'hoy') { const t = new Date(); idx = t.getFullYear() * 12 + t.getMonth(); } else idx += Number(d);
+      idx = Math.max(cal.minY * 12 + cal.minM, Math.min(cal.maxY * 12 + cal.maxM, idx));
+      cal.y = Math.floor(idx / 12); cal.m = idx % 12; selDay = null;
+      $('#calBody').innerHTML = calBody();
+    } else if (act === 'vista') {
+      S.prefs.cal.vista = el.dataset.v; save(); render();
+    } else if (act === 'cal-asig') {
+      const off = S.prefs.cal.asigsOff; const v = el.dataset.v;
+      const visible = !off.includes(v);
+      if (visible) off.push(v); else off.splice(off.indexOf(v), 1); // pulsar alterna visible/oculta
+      el.setAttribute('aria-pressed', String(!visible)); save();
+      refCal();
+    } else if (act === 'tarea-borrar') {
+      if (confirm('¿Borrar esta tarea personal?')) {
+        S.personales = S.personales.filter((p) => p.id !== el.dataset.id); delete S.tareas[el.dataset.id]; save();
+        $('#tarLista').innerHTML = tareasLista();
+      }
+    } else if (act === 'ses-share') {
+      const s = sesDe(el.dataset.id); const l = (s.links || [])[Number(el.dataset.i)]; const u = l && urlOk(l.u);
+      const e = sesionesCurso().find((x) => x.id === el.dataset.id);
+      if (u && e) compartir(`${(asigDe(e.asig) || {}).corto || ''} · ${e.titulo}${l.t ? ' · ' + l.t : ''}`, u);
+    } else if (act === 'ses-del') {
+      const s = sesGet(el.dataset.id);
+      if (confirm('¿Quitar este enlace de la sesión?')) { s.links.splice(Number(el.dataset.i), 1); save(); render(); }
+    } else if (act === 'ses-export') { exportarEnlaces();
+    } else if (act === 'ir-sesiones') { S.prefs.ses.asig = el.dataset.v; S.prefs.ses.estado = ''; S.prefs.ses.q = ''; save();
+    } else if (act === 'rename-tema') {
+      const c = curso(); let t = null;
+      c.asignaturas.forEach((a) => a.temas.forEach((x) => { if (x.id === el.dataset.tema) t = x; }));
+      if (!t) return;
+      const nuevo = prompt(`Nombre para «${t.nombre}» (déjalo vacío para quitar el nombre personalizado):`, S.nombresTemas[t.id] || t.titulo || '');
+      if (nuevo === null) return;
+      if (nuevo.trim()) S.nombresTemas[t.id] = nuevo.trim().slice(0, 140); else delete S.nombresTemas[t.id];
+      save(); render();
+    }
+  });
+
+  document.addEventListener('change', (ev) => {
+    const el = ev.target.closest('[data-act]');
+    if (!el) return;
+    const act = el.dataset.act;
+    if (changeExtra(el, act)) return;
+    if (act === 'cal-tipo') {
+      // tiposOff contiene los tipos ocultos: casilla marcada = visible
+      const off = S.prefs.cal.tiposOff; const i = off.indexOf(el.dataset.v);
+      if (el.checked && i >= 0) off.splice(i, 1);
+      if (!el.checked && i < 0) off.push(el.dataset.v);
+      save(); refCal();
+    } else if (act === 'cal-fiab') { S.prefs.cal.fiab = el.value; save(); refCal(); }
+    else if (act === 'cal-pasados') { S.prefs.cal.pasados = el.checked; save(); refCal(); }
+    else if (act === 'tarea-check') {
+      const o = S.tareas[el.dataset.id] = S.tareas[el.dataset.id] || {};
+      o.estado = el.checked ? 'hecha' : 'pendiente'; save(); $('#tarLista').innerHTML = tareasLista();
+    } else if (act === 'tarea-estado') {
+      const o = S.tareas[el.dataset.id] = S.tareas[el.dataset.id] || {};
+      o.estado = el.value; save(); $('#tarLista').innerHTML = tareasLista();
+    } else if (act === 'tarea-prio') {
+      const o = S.tareas[el.dataset.id] = S.tareas[el.dataset.id] || {};
+      o.prioridad = el.value; save(); $('#tarLista').innerHTML = tareasLista();
+    } else if (act === 'tar-f') { S.prefs.tar[el.dataset.k] = el.value; save(); $('#tarLista').innerHTML = tareasLista(); }
+    else if (act === 'tar-ocultar') { S.prefs.tar.ocultarHechas = el.checked; save(); $('#tarLista').innerHTML = tareasLista(); }
+    else if (act === 'bib-f') { S.prefs.bib[el.dataset.k] = el.value; save(); refBib(); }
+    else if (act === 'ses-f') { S.prefs.ses[el.dataset.k] = el.value; save(); $('#sesLista').innerHTML = sesLista(); }
+    else if (act === 'ses-visto') { sesGet(el.dataset.id).visto = el.checked; save(); }
+    else if (act === 'prog') {
+      const p = S.progreso[el.dataset.tema] = S.progreso[el.dataset.tema] || {};
+      p[el.dataset.k] = el.checked; save();
+      const a = asigs().find((x) => x.temas.some((t) => t.id === el.dataset.tema));
+      if (a) { const pr = progresoAsig(a); const sec = $('#prog-' + a.code); $('i', sec).style.width = pr.pct + '%'; $(`[data-pct="${a.code}"]`, sec).textContent = pr.pct + ' %'; }
+    }
+  });
+
+  document.addEventListener('input', (ev) => {
+    const ex = ev.target.closest('[data-act]'); if (ex && inputExtra(ex, ex.dataset.act)) return;
+    const el = ev.target.closest('[data-act="bib-q"]');
+    if (el) { S.prefs.bib.q = el.value; save(); refBib(); return; }
+    const q = ev.target.closest('[data-act="ses-q"]');
+    if (q) { S.prefs.ses.q = q.value; save(); $('#sesLista').innerHTML = sesLista(); return; }
+    const n = ev.target.closest('[data-act="ses-nota"]');
+    if (n) { sesGet(n.dataset.id).nota = n.value.slice(0, 2000); save(); }
+  });
+
+  document.addEventListener('submit', (ev) => {
+    if (ev.target.id === 'formEnlace') {
+      ev.preventDefault();
+      const f = new FormData(ev.target); const u = urlOk(f.get('u'));
+      if (!u) { alert('Ese enlace no es válido. Escribe una dirección completa, por ejemplo https://youtu.be/…'); return; }
+      const s = sesGet(ev.target.dataset.id);
+      if (s.links.some((l) => l.u === u)) { alert('Ese enlace ya está guardado en esta sesión.'); return; }
+      s.links.push({ t: String(f.get('t') || '').trim().slice(0, 80), u }); save(); render(); toast('Enlace guardado');
+      return;
+    }
+    if (ev.target.id !== 'formTarea') return;
+    ev.preventDefault();
+    const f = new FormData(ev.target);
+    const titulo = String(f.get('titulo') || '').trim();
+    if (!titulo) return;
+    S.personales.push({ id: 'p-' + Date.now().toString(36), curso: curso().id, asig: String(f.get('asig')), titulo: titulo.slice(0, 120),
+      fecha: f.get('fecha') || null, hora: null, prioridad: String(f.get('prioridad') || 'media'), detalle: 'Tarea personal' });
+    save(); ev.target.reset(); $('#tarLista').innerHTML = tareasLista();
+  });
+
+  /* ---------- barra lateral: curso, tema, copias ---------- */
+  const cursoSel = $('#cursoSel');
+  if (cursoSel) {
+    cursoSel.innerHTML = CURSOS.map((c) => `<option value="${esc(c.id)}">${esc(c.nombre)} · ${esc(c.cuatrimestre)}</option>`).join('');
+    cursoSel.value = curso().id;
+    cursoSel.addEventListener('change', () => { S.prefs.curso = cursoSel.value; save(); cal = null; render(); });
+  }
+
+  const TEMAS = ['auto', 'light', 'dark'];
+  const TEMA_L = { auto: 'automático', light: 'claro', dark: 'oscuro' };
+  function aplicaTema() {
+    const t = S.prefs.tema || 'auto';
+    if (t === 'auto') document.documentElement.removeAttribute('data-theme'); else document.documentElement.setAttribute('data-theme', t);
+    const b = $('#themeBtn'); if (b) b.textContent = 'Tema: ' + TEMA_L[t];
+  }
+  $('#themeBtn') && $('#themeBtn').addEventListener('click', () => {
+    S.prefs.tema = TEMAS[(TEMAS.indexOf(S.prefs.tema) + 1) % TEMAS.length]; save(); aplicaTema();
+  });
+  $('#menuBtn') && $('#menuBtn').addEventListener('click', () => {
+    const open = document.body.classList.toggle('nav-open'); $('#menuBtn').setAttribute('aria-expanded', String(open));
+  });
+
+  // En móvil: tocar fuera del menú lateral lo cierra.
+  document.addEventListener('click', (ev) => {
+    if (!document.body.classList.contains('nav-open')) return;
+    if (ev.target.closest('#sidebar') || ev.target.closest('#menuBtn') || ev.target.closest('#bottomMenu')) return;
+    document.body.classList.remove('nav-open'); $('#menuBtn') && $('#menuBtn').setAttribute('aria-expanded', 'false');
+  });
+
+  $('#exportBtn') &&$('#exportBtn').addEventListener('click', () => {
+    S.prefs.ultimaCopia = new Date().toISOString(); save();
+    const data = { app: 'campus-viu', version: 1, exportado: S.prefs.ultimaCopia, datos: S };
+    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = `campus_viu_copia_${hoy()}.json`;
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(() => URL.revokeObjectURL(a.href), 2000);
+    if (currentView() === 'inicio') render();
+  });
+  $('#importBtn') && $('#importBtn').addEventListener('click', () => $('#importFile').click());
+  $('#importFile') && $('#importFile').addEventListener('change', (ev) => {
+    const file = ev.target.files[0]; ev.target.value = '';
+    if (!file) return;
+    const r = new FileReader();
+    r.onload = () => {
+      try {
+        const o = JSON.parse(r.result);
+        if (!o || o.app !== 'campus-viu' || !o.datos) throw new Error('formato');
+        if (!confirm('Se reemplazarán las tareas, el progreso y las preferencias actuales por las de la copia. ¿Continuar?')) return;
+        S = merge(defaults(), o.datos);
+        if (!CURSOS.some((c) => c.id === S.prefs.curso)) S.prefs.curso = CURSOS[0].id;
+        save(); cal = null; aplicaTema();
+        if (cursoSel) cursoSel.value = curso().id;
+        render(); alert('Copia importada correctamente.');
+      } catch (e) { alert('Este archivo no es una copia válida del campus.'); }
+    };
+    r.readAsText(file);
+  });
+
+  window.addEventListener('hashchange', render);
+  buildNav();
+  aplicaTema();
+  render();
+})();
+
+</script>
+  <noscript>Esta web necesita JavaScript activado.</noscript>
+</body>
+</html>
