@@ -3184,8 +3184,13 @@ window.CAMPUS_CURSOS.push({
     const f = S.prefs.ses;
     const estado = SES_EST[f.estado] ? f.estado : '';
     const pend = sesionesLista().filter((e) => sesEstado(e.id) === 'pend').length;
-    return `<div class="page-head"><div><h1>Sesiones</h1><p>Solo las sesiones <b>a exportar</b> o ya <b>exportadas</b>. Guarda el enlace al vídeo, tus notas y márcalas cuando las hayas exportado.</p></div>
+    return `<div class="page-head"><div><h1>Sesiones</h1><p>Vídeos de las sesiones de cada asignatura (canal de YouTube) y tu lista de sesiones <b>a exportar</b> o ya <b>exportadas</b>.</p></div>
       <button class="btn" data-act="ses-export">⬇ Exportar lista (CSV)${pend ? ` · ${pend} a exportar` : ''}</button></div>
+    <section class="card" style="margin-bottom:14px"><h2>▶ Sesiones en vídeo · canal de YouTube</h2>
+      <p class="small muted" style="margin:0 0 10px">Se actualiza solo cada vez que se sube un vídeo nuevo al canal. Usa el icono de lista del reproductor para elegir la sesión.</p>
+      <div style="position:relative;width:100%;aspect-ratio:16/9;border-radius:10px;overflow:hidden;background:#000">
+        <iframe src="https://www.youtube.com/embed/videoseries?list=UUW_JI4uNrKlgd94SLZFuriQ" title="Sesiones · canal de YouTube @marcosrodriguez2279" style="position:absolute;inset:0;width:100%;height:100%;border:0" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+      <p class="small" style="margin:10px 0 0"><a href="https://www.youtube.com/@marcosrodriguez2279" target="_blank" rel="noopener">Abrir el canal en YouTube ↗</a></p></section>
     <section class="card" style="margin-bottom:14px"><h2>Añadir sesiones a la lista</h2>
       <p class="small muted">Hay ${sesionesCurso().length} clases y tutorías en el calendario; aquí solo se muestran las que tú elijas.</p>
       <div class="row" style="align-items:flex-end;margin-top:8px">
