@@ -285,6 +285,16 @@ tr.past { opacity: .55; }
   .card.stat { padding: 12px; } .card.stat b { font-size: 1.5rem; }
 }
 
+/* ===== Canal de YouTube ===== */
+.yt-player { position: relative; width: 100%; aspect-ratio: 16/9; border-radius: 10px; overflow: hidden; background: #000; }
+.yt-player iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+.yt-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 12px; }
+.yt-card { display: flex; flex-direction: column; text-align: left; gap: 4px; padding: 0 0 8px; background: var(--surface-2); color: var(--text); border: 2px solid transparent; border-radius: 10px; overflow: hidden; cursor: pointer; font: inherit; }
+.yt-card.on { border-color: var(--accent); }
+.yt-card img { width: 100%; aspect-ratio: 16/9; object-fit: cover; display: block; background: #000; }
+.yt-t { padding: 0 8px; font-size: .88rem; font-weight: 600; line-height: 1.3; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+.yt-d { padding: 0 8px; font-size: .78rem; color: var(--muted); }
+
 </style>
 </head>
 <body>
@@ -3179,17 +3189,59 @@ window.CAMPUS_CURSOS.push({
     return '<option value="">Elige una sesión del calendario…</option>' + asigs().filter((a) => g[a.code]).map((a) =>
       `<optgroup label="${esc(a.nombre)}">${g[a.code].map((e) => `<option value="${esc(e.id)}">${esc(fmtCorto(e.fecha))} · ${esc(e.titulo)} · ${esc(hora(e))}</option>`).join('')}</optgroup>`).join('');
   }
+  /* ===== Canal de YouTube (pestaña Sesiones) ===== */
+  const YT_LISTA = 'UUW_JI4uNrKlgd94SLZFuriQ';
+  let ytVideos = null, ytSel = '', ytMax = 12, ytQ = '', ytCarga = null, ytFuente = '';
+  const ytSrc = (auto) => 'https://www.youtube.com/embed/' + (ytSel || 'videoseries') + '?list=' + YT_LISTA + '&rel=0' + (auto ? '&autoplay=1' : '');
+  const ytFecha = (d) => { const t = new Date(d); return isNaN(t) ? '' : t.toLocaleDateString('es-ES', { day: 'numeric', month: 'short', year: 'numeric' }); };
+  function ytGrid() {
+    const g = document.getElementById('ytGrid'); if (!g) return;
+    const q = ytQ.trim().toLowerCase();
+    const L = ytVideos.filter((v) => !q || v.title.toLowerCase().includes(q));
+    const vis = L.slice(0, ytMax);
+    const n = document.getElementById('ytCount'); if (n) n.textContent = L.length + (L.length === 1 ? ' vídeo' : ' vídeos');
+    g.innerHTML = vis.length ? vis.map((v) => `<button type="button" class="yt-card${v.id === ytSel ? ' on' : ''}" data-yt="${esc(v.id)}"><img src="https://i.ytimg.com/vi/${esc(v.id)}/mqdefault.jpg" alt="" loading="lazy"><span class="yt-t">${esc(v.title)}</span><span class="yt-d">${esc(ytFecha(v.date))}</span></button>`).join('')
+      : '<p class="small muted">Ningún vídeo coincide.</p>';
+    const m = document.getElementById('ytMas');
+    if (m) { m.style.display = L.length > vis.length ? '' : 'none'; m.textContent = 'Mostrar más (' + (L.length - vis.length) + ')'; }
+  }
+  function ytPintar() {
+    const box = document.getElementById('ytLista'); if (!box) return;
+    if (ytVideos === 'error') { box.innerHTML = '<p class="small muted">No se pudo cargar la lista de vídeos. Puedes verlos todos con el icono de lista del reproductor.</p>'; return; }
+    if (!ytVideos) { box.innerHTML = '<p class="small muted">Cargando vídeos…</p>'; return; }
+    box.innerHTML = `<div class="row between" style="margin:12px 0 8px;gap:8px;flex-wrap:wrap"><span class="small muted"><span id="ytCount"></span>${ytFuente === 'rss' ? ' · se muestran los 15 más recientes' : ''}</span>
+      <input type="search" id="ytBuscar" value="${esc(ytQ)}" placeholder="Buscar vídeo…" style="max-width:220px"></div>
+      <div class="yt-grid" id="ytGrid"></div>
+      <p style="text-align:center;margin:12px 0 0"><button type="button" class="btn" id="ytMas">Mostrar más</button></p>`;
+    ytGrid();
+    box.onclick = (ev) => {
+      const c = ev.target.closest('[data-yt]');
+      if (c) { ytSel = c.dataset.yt; const f = document.getElementById('ytFrame'); if (f) { f.src = ytSrc(true); f.scrollIntoView({ behavior: 'smooth', block: 'center' }); } ytGrid(); return; }
+      if (ev.target.id === 'ytMas') { ytMax += 12; ytGrid(); }
+    };
+    document.getElementById('ytBuscar').oninput = (ev) => { ytQ = ev.target.value; ytMax = 12; ytGrid(); };
+  }
+  function ytCargar() {
+    if (ytVideos === 'error') ytVideos = null;
+    ytPintar();
+    if (ytVideos || ytCarga) return;
+    ytCarga = fetch('/.netlify/functions/videos').then((r) => (r.ok ? r.json() : Promise.reject(new Error('http'))))
+      .then((d) => { ytVideos = d.videos || []; ytFuente = d.source || ''; })
+      .catch(() => { ytVideos = 'error'; })
+      .finally(() => { ytCarga = null; ytPintar(); });
+  }
   V.sesiones = function (id) {
     if (id) return sesDetalle(id);
+    setTimeout(ytCargar, 0);
     const f = S.prefs.ses;
     const estado = SES_EST[f.estado] ? f.estado : '';
     const pend = sesionesLista().filter((e) => sesEstado(e.id) === 'pend').length;
     return `<div class="page-head"><div><h1>Sesiones</h1><p>Vídeos de las sesiones de cada asignatura (canal de YouTube) y tu lista de sesiones <b>a exportar</b> o ya <b>exportadas</b>.</p></div>
       <button class="btn" data-act="ses-export">⬇ Exportar lista (CSV)${pend ? ` · ${pend} a exportar` : ''}</button></div>
     <section class="card" style="margin-bottom:14px"><h2>▶ Sesiones en vídeo · canal de YouTube</h2>
-      <p class="small muted" style="margin:0 0 10px">Se actualiza solo cada vez que se sube un vídeo nuevo al canal. Usa el icono de lista del reproductor para elegir la sesión.</p>
-      <div style="position:relative;width:100%;aspect-ratio:16/9;border-radius:10px;overflow:hidden;background:#000">
-        <iframe src="https://www.youtube.com/embed/videoseries?list=UUW_JI4uNrKlgd94SLZFuriQ" title="Sesiones · canal de YouTube @marcosrodriguez2279" style="position:absolute;inset:0;width:100%;height:100%;border:0" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+      <p class="small muted" style="margin:0 0 10px">Todos los vídeos del canal, del más reciente al más antiguo. Se actualizan solos cuando se sube uno nuevo. Toca uno para verlo.</p>
+      <div class="yt-player"><iframe id="ytFrame" src="${ytSrc(false)}" title="Sesiones · canal de YouTube @marcosrodriguez2279" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+      <div id="ytLista"><p class="small muted">Cargando vídeos…</p></div>
       <p class="small" style="margin:10px 0 0"><a href="https://www.youtube.com/@marcosrodriguez2279" target="_blank" rel="noopener">Abrir el canal en YouTube ↗</a></p></section>
     <section class="card" style="margin-bottom:14px"><h2>Añadir sesiones a la lista</h2>
       <p class="small muted">Hay ${sesionesCurso().length} clases y tutorías en el calendario; aquí solo se muestran las que tú elijas.</p>
