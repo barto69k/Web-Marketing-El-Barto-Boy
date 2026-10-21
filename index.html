@@ -2436,7 +2436,7 @@ window.CAMPUS_CURSOS.push({
 
   /* ---------- estado guardado ---------- */
   const defaults = () => ({
-    v: 1, tareas: {}, personales: [], progreso: {}, nombresTemas: {}, sesiones: {}, sesExp: {}, ytMan: [], act: {}, exam: {},
+    v: 1, tareas: {}, personales: [], progreso: {}, nombresTemas: {}, sesiones: {}, sesExp: {}, act: {}, exam: {},
     prefs: { tema: 'auto', curso: CURSOS[0].id, ultimaCopia: null,
       cal: { vista: 'mes', asigsOff: [], tiposOff: [], fiab: '', pasados: false },
       tar: { asig: '', estado: '', tipo: '', prioridad: '', ocultarHechas: false },
@@ -3192,127 +3192,12 @@ window.CAMPUS_CURSOS.push({
     return '<option value="">Elige una sesión del calendario…</option>' + asigs().filter((a) => g[a.code]).map((a) =>
       `<optgroup label="${esc(a.nombre)}">${g[a.code].map((e) => `<option value="${esc(e.id)}">${esc(fmtCorto(e.fecha))} · ${esc(e.titulo)} · ${esc(hora(e))}</option>`).join('')}</optgroup>`).join('');
   }
-  /* ===== Vídeos del canal de YouTube asignados a cada sesión (pestaña Sesiones) ===== */
-  const YT_CANAL = 'https://www.youtube.com/@marcosrodriguez2279';
-  const YT_RSS = 'https://www.youtube.com/feeds/videos.xml?channel_id=UCW_JI4uNrKlgd94SLZFuriQ';
-  let ytVideos = [], ytEstado = 'cargando', ytCarga = null, ytMsg = '';
-  const ytNorm = (t) => String(t || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9 ]+/g, ' ').replace(/\s+/g, ' ').trim();
-  const ytId = (u) => { const m = /(?:youtu\.be\/|v=|embed\/|shorts\/|live\/)([A-Za-z0-9_-]{11})/.exec(String(u || '')); return m ? m[1] : null; };
-  const YT_KW = { '04GMAR': ['economia', 'oferta', 'demanda', 'mercado', 'pib', 'inflacion', 'macroeconom', 'microeconom', 'elasticidad', 'monopolio'],
-    '03GMAR': ['estadistic', 'mediana', 'desviacion', 'probabilidad', 'regresion', 'correlacion', 'distribucion', 'muestreo', 'hipotesis', 'frecuencia'],
-    '02GMAR': ['comunicacion', 'dircom', 'reputacion', 'stakeholder', 'etica', 'crisis', 'publicidad', 'redes sociales', 'cultura'],
-    '01GMAR': ['contab', 'coste', 'balance', 'ratio', 'fondo de maniobra', 'cuenta de resultados', 'amortizacion', 'imputacion'] };
-  /* Analiza el título (y la descripción): asignatura y número («Tema 1 Estadística» → Estadística, 1). */
-  function ytInfo(v) {
-    const x = ytNorm(v.title + ' ' + (v.desc || '')), w = ' ' + x + ' ';
-    let best = null, bs = 0;
-    for (const a of asigs()) {
-      let s = 0;
-      if (w.includes(' ' + ytNorm(a.nombre) + ' ')) s += 10;
-      const c = ytNorm(a.corto); if (c && w.includes(' ' + c.slice(0, Math.max(5, c.length - 2)))) s += 8;
-      (YT_KW[a.code] || []).forEach((k) => { if (w.includes(' ' + k)) s += 2; });
-      a.temas.forEach((tm) => { const ti = ytNorm(S.nombresTemas[tm.id] || tm.titulo); if (ti && w.includes(ti)) s += 9; });
-      if (s > bs) { bs = s; best = a; }
-    }
-    const m = /\b(?:tema|sesion|unidad(?: de aprendizaje)?|ua|t)\s*(\d{1,2})\b/.exec(ytNorm(v.title));
-    return { asig: bs >= 4 ? best : null, num: m ? +m[1] : 0 };
-  }
-  const ytParse = (xml) => [...new DOMParser().parseFromString(xml, 'text/xml').getElementsByTagName('entry')].map((e) => {
-    const g = (n) => { const el = e.getElementsByTagName(n)[0]; return el ? el.textContent : ''; };
-    return { id: g('yt:videoId'), title: g('title'), date: g('published'), desc: g('media:description') };
-  }).filter((v) => v.id);
-  async function ytTraer() {
-    const enc = encodeURIComponent(YT_RSS);
-    try { const r = await fetch('/.netlify/functions/videos'); if (r.ok) { const d = await r.json(); if (d.videos && d.videos.length) return d.videos; } } catch (e) { /* plan B */ }
-    for (const u of ['https://api.allorigins.win/raw?url=' + enc, 'https://corsproxy.io/?' + enc, 'https://api.codetabs.com/v1/proxy?quest=' + enc]) {
-      try { const r = await fetch(u); if (!r.ok) continue; const v = ytParse(await r.text()); if (v.length) return v; } catch (e) { /* siguiente */ }
-    }
-    try {
-      const r = await fetch('https://api.rss2json.com/v1/api.json?rss_url=' + enc);
-      if (r.ok) { const d = await r.json(); const v = (d.items || []).map((it) => ({ id: ytId(it.link) || ytId(it.guid), title: it.title, date: it.pubDate, desc: '' })).filter((x) => x.id); if (v.length) return v; }
-    } catch (e) { /* sin lista */ }
-    return [];
-  }
-  function ytTodos() {
-    const vistos = new Set(), out = [];
-    [...ytVideos, ...(S.ytMan || [])].forEach((v) => { if (!v.id || vistos.has(v.id)) return; vistos.add(v.id); if (!v.i) v.i = ytInfo(v); out.push(v); });
-    return out;
-  }
-  async function ytAnadir(texto) {
-    const ids = [...new Set((String(texto).match(/https?:\/\/\S+/g) || []).map(ytId).filter(Boolean))];
-    let n = 0, mal = 0; S.ytMan = S.ytMan || [];
-    for (const id of ids) {
-      if (S.ytMan.some((m) => m.id === id)) continue;
-      try {
-        const r = await fetch('https://www.youtube.com/oembed?format=json&url=' + encodeURIComponent('https://www.youtube.com/watch?v=' + id));
-        if (!r.ok) throw new Error('oembed'); const d = await r.json(); S.ytMan.push({ id, title: d.title || '' }); n++;
-      } catch (e) { mal++; }
-    }
-    save();
-    ytMsg = !ids.length ? 'No he encontrado enlaces de YouTube.' : `${n} añadido${n === 1 ? '' : 's'}${mal ? ` · ${mal} sin leer (¿es público?)` : ''}.`;
-  }
-  /* Un vídeo «Tema N Asignatura» se añade a la «Sesión N» de esa asignatura. */
-  function ytSeccion() {
-    const V = ytTodos(), ses = sesionesCurso().filter((e) => e.tipo === 'sesion'), usados = new Set();
-    const estado = ytEstado === 'cargando' && !V.length ? 'Cargando los vídeos del canal…'
-      : V.length ? `${V.length} vídeos del canal analizados por su título.` : 'No se pudo leer la lista del canal. Pega abajo los enlaces de tus vídeos.';
-    const grupos = asigs().map((a) => {
-      const L = ses.filter((e) => e.asig === a.code); if (!L.length) return '';
-      let con = 0;
-      const items = L.map((e) => {
-        const num = +((/(\d+)/.exec(e.titulo) || [])[1] || 0);
-        const mis = (sesDe(e.id).links || []).map((l) => ({ u: l.u, t: 'Abrir vídeo' }))
-          .concat(V.filter((v) => v.i.asig && v.i.asig.code === a.code && v.i.num === num).map((v) => { usados.add(v.id); return { u: 'https://www.youtube.com/watch?v=' + v.id, t: v.title }; }));
-        if (mis.length) con++;
-        return `<li><div class="li-main"><b>${esc(e.titulo)}</b><span class="muted small">${esc(fmtCorto(e.fecha))} · ${esc(e.detalle)}</span></div>
-          <div class="li-ctrl"><div class="row" style="gap:6px;flex-wrap:wrap">${mis.map((m) => `<a class="btn small primary" href="${esc(m.u)}" target="_blank" rel="noopener">▶ ${esc(m.t.length > 48 ? m.t.slice(0, 46) + '…' : m.t)}</a>`).join('')}</div></div></li>`;
-      }).join('');
-      return `<details style="margin-top:10px"><summary><b style="color:${esc(a.color)}">${esc(a.nombre)}</b> <span class="muted small">· ${con} de ${L.length} sesiones con vídeo</span></summary><ul class="list" style="margin-top:8px">${items}</ul></details>`;
-    }).join('');
-    const libres = V.filter((v) => !usados.has(v.id));
-    return `<p class="small muted" style="margin:0 0 4px">${estado} Un vídeo «Tema 1 Estadística» va a la Sesión 1 de Estadística. Las sesiones sin vídeo quedan vacías.</p>${grupos}
-      ${libres.length ? `<details style="margin-top:10px"><summary class="small">Vídeos sin sesión (${libres.length})</summary><ul class="list" style="margin-top:6px">${libres.map((v) => `<li><div class="li-main"><a href="https://www.youtube.com/watch?v=${esc(v.id)}" target="_blank" rel="noopener">${esc(v.title)}</a></div></li>`).join('')}</ul></details>` : ''}
-      <details style="margin-top:10px"><summary class="small">Añadir vídeos pegando enlaces</summary>
-        <p class="small muted" style="margin:6px 0">Pega uno o varios enlaces de YouTube, uno por línea. Se lee el título y se asigna a su sesión. Se guardan en este navegador.</p>
-        <textarea id="ytPega" rows="4" style="width:100%" placeholder="https://youtu.be/…"></textarea>
-        <div class="row" style="gap:8px;margin-top:6px;align-items:center"><button class="btn primary" id="ytPegaBtn" type="button">Añadir</button><span class="small muted">${esc(ytMsg)}</span></div></details>`;
-  }
-  function ytPintar() {
-    const box = document.getElementById('ytSes'); if (!box) return;
-    box.innerHTML = ytSeccion();
-    const b = document.getElementById('ytPegaBtn');
-    if (b) b.onclick = async () => { b.disabled = true; b.textContent = 'Leyendo…'; await ytAnadir(document.getElementById('ytPega').value); ytPintar(); };
-  }
-  function ytCargar() {
-    ytPintar();
-    if (ytCarga || ytEstado === 'ok') return;
-    ytEstado = 'cargando';
-    ytCarga = ytTraer().then((v) => { ytVideos = v; ytEstado = v.length ? 'ok' : 'error'; }).catch(() => { ytEstado = 'error'; })
-      .finally(() => { ytCarga = null; ytPintar(); });
-  }
   V.sesiones = function (id) {
     if (id) return sesDetalle(id);
-    setTimeout(ytCargar, 0);
-    const f = S.prefs.ses;
-    const estado = SES_EST[f.estado] ? f.estado : '';
-    const pend = sesionesLista().filter((e) => sesEstado(e.id) === 'pend').length;
-    return `<div class="page-head"><div><h1>Sesiones</h1><p>Enlace al vídeo de cada sesión en el canal de YouTube y tu lista de sesiones <b>a exportar</b> o ya <b>exportadas</b>.</p></div>
-      <button class="btn" data-act="ses-export">⬇ Exportar lista (CSV)${pend ? ` · ${pend} a exportar` : ''}</button></div>
-    <section class="card" style="margin-bottom:14px"><h2>▶ Vídeos de las sesiones · canal de YouTube</h2>
-      <div id="ytSes">${ytSeccion()}</div>
-      <p class="small" style="margin:12px 0 0"><a href="https://www.youtube.com/@marcosrodriguez2279" target="_blank" rel="noopener">Abrir el canal en YouTube ↗</a></p></section>
-    <section class="card" style="margin-bottom:14px"><h2>Añadir sesiones a la lista</h2>
-      <p class="small muted">Hay ${sesionesCurso().length} clases y tutorías en el calendario; aquí solo se muestran las que tú elijas.</p>
-      <div class="row" style="align-items:flex-end;margin-top:8px">
-        <label class="field" style="flex:1;min-width:230px">Sesión del calendario<select id="sesPick">${sesPickHtml()}</select></label>
-        <button class="btn primary" data-act="ses-add-pick">Añadir a exportar</button>
-        <button class="btn" data-act="ses-add-pasadas">Añadir todas las ya celebradas</button></div></section>
-    <div class="card filters">
-      <label class="field">Asignatura<select data-act="ses-f" data-k="asig"><option value="">Todas</option>${asigs().map((a) => `<option value="${esc(a.code)}" ${f.asig === a.code ? 'selected' : ''}>${esc(a.corto)}</option>`).join('')}</select></label>
-      <label class="field">Mostrar<select data-act="ses-f" data-k="estado">${optSel(SES_EST, estado, 'Todas')}</select></label>
-      <label class="field">Buscar<input type="text" data-act="ses-q" value="${esc(f.q)}" placeholder="Tema, nota o título…"></label>
-    </div>
-    <div id="sesLista">${sesLista()}</div>`;
+    return `<div class="page-head"><div><h1>Sesiones</h1><p>Las sesiones de cada asignatura están en el canal de YouTube.</p></div></div>
+    <section class="card"><h2>▶ Canal de YouTube</h2>
+      <p class="small muted" style="margin:6px 0 12px">Todos los vídeos de las sesiones, de cada tema y asignatura.</p>
+      <a class="btn primary" href="https://www.youtube.com/@marcosrodriguez2279" target="_blank" rel="noopener">▶ Abrir el canal en YouTube</a></section>`;
   };
   function exportarEnlaces() {
     const lista = sesionesLista();
